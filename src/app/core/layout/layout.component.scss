@@ -1,0 +1,29 @@
+@import "./src/assets/scss/master";
+
+.private-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .container {
+    height: 100%;
+    background-color: rgb(245, 245, 245);
+  }
+
+  .content {
+    padding: 1em 3em;
+    box-sizing: border-box;
+    background-color: white; 
+    height: calc(100vh - 106px);
+    margin: 25px;
+  }
+
+  .content-opennav {
+    margin-left: 225px !important;
+  }
+}
+
+::ng-deep .mat-sidenav{
+  max-width: 200px;
+  width: 200px;
+}

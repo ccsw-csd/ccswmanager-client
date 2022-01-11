@@ -1,0 +1,54 @@
+@import './src/assets/scss/master';
+
+.container {
+  background-color: $primary;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 56px;
+  min-height: 56px;
+  overflow:hidden;
+}  
+
+.header-menu {
+  width: fit-content;
+  button {
+    color: white;
+  }
+}
+
+
+.dark {
+  color: $icon;
+}
+
+.feedback-button {
+  width: 50px;
+  min-width: 50px;
+}
+
+
+.menu-button {
+  color: white;
+
+  a {
+    vertical-align: super;
+  }
+}
+
+button {
+  background-color: transparent;
+}
+
+button:focus {
+  border: none;
+  outline: none;
+}
+
+.header-submenu {
+  display: flex;
+  justify-content: flex-end;
+
+}
+

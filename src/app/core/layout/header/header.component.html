@@ -1,0 +1,37 @@
+<mat-toolbar class="container">
+
+    <mat-toolbar-row class="header-menu">
+      <button mat-icon-button (click)="toggleSideNav()" mat-button>
+        <i class="material-icons header-icon">menu</i>
+      </button>
+    </mat-toolbar-row>
+  
+    <mat-toolbar-row routerLink="/main">
+      <img src="assets/images/logo.png" height="40px" alt="" />
+    </mat-toolbar-row>
+  
+    <mat-toolbar-row class="header-submenu">
+
+      <button mat-flat-button class="feedback-button" [matTooltip]="'Enviar feedback'" >
+        <a href="mailto:ccsw.support@capgemini.com?subject=[CCSWManager] Consulta / Feedback">
+          <mat-icon>feedback</mat-icon>
+        </a>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+        <mat-divider class="divider">
+        </mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon class="dark">logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+  
+      <button mat-flat-button [matMenuTriggerFor]="menu" class="menu-button">
+        <i class="material-icons header-icon">account_circle</i>
+        <a> {{ getName() }} </a>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  
+  </mat-toolbar>

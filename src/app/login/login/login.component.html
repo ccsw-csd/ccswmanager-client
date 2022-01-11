@@ -1,0 +1,34 @@
+<div id="container">
+    <div id="login-left">
+        <div><img src="assets/images/Capgemini_Logo_White.png" alt="" /></div>
+    </div>
+
+    <div id="login-right">        
+        <div id="card" style="display:flex;flex-direction: column;">
+            <div style="flex:1"></div>
+            <div id="header">
+                <img src="assets/images/logo-negative.png" alt="" />
+            </div>
+
+            <div style="height:200px;width:300px;" id="login-card">
+                <mat-form-field appearance="standard">
+                    <mat-label>Username</mat-label>
+                    <input matInput name="user" [(ngModel)]="user" required matInput placeholder="Username" (keyup.enter)="login()"/>
+                    <mat-error>this field cannot be empty</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput name="password" [(ngModel)]="password" required matInput type="password" placeholder="Password" (keyup.enter)="login()"/>
+                    <mat-error>this field cannot be empty</mat-error>
+                </mat-form-field>                
+                <button mat-button primary [disabled]="user == '' || password == ''" (click)="login()">Login</button>
+            </div>
+            <div class="support">Si necesita ayuda para resolver dudas o problemas técnicos, por favor envía un correo a <a href="mailto:ccsw.support@capgemini.com?subject=[CCSWManager] Soporte / Consulta">ccsw.support@capgemini.com</a>.</div>
+            <div style="flex:1"></div>
+        </div>
+    </div>
+</div>
+
+<div class="loadWrapper" *ngIf="isloading">
+    <mat-spinner></mat-spinner>
+  </div>
