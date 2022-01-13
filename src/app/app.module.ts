@@ -18,6 +18,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { MainComponent } from './main/main.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MainComponent } from './main/main.component';
     MatSlideToggleModule,
     CoreModule,
     LoginModule,
+    AgGridModule.withComponents([])
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent]
