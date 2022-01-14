@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
 import { MainService } from './services/main.service';
-import { MainPersonDto } from './to/MainPersonDto';
 
 @Component({
   selector: 'app-main',
@@ -21,13 +20,13 @@ export class MainComponent implements OnInit {
     { field: 'grade', headerName: 'Grado'},
     { field: 'role', headerName: 'Rol'},
     { field: 'businesscode', headerName: 'Práctica'},
-    { field: 'geography', headerName: 'Geografía'},
+    { field: 'center.name', headerName: 'Geografía'},
     { field: 'hours', headerName: 'Horas Jornada'},
     { field: 'details', headerName: 'Detalle'},
-    { field: 'state', headerName: 'Estado'},
+    { field: 'active', headerName: 'Estado', cellRenderer: params => params.value == 0  ? "Baja" : params.value == 1 ? "Activo" : params.value == 2 ? "Pendiente" : ""},
   ];
 
-  rowData : MainPersonDto[] = [];
+  rowData : PersonDto[] = [];
 
   constructor(
     private mainService: MainService
@@ -35,31 +34,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.mainService.findPersons().subscribe( (res) => {
-      let persons: MainPersonDto[] = [];
-      res.forEach(person => {
-        persons.push(this.changePersonToMainPerson(person));
-      });
-      this.rowData = persons;
+      this.rowData = res;
     });
-
-
   }
-
-  private changePersonToMainPerson(person: PersonDto): MainPersonDto {
-    let mainPerson: MainPersonDto;
-    mainPerson = person;
-    mainPerson.geography = person.center?.name;
-    
-    if(person.active == 1) {
-      mainPerson.state = "Activo";
-    }
-    else if (person.active == 0) {
-      mainPerson.state = "Baja";
-    }
-    else if (person.active == 2) {
-      mainPerson.state = "Pendiente";
-    }
-    return mainPerson;
-  }
-
 }
