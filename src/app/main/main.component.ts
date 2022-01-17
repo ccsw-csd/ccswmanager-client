@@ -23,10 +23,29 @@ export class MainComponent implements OnInit {
     { field: 'center.name', headerName: 'Geografía'},
     { field: 'hours', headerName: 'Horas Jornada'},
     { field: 'details', headerName: 'Detalle'},
-    { field: 'active', headerName: 'Estado', cellRenderer: params => params.value == 0  ? "Baja" : params.value == 1 ? "Activo" : params.value == 2 ? "Pendiente" : ""},
+    { field: 'active', headerName: 'Estado', 
+    valueGetter: function (params) {
+      if (params.data.active == 1) {
+          return 'Activo';
+      } else if (params.data.active == 0) {
+          return 'Baja';
+      } else {
+          return 'Pendiente';
+      }}},
   ];
 
   rowData : PersonDto[] = [];
+
+  defaultColDef = {
+    sortable: true,
+    filter: 'agTextColumnFilter',
+    floatingFilter: true,
+    caseSensitive: false,
+    suppressAndOrCondition: true,
+    filterParams: {
+      filterOptions: ["contains"],
+    }
+  };
 
   constructor(
     private mainService: MainService
