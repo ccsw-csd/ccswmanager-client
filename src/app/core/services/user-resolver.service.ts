@@ -16,12 +16,9 @@ export class UserResolverService implements Resolve<any> {
    * @param state
    */
   resolve(route: ActivatedRouteSnapshot): Observable<User> {
-    return new Observable<User>();
-    /*
     return this.http.get<User>(
-        environment.server + '/user/'
+        environment.server + '/security/user/'
     );
-    */
   }
 
 }

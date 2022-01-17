@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -20,23 +20,22 @@ export class LayoutComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     public dialog: MatDialog,
+    public router: Router,
     ) { }
 
   ngOnInit() {
-    /*
     this.activatedRoute.data.subscribe(response => { 
-      this.authService.putUserInfo(response.user); this.checkUserDetails();
+      this.authService.putUserInfo(response.user); 
+      this.checkUserDetails();
     }); 
-    */
-
   }
 
   private checkUserDetails() : void {
     let user = this.authService.getUserInfo();
 
     if (user == null || user.username == null) {
-
-      //TODO no existe el usuario lanzar pantalla de edición
+      this.authService.clearCredentials();
+      this.router.navigate(['main']);
     }
   }
 

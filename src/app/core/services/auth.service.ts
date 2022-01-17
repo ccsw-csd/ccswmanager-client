@@ -76,16 +76,6 @@ export class AuthService {
     return this.user.role == 'ADMIN';
   }
 
-  isGestor() : boolean {
-    if (this.user == null || this.user.role == null) return false;
-    return this.user.role == 'GESTOR' || this.user.role == 'ADMIN';
-  }
-
-  withPublicGroups() : boolean {
-    if (this.user == null || this.user.role == null) return false;
-    return this.user.withPublicGroups;
-  }
-
 
   isTokenValid() : boolean {
     let accessToken = this.getToken();

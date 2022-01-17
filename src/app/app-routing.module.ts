@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
+import { AuthGuard } from './core/services/auth.guard';
+import { UserResolverService } from './core/services/user-resolver.service';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main.component';
 
@@ -12,6 +14,8 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
+    resolve: {user: UserResolverService},
     children: [
       { path: 'main', component: MainComponent,},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
