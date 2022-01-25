@@ -17,4 +17,8 @@ export class MainService {
   findPersons() : Observable<PersonDto[]> {
     return this.http.get<PersonDto[]>(environment.server+ '/person/');
   }
+
+  saveOrUpdatePerson(person: PersonDto) : Observable<PersonDto> {
+    return this.http.post<PersonDto>(environment.server+ '/person/', person);
+  }
 }
