@@ -4,12 +4,19 @@
     </div>
 
     <div>
+        <button class="edit" (click)="changeMode()">{{buttonText}}</button>
+    </div>
+    <div>
         <ag-grid-angular
-            style="width: 800px; height: 300px;"
+            style="height: calc(100vh - 200px); width: 100%;"
             class="ag-theme-alpine"
             [columnDefs]="columnDefs"
             [rowData]="rowData"
             [defaultColDef]="defaultColDef"
+            [stopEditingWhenCellsLoseFocus] = true
+            [gridOptions] = "gridOptions"
+            (gridReady)="onGridReady($event)"
+            (cellEditingStopped)="onCellEditingStopped($event)"
         >
         </ag-grid-angular>
         

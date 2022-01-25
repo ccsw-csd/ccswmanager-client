@@ -1,7 +1,7 @@
 import { CenterDto } from "./CenterDto";
 
 export class PersonDto {
-    id: number|undefined;
+    id!: number;
     saga: String|undefined;
     username: String|undefined;
     name: String|undefined;
