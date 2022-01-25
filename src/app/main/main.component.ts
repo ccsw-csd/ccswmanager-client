@@ -71,6 +71,7 @@ export class MainComponent implements OnInit {
       floatingFilter: true,
       filterParams: {
         filterOptions: ["contains"],
+        newRowsAction: 'keep',
       },
       editable: this.isEditing.bind(this),
       singleClickEdit: true,
@@ -90,6 +91,21 @@ export class MainComponent implements OnInit {
 
   onGridReady = (params: { api: GridApi;}) => {
     this.api = params.api;
+
+    var filter = {
+
+      department: {
+        type: 'contains',
+        filter: 'CCSw'
+      },
+
+      active: {
+        type: 'contains',
+        filter: 'Activo'
+      }
+    };
+
+    this.api.setFilterModel(filter);
 }
 
   isEditing(): boolean {
