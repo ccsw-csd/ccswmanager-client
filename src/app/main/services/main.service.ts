@@ -23,4 +23,8 @@ export class MainService {
     return this.http.get<ScholarDto[]>(environment.server+ '/scholar/');
   }
   //
+
+  saveOrUpdatePerson(person: PersonDto) : Observable<PersonDto> {
+    return this.http.post<PersonDto>(environment.server+ '/person/', person);
+  }
 }
