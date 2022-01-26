@@ -20,12 +20,15 @@ import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
