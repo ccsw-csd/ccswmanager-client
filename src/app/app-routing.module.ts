@@ -5,6 +5,8 @@ import { AuthGuard } from './core/services/auth.guard';
 import { UserResolverService } from './core/services/user-resolver.service';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main.component';
+import { ScholarComponent } from './scholar/scholar.component';
+
 
 const routes: Routes = [
   {
@@ -18,6 +20,7 @@ const routes: Routes = [
     resolve: {user: UserResolverService},
     children: [
       { path: 'main', component: MainComponent,},
+      { path: 'scholar', component: ScholarComponent,},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
     ]
   },  
