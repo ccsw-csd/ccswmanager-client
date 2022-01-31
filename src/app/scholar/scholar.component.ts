@@ -1,3 +1,4 @@
+import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { Component, OnInit} from '@angular/core';
 import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { ScholarDto } from 'src/app/core/to/ScholarDto';
@@ -42,12 +43,51 @@ export class ScholarComponent implements OnInit {
 
   rowDataScholar : ScholarDto[] = [];
 
-  constructor( private scholarService: ScholarService ) { }
+  defaultColDef : ColDef;
+
+  gridOptions: GridOptions;
+
+  api: GridApi = new GridApi;
+
+  constructor( private scholarService: ScholarService ) 
+  { 
+    this.defaultColDef = {
+      sortable: true,
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+      filterParams: {
+        filterOptions: ["contains"],
+        newRowsAction: 'keep',
+      },
+
+    };
+
+    this.gridOptions = {
+      getRowNodeId: (data) => data.id,
+    };
+
+  }
 
   ngOnInit(): void {
     this.scholarService.findScholars().subscribe( (res) => {
       this.rowDataScholar = res;
     }); 
+  }
+
+  onGridReady = (params: { api: GridApi;}) => {
+    this.api = params.api;
+
+    var filter = {
+
+      active: {
+        type: 'contains',
+        filter: 'Activo'
+      }
+    };
+    
+    this.api.setFilterModel(filter);
+
+    
   }
 
 }
