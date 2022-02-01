@@ -1,7 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
 import { MainService } from './services/main.service';
+import { AutocompleteSelectCellEditor } from "ag-grid-autocomplete-editor";
+import 'ag-grid-autocomplete-editor/dist/main.css';
 
 @Component({
   selector: 'app-main',
@@ -20,50 +22,82 @@ export class MainComponent implements OnInit {
 
   api: GridApi = new GridApi;
 
-  columnDefs: ColDef[] = [
-    { field: 'saga', headerName: 'Saga'}, 
-    { field: 'username', headerName: 'Nombre de usuario' },
-    { field: 'department', headerName: 'Departamento'}, 
-    { field: 'name', headerName: 'Nombre'}, 
-    { field: 'lastname', headerName: 'Apellidos'}, 
-    { field: 'customer', headerName: 'Cliente'},
-    { field: 'grade', headerName: 'Grado'},
-    { field: 'role', headerName: 'Rol'},
-    { field: 'businesscode', headerName: 'Práctica'},
-    { field: 'center.name', headerName: 'Geografía'},
-    { field: 'hours', headerName: 'Horas Jornada'},
-    { field: 'details', headerName: 'Detalle'},
-    { field: 'active', headerName: 'Estado', 
-    valueGetter: function (params) {
-      if (params.data.active == 1) {
-          return 'Activo';
-      } else if (params.data.active == 0) {
-          return 'Baja';
-      } else {
-          return 'Pendiente';
-      }}, 
-      valueSetter: params => {
-        var newValue = params.newValue;
-        if(newValue == "Activo") {
-          params.data.active = 1;
-        }
-        else if (newValue == "Baja") {
-          params.data.active = 0;
-        }
-        else {
-          params.data.active = 2;
-        }
-        return true;
-    }},
-  ];
+  centers: string[] = [];
 
+  columnDefs: ColDef[];
+  
   rowData : PersonDto[] = [];
+
+  departments: string[] = [];
 
   defaultColDef: ColDef;
 
   constructor(
     private mainService: MainService
-  ) { 
+  ) {
+    this.columnDefs = [
+      { field: 'saga', headerName: 'Saga'},
+      { field: 'username', headerName: 'Nombre de usuario' },
+      { field: 'department', headerName: 'Departamento',
+      cellEditor: AutocompleteSelectCellEditor,
+      cellEditorParams: {
+        selectData: [
+           { label: 'CCSw', value: 'CCSw'},
+           { label: 'CSD', value: 'CSD'}
+       ],
+        placeholder: 'Select an option',
+      },
+   editable: true,}, 
+      { field: 'name', headerName: 'Nombre'},
+      { field: 'lastname', headerName: 'Apellidos'},
+      { field: 'customer', headerName: 'Cliente'},
+      { field: 'grade', headerName: 'Grado'},
+      { field: 'role', headerName: 'Rol'},
+      { field: 'businesscode', headerName: 'Práctica'},
+      { field: 'center', headerName: 'Geografía',
+      cellEditor: 'agSelectCellEditor',
+      valueGetter: function (params) {
+        return params.data.center.name;
+        },
+        valueSetter: params => {
+          var newValue = params.newValue;
+          var id = this.centers.indexOf(newValue);
+          params.data.center.id = id;
+          params.data.center.name = newValue;
+          return true;
+        }
+      },
+
+      { field: 'hours', headerName: 'Horas Jornada'},
+      { field: 'details', headerName: 'Detalle'},
+      { field: 'active', headerName: 'Estado', 
+      valueGetter: function (params) {
+        if (params.data.active == 1) {
+            return 'Activo';
+        } else if (params.data.active == 0) {
+            return 'Baja';
+        } else {
+            return 'Pendiente';
+        }}, 
+        valueSetter: params => {
+          var newValue = params.newValue;
+          if(newValue == "Activo") {
+            params.data.active = 1;
+          }
+          else if (newValue == "Baja") {
+            params.data.active = 0;
+          }
+          else {
+            params.data.active = 2;
+          }
+          return true;
+      },
+      cellEditor: 'agSelectCellEditor',
+              cellEditorParams: {
+                  values: ['Activo', 'Baja', 'Pendiente'],
+              },
+      }];
+  
     
     this.defaultColDef = {
       sortable: true,
@@ -85,9 +119,35 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.mainService.findPersons().subscribe( (res) => {
+      var departments: any[] = [];
       this.rowData = res;
+      res.forEach(person => {
+
+        if(person.department != undefined) 
+        {
+          if(!departments.includes({label: person.department, value:person.department})) 
+          {
+            departments.push({label: person.department, value:person.department});
+          } 
+        }
+
+        var columnDep = this.api.getColumnDef('department');
+        if (columnDep != null) {
+          //columnDep.cellEditorParams = { selectData: departments, autocomplete: {strict: false, autoselectfirst: false}};
+      }});
     });
-  }
+
+    this.mainService.findCenters().subscribe((res) => {
+      res.forEach(center => {
+        if(center.id != undefined && center.name) {
+        this.centers[center.id] = center.name;}
+        
+      });
+      var column = this.api.getColumnDef('center');
+      if (column != null) {
+        column.cellEditorParams = { values: this.centers}
+    }});
+}
 
   onGridReady = (params: { api: GridApi;}) => {
     this.api = params.api;

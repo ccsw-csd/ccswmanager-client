@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@ag-grid-community/core": "^26.2.1",
     "@angular/animations": "~11.0.5",
     "@angular/cdk": "^11.2.2",
     "@angular/common": "~11.0.5",
@@ -23,6 +24,7 @@
     "@angular/router": "~11.0.5",
     "@auth0/angular-jwt": "^5.0.2",
     "ag-grid-angular": "^26.2.0",
+    "ag-grid-autocomplete-editor": "^3.0.1",
     "ag-grid-community": "^26.2.1",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
