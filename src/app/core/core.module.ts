@@ -24,11 +24,12 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, NavComponent],
+  declarations: [LayoutComponent, HeaderComponent, NavComponent, DialogComponent],
   imports: [
     CommonModule,
     MatSnackBarModule,

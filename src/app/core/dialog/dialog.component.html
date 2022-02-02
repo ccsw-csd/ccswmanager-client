@@ -1,0 +1,9 @@
+<div class="column-container" style="height: 100%">
+
+    <h1>{{data.title}}</h1>
+    <p [innerHTML]="data.description"></p>
+    <div class="button-container float-left">
+        <button secondary mat-button (click)="no()">No</button>&nbsp;&nbsp;
+        <button primary mat-button (click)="yes()">Sí</button>
+    </div>
+</div>

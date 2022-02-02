@@ -2,8 +2,8 @@ import { Component, OnInit} from '@angular/core';
 import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
 import { MainService } from './services/main.service';
-import { AutocompleteSelectCellEditor } from "ag-grid-autocomplete-editor";
-import 'ag-grid-autocomplete-editor/dist/main.css';
+import { DialogComponent } from '../core/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main',
@@ -11,8 +11,6 @@ import 'ag-grid-autocomplete-editor/dist/main.css';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-
-  buttonText: string = "Editar";
 
   editar = false;
 
@@ -27,34 +25,24 @@ export class MainComponent implements OnInit {
   columnDefs: ColDef[];
   
   rowData : PersonDto[] = [];
-
-  departments: string[] = [];
-
+  
   defaultColDef: ColDef;
 
   constructor(
-    private mainService: MainService
+    private mainService: MainService,
+    public dialog: MatDialog,
   ) {
     this.columnDefs = [
-      { field: 'saga', headerName: 'Saga'},
-      { field: 'username', headerName: 'Nombre de usuario' },
-      { field: 'department', headerName: 'Departamento',
-      cellEditor: AutocompleteSelectCellEditor,
-      cellEditorParams: {
-        selectData: [
-           { label: 'CCSw', value: 'CCSw'},
-           { label: 'CSD', value: 'CSD'}
-       ],
-        placeholder: 'Select an option',
-      },
-   editable: true,}, 
+      { field: 'saga', headerName: 'Saga', width: 114},
+      { field: 'username', headerName: 'Nombre de usuario', width: 186},
+      { field: 'department', headerName: 'Departamento', width: 164}, 
       { field: 'name', headerName: 'Nombre'},
       { field: 'lastname', headerName: 'Apellidos'},
       { field: 'customer', headerName: 'Cliente'},
-      { field: 'grade', headerName: 'Grado'},
+      { field: 'grade', headerName: 'Grado', width: 112},
       { field: 'role', headerName: 'Rol'},
-      { field: 'businesscode', headerName: 'Práctica'},
-      { field: 'center', headerName: 'Geografía',
+      { field: 'businesscode', headerName: 'Práctica', width:130},
+      { field: 'center', headerName: 'Geografía', width: 130,
       cellEditor: 'agSelectCellEditor',
       valueGetter: function (params) {
         return params.data.center.name;
@@ -68,9 +56,9 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'hours', headerName: 'Horas Jornada'},
+      { field: 'hours', headerName: 'Horas Jornada', width: 162},
       { field: 'details', headerName: 'Detalle'},
-      { field: 'active', headerName: 'Estado', 
+      { field: 'active', headerName: 'Estado', width: 170,
       valueGetter: function (params) {
         if (params.data.active == 1) {
             return 'Activo';
@@ -118,24 +106,8 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mainService.findPersons().subscribe( (res) => {
-      var departments: any[] = [];
-      this.rowData = res;
-      res.forEach(person => {
-
-        if(person.department != undefined) 
-        {
-          if(!departments.includes({label: person.department, value:person.department})) 
-          {
-            departments.push({label: person.department, value:person.department});
-          } 
-        }
-
-        var columnDep = this.api.getColumnDef('department');
-        if (columnDep != null) {
-          //columnDep.cellEditorParams = { selectData: departments, autocomplete: {strict: false, autoselectfirst: false}};
-      }});
-    });
+    
+    this.getPersons();
 
     this.mainService.findCenters().subscribe((res) => {
       res.forEach(center => {
@@ -174,15 +146,27 @@ export class MainComponent implements OnInit {
 
   changeMode(): void {
 
-    if(this.buttonText == "Editar") {
-      this.buttonText = "Guardar y Finalizar";
+    if(this.editar == false) {
       this.editar = true;
     }
     else {
-      this.buttonText = "Editar";
       this.editar = false;
       this.save();
     }
+  }
+
+  undoChanges(): void {
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { title: "Atención", description: "Vas a deshacer los cambios que hayas podido hacer en el listado y que no se hayan guardado.<br/>¿Estás seguro que deseas deshacer los cambios?"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.editar = false;
+        this.getPersons();
+      }
+    });
   }
 
   onCellEditingStopped(e: any) {
@@ -203,5 +187,11 @@ export class MainComponent implements OnInit {
 
     this.api?.onFilterChanged();
     this.saveRows = [];
+  }
+
+  getPersons() {
+    this.mainService.findPersons().subscribe( (res) => {
+      this.rowData = res;
+    });
   }
   }

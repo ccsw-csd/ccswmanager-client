@@ -4,11 +4,15 @@
     </div>
 
     <div>
-        <button class="edit" (click)="changeMode()">{{buttonText}}</button>
+        <button *ngIf="!editar" secondary class="edit" (click)="changeMode()">Editar</button>
+        <div *ngIf="editar" class="closeEdit">
+            <button  secondary (click)="undoChanges()" style="margin-right: 10px;">Deshacer cambios</button>
+            <button  primary (click)="changeMode()">Guardar y Finalizar</button>
+        </div>
     </div>
     <div>
         <ag-grid-angular
-            style="height: calc(100vh - 200px); width: 100%;"
+            style="height: calc(100vh - 250px); width: 100%;"
             class="ag-theme-alpine"
             [columnDefs]="columnDefs"
             [rowData]="rowData"
