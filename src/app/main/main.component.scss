@@ -6,4 +6,21 @@
     display:block;
     margin-bottom: 20px;
     padding: 5px;
+    width: 150px;
+}
+
+.closeEdit {
+
+    margin-right: 0;
+    margin-left:auto;
+    display:block;
+    width: 310px;
+
+    button {
+        width: 150px;
+        margin-bottom: 20px;
+        padding: 5px;
+        margin-right: 0px;
+    }
+
 }
