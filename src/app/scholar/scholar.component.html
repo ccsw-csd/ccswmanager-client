@@ -3,6 +3,11 @@
         <h1>Gestión becarios</h1>
     </div>
 
+    
+    <div>
+        <button class="edit" (click)="changeMode()">{{buttonText}}</button>
+    </div>
+
     <div>
         <ag-grid-angular
         style="height: calc(100vh - 200px); width: 100%;"
@@ -12,7 +17,8 @@
         [defaultColDef]="defaultColDef"
         [gridOptions] = "gridOptions"
         (gridReady)="onGridReady($event)"
-
+        [stopEditingWhenCellsLoseFocus] = true
+        (cellEditingStopped)="onCellEditingStopped($event)"
         >    
         </ag-grid-angular>
         
