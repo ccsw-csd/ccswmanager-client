@@ -16,5 +16,8 @@ export class ScholarService {
   findScholars() : Observable<ScholarDto[]> {
     return this.http.get<ScholarDto[]>(environment.server+ '/scholar/');
   }
-
+  
+  saveOrUpdateScholar(scholar: ScholarDto) : Observable<ScholarDto> {
+    return this.http.post<ScholarDto>(environment.server+ '/scholar/', scholar);
+  }
 }
