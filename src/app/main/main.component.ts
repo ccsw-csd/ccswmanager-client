@@ -1,9 +1,13 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, Inject, OnInit} from '@angular/core';
 import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
 import { MainService } from './services/main.service';
 import { DialogComponent } from '../core/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
+import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
+import { iif } from 'rxjs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-main',
@@ -28,9 +32,15 @@ export class MainComponent implements OnInit {
   
   defaultColDef: ColDef;
 
+  searchPersonsCtrl = new FormControl();
+  isLoading = false;
+  persons: any[] = [];
+  errorMsg: string | undefined;
+
   constructor(
     private mainService: MainService,
     public dialog: MatDialog,
+    @Inject (MatAutocompleteModule) public auto: string
   ) {
     this.columnDefs = [
       { field: 'saga', headerName: 'Saga', width: 114},
@@ -119,6 +129,29 @@ export class MainComponent implements OnInit {
       if (column != null) {
         column.cellEditorParams = { values: this.centers}
     }});
+
+    this.searchPersonsCtrl.valueChanges
+    .pipe(
+      debounceTime(100),
+      tap(() => {
+        this.errorMsg = '';
+        this.persons = [];
+        this.isLoading = true;
+
+
+      }),
+      switchMap(value =>
+        iif(() => value.length > 2,
+        this.mainService.findPersonsByFilter(value))
+        .pipe(
+          finalize(() => { this.isLoading = false; }),
+        )
+      )
+    )
+    .subscribe((data: any) => {
+      this.persons = this.persons.concat(data);
+    }
+  );
 }
 
   onGridReady = (params: { api: GridApi;}) => {
@@ -151,6 +184,7 @@ export class MainComponent implements OnInit {
     }
     else {
       this.editar = false;
+      this.searchPersonsCtrl.setValue("");
       this.save();
     }
   }
@@ -164,6 +198,7 @@ export class MainComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.editar = false;
+        this.searchPersonsCtrl.setValue("");
         this.getPersons();
       }
     });
@@ -178,9 +213,10 @@ export class MainComponent implements OnInit {
 
   save() {
     this.api.forEachNode(node => {
-      if(this.saveRows.includes(node.data.id)) {
+      if(this.saveRows.includes(node.data.id) || node.data.id == null) {
         this.mainService.saveOrUpdatePerson(node.data).subscribe(data => {
           node.updateData(data);
+          this.getPersons();
         });
       }
     });
@@ -193,5 +229,21 @@ export class MainComponent implements OnInit {
     this.mainService.findPersons().subscribe( (res) => {
       this.rowData = res;
     });
+  }
+
+  addPersonToData(person: PersonDto) {
+    if(person.hours == null) {
+      person.hours = 8;
+    }
+    if(person.active == null) {
+      person.active = 1;
+    }
+    if(person.department == null) {
+      person.department = 'CCSw';
+    }
+    if(person.center == null) {
+      person.center = {id:6, name: 'Valencia'};
+    }
+    this.rowData = this.rowData.concat([person]);
   }
   }

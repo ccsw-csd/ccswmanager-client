@@ -26,4 +26,8 @@ export class MainService {
   findCenters(): Observable<CenterDto[]> {
     return this.http.get<CenterDto[]>(environment.server + '/center/');
   }
+
+  findPersonsByFilter(filter: String): Observable<PersonDto[]> {
+    return this.http.get<PersonDto[]>(environment.server + '/person/' + filter);
+  }
 }
