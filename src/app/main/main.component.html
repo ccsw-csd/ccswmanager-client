@@ -5,9 +5,22 @@
 
     <div>
         <button *ngIf="!editar" secondary class="edit" (click)="changeMode()">Editar</button>
-        <div *ngIf="editar" class="closeEdit">
-            <button  secondary (click)="undoChanges()" style="margin-right: 10px;">Deshacer cambios</button>
-            <button  primary (click)="changeMode()">Guardar y Finalizar</button>
+        <div *ngIf="editar" style="display: flex;">
+                <mat-form-field class="input-form">
+                    <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">
+                    <mat-autocomplete #autocompletePersons="matAutocomplete">
+                    <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                    <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let person of persons" [value]="person.username" (click)="addPersonToData(person)">
+                        <span>{{person.name}} {{person.lastname}} <i *ngIf="person.username != null"><b>( {{person.username}} )</b></i></span>
+                        </mat-option>
+                    </ng-container>
+                    </mat-autocomplete>
+                </mat-form-field>
+            <div class="closeEdit">
+                <button  secondary (click)="undoChanges()" style="margin-right: 10px;">Deshacer cambios</button>
+                <button  primary (click)="changeMode()">Guardar y Finalizar</button>
+            </div>
         </div>
     </div>
     <div>

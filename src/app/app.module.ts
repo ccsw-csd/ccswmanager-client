@@ -14,6 +14,7 @@ import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import {MatRadioModule} from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -46,7 +47,8 @@ import { ScholarComponent } from './scholar/scholar.component';
     MatSlideToggleModule,
     CoreModule,
     LoginModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([]),
+    MatAutocompleteModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent]
