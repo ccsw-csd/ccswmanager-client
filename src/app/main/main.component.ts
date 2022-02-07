@@ -44,14 +44,15 @@ export class MainComponent implements OnInit {
   ) {
     this.columnDefs = [
       { field: 'saga', headerName: 'Saga', width: 114},
-      { field: 'username', headerName: 'Nombre de usuario', width: 186},
-      { field: 'department', headerName: 'Departamento', width: 164}, 
+      { field: 'username', headerName: 'Username', width: 135},
       { field: 'name', headerName: 'Nombre'},
       { field: 'lastname', headerName: 'Apellidos'},
       { field: 'customer', headerName: 'Cliente'},
       { field: 'grade', headerName: 'Grado', width: 112},
       { field: 'role', headerName: 'Rol'},
+      { field: 'hours', headerName: 'Horas', width: 110},
       { field: 'businesscode', headerName: 'Práctica', width:130},
+      { field: 'department', headerName: 'Departamento', width: 164}, 
       { field: 'center', headerName: 'Geografía', width: 130,
       cellEditor: 'agSelectCellEditor',
       valueGetter: function (params) {
@@ -65,10 +66,7 @@ export class MainComponent implements OnInit {
           return true;
         }
       },
-
-      { field: 'hours', headerName: 'Horas Jornada', width: 162},
-      { field: 'details', headerName: 'Detalle'},
-      { field: 'active', headerName: 'Estado', width: 170,
+      { field: 'active', headerName: 'Estado', width: 120,
       valueGetter: function (params) {
         if (params.data.active == 1) {
             return 'Activo';
@@ -94,7 +92,8 @@ export class MainComponent implements OnInit {
               cellEditorParams: {
                   values: ['Activo', 'Baja', 'Pendiente'],
               },
-      }];
+      },
+      { field: 'details', headerName: 'Detalle'},];
   
     
     this.defaultColDef = {
