@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { iif } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-main',
@@ -42,22 +43,112 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     @Inject (MatAutocompleteModule) public auto: string
   ) {
+    
     this.columnDefs = [
-      { field: 'saga', headerName: 'Saga', width: 114},
-      { field: 'username', headerName: 'Username', width: 135},
-      { field: 'name', headerName: 'Nombre'},
-      { field: 'lastname', headerName: 'Apellidos'},
-      { field: 'customer', headerName: 'Cliente'},
-      { field: 'grade', headerName: 'Grado', width: 112},
-      { field: 'role', headerName: 'Rol'},
-      { field: 'hours', headerName: 'Horas', width: 110},
-      { field: 'businesscode', headerName: 'Práctica', width:130},
-      { field: 'department', headerName: 'Departamento', width: 164}, 
+      { field: 'saga', headerName: 'Saga', width: 114,
+        cellStyle: params => {
+          if(params.value?.length > 25) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'username', headerName: 'Username', width: 135,
+        cellStyle: params => {
+          if(params.value?.length > 25) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'name', headerName: 'Nombre', 
+        cellStyle: params => {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'gray'};
+          }
+          else if(params.value.length > 50) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'lastname', headerName: 'Apellidos', 
+        cellStyle: params => {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'gray'};
+          }
+          else if(params.value.length > 100) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'customer', headerName: 'Cliente',
+        cellStyle: params => {
+          if(params.value?.length > 100) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'grade', headerName: 'Grado', width: 112,
+        cellStyle: params => {
+          if(params.value?.length > 5) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'role', headerName: 'Rol', 
+        cellStyle: params => {
+          if(params.value?.length > 50) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'hours', headerName: 'Horas', width: 110,
+        cellStyle: params => {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'gray'};
+          }
+          else if(params.value.length > 10) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'businesscode', headerName: 'Práctica', width:130,
+        cellStyle: params => {
+          if(params.value?.length > 50) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
+      { field: 'department', headerName: 'Departamento', width: 164,
+        cellStyle: params => {
+          if(params.value?.length > 10) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      },
+
       { field: 'center', headerName: 'Geografía', width: 130,
-      cellEditor: 'agSelectCellEditor',
-      valueGetter: function (params) {
-        return params.data.center.name;
-        },
+        cellEditor: 'agSelectCellEditor',
+        valueGetter: function (params) {
+          return params.data.center.name;
+          },
         valueSetter: params => {
           var newValue = params.newValue;
           var id = this.centers.indexOf(newValue);
@@ -66,15 +157,16 @@ export class MainComponent implements OnInit {
           return true;
         }
       },
+
       { field: 'active', headerName: 'Estado', width: 120,
-      valueGetter: function (params) {
-        if (params.data.active == 1) {
-            return 'Activo';
-        } else if (params.data.active == 0) {
-            return 'Baja';
-        } else {
-            return 'Pendiente';
-        }}, 
+        valueGetter: function (params) {
+          if (params.data.active == 1) {
+              return 'Activo';
+          } else if (params.data.active == 0) {
+              return 'Baja';
+          } else {
+              return 'Pendiente';
+          }}, 
         valueSetter: params => {
           var newValue = params.newValue;
           if(newValue == "Activo") {
@@ -87,13 +179,21 @@ export class MainComponent implements OnInit {
             params.data.active = 2;
           }
           return true;
+        },
+        cellEditor: 'agSelectCellEditor',
+                cellEditorParams: {
+                    values: ['Activo', 'Baja', 'Pendiente'],
+                },
       },
-      cellEditor: 'agSelectCellEditor',
-              cellEditorParams: {
-                  values: ['Activo', 'Baja', 'Pendiente'],
-              },
-      },
-      { field: 'details', headerName: 'Detalle'},];
+
+      { field: 'details', headerName: 'Detalle',
+        cellStyle: params => {
+          if(params.value?.length > 200) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'}; 
+        }
+      }];
   
     
     this.defaultColDef = {
@@ -182,9 +282,16 @@ export class MainComponent implements OnInit {
       this.editar = true;
     }
     else {
-      this.editar = false;
-      this.searchPersonsCtrl.setValue("");
-      this.save();
+      if(this.validations()) {
+        this.searchPersonsCtrl.setValue("");
+        this.editar = false;
+        this.save();
+      }
+      else {
+        this.dialog.open(AlertDialogComponent, {
+          data: { titulo: "Error", informacion: "No se pueden guardar los cambios, revisa los errores. <br /> Gris: Campo obligatorio <br /> Rojo: Dato demasiado largo "}
+        });
+      }
     }
   }
 
@@ -197,6 +304,7 @@ export class MainComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.editar = false;
+        this.saveRows = [];
         this.searchPersonsCtrl.setValue("");
         this.getPersons();
       }
@@ -208,7 +316,7 @@ export class MainComponent implements OnInit {
       if(!this.saveRows.includes(e.node.data.id))
         this.saveRows.push(e.node.data.id);
     }
-}
+  }
 
   save() {
     this.api.forEachNode(node => {
@@ -244,5 +352,29 @@ export class MainComponent implements OnInit {
       person.center = {id:6, name: 'Valencia'};
     }
     this.rowData = this.rowData.concat([person]);
+    this.searchPersonsCtrl.setValue("");
   }
+
+  validations(): boolean {
+    var correct = true;
+
+    this.api.forEachNode(node => {
+
+      if(this.saveRows.includes(node.data.id)) {
+        if(this.isEmpty(node.data.name) || this.isEmpty(node.data.lastname) || this.isEmpty(node.data.active) || this.isEmpty(node.data.hours) || this.isEmpty(node.data.center)) {
+          correct = false;
+        }
+        else if(node.data.name?.length > 50 || node.data.saga?.length > 25 || node.data.username?.length > 25 || node.data.department?.length > 10
+          || node.data.lastname?.length > 100 || node.data.customer?.length > 100 || node.data.grade?.length > 5 || node.data.role?.length > 50
+          || node.data.businesscode?.length > 50 || node.data.details?.length > 200) {
+          correct = false;
+        }
+      }
+    });
+
+    return correct;
   }
+  isEmpty(value: any) {
+    return value === undefined || value === null || value === '';
+  }
+}
