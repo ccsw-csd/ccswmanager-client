@@ -33,6 +33,8 @@ export class MainComponent implements OnInit {
   
   defaultColDef: ColDef;
 
+  grades: string[] = ["N/A", "A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "VP"];
+
   searchPersonsCtrl = new FormControl();
   isLoading = false;
   persons: any[] = [];
@@ -45,7 +47,7 @@ export class MainComponent implements OnInit {
   ) {
     
     this.columnDefs = [
-      { field: 'saga', headerName: 'Saga', width: 114,
+      { field: 'saga', headerName: 'Saga', width: 98,
         cellStyle: params => {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
@@ -54,7 +56,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'username', headerName: 'Username', width: 135,
+      { field: 'username', headerName: 'Username', width: 98,
         cellStyle: params => {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
@@ -63,10 +65,10 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'name', headerName: 'Nombre', 
+      { field: 'name', headerName: 'Nombre',
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'gray'};
+            return {borderColor: 'lightcoral'};
           }
           else if(params.value.length > 50) {
             return {borderColor: 'lightcoral'};
@@ -75,10 +77,10 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'lastname', headerName: 'Apellidos', 
+      { field: 'lastname', headerName: 'Apellidos',
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'gray'};
+            return {borderColor: 'lightcoral'};
           }
           else if(params.value.length > 100) {
             return {borderColor: 'lightcoral'};
@@ -96,28 +98,51 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'grade', headerName: 'Grado', width: 112,
+      { field: 'grade', headerName: 'Grado', width: 85,
         cellStyle: params => {
-          if(params.value?.length > 5) {
+          if(params.value?.length > 5 || !this.grades.includes(params.value)) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'}; 
+        },
+        valueGetter: function (params) {
+          if (params.data.grade == null || params.data.grade == "" || params.data.grade == undefined) {
+              return 'N/A';
+          }
+          else {
+            return params.data.grade;
+          }
+        },
+        valueSetter: params => {
+          var newValue = params.newValue;
+          if(newValue == "N/A") {
+            params.data.grade = "";
+          }
+          else {
+            params.data.grade = newValue;
+          }
+          return true;
         }
+
       },
 
-      { field: 'role', headerName: 'Rol', 
+      { field: 'role', headerName: 'Rol', width: 170, 
         cellStyle: params => {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'}; 
+        },
+        cellEditor: 'agSelectCellEditor',
+          cellEditorParams: {
+              values: ['Project Manager', 'Team Leader', 'Technical Lead', 'Analista', 'Developer', 'Tester'],
         }
       },
 
-      { field: 'hours', headerName: 'Horas', width: 110,
+      { field: 'hours', headerName: 'Horas', width: 80,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'gray'};
+            return {borderColor: 'lightcoral'};
           }
           else if(params.value.length > 10) {
             return {borderColor: 'lightcoral'};
@@ -126,7 +151,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'businesscode', headerName: 'Práctica', width:130,
+      { field: 'businesscode', headerName: 'Práctica', width:90,
         cellStyle: params => {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
@@ -135,7 +160,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'department', headerName: 'Departamento', width: 164,
+      { field: 'department', headerName: 'Departamento', width: 120,
         cellStyle: params => {
           if(params.value?.length > 10) {
             return {borderColor: 'lightcoral'};
@@ -144,7 +169,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'center', headerName: 'Geografía', width: 130,
+      { field: 'center', headerName: 'Geografía', width: 114,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           return params.data.center.name;
@@ -158,12 +183,12 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'active', headerName: 'Estado', width: 120,
+      { field: 'active', headerName: 'Estado', width: 98,
         valueGetter: function (params) {
           if (params.data.active == 1) {
               return 'Activo';
           } else if (params.data.active == 0) {
-              return 'Baja';
+              return 'Inactivo';
           } else {
               return 'Pendiente';
           }}, 
@@ -172,7 +197,7 @@ export class MainComponent implements OnInit {
           if(newValue == "Activo") {
             params.data.active = 1;
           }
-          else if (newValue == "Baja") {
+          else if (newValue == "Inactivo") {
             params.data.active = 0;
           }
           else {
@@ -182,17 +207,8 @@ export class MainComponent implements OnInit {
         },
         cellEditor: 'agSelectCellEditor',
                 cellEditorParams: {
-                    values: ['Activo', 'Baja', 'Pendiente'],
+                    values: ['Activo', 'Inactivo', 'Pendiente'],
                 },
-      },
-
-      { field: 'details', headerName: 'Detalle',
-        cellStyle: params => {
-          if(params.value?.length > 200) {
-            return {borderColor: 'lightcoral'};
-          }
-          return {borderColor: 'transparent'}; 
-        }
       }];
   
     
@@ -204,8 +220,10 @@ export class MainComponent implements OnInit {
         filterOptions: ["contains"],
         newRowsAction: 'keep',
       },
+      floatingFilterComponentParams: {suppressFilterButton:true},
+      suppressMenu:true,
       editable: this.isEditing.bind(this),
-      singleClickEdit: true,
+      singleClickEdit: true
     };
 
     this.gridOptions = {
@@ -289,7 +307,7 @@ export class MainComponent implements OnInit {
       }
       else {
         this.dialog.open(AlertDialogComponent, {
-          data: { titulo: "Error", informacion: "No se pueden guardar los cambios, revisa los errores. <br /> Gris: Campo obligatorio <br /> Rojo: Dato demasiado largo "}
+          data: { titulo: "Error", informacion: "Existen campos que tienen errores o bien no pueden ser vacíos o bien el texto es demasiado largo.<br />Por favor, revise los errores antes de guardar los datos."}
         });
       }
     }
@@ -367,6 +385,9 @@ export class MainComponent implements OnInit {
         else if(node.data.name?.length > 50 || node.data.saga?.length > 25 || node.data.username?.length > 25 || node.data.department?.length > 10
           || node.data.lastname?.length > 100 || node.data.customer?.length > 100 || node.data.grade?.length > 5 || node.data.role?.length > 50
           || node.data.businesscode?.length > 50 || node.data.details?.length > 200) {
+          correct = false;
+        }
+        else if (!this.grades.includes(node.data.grade) && !this.isEmpty(node.data.grade)) {
           correct = false;
         }
       }
