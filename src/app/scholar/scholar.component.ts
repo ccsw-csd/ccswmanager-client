@@ -94,7 +94,6 @@ export class ScholarComponent implements OnInit {
   ngOnInit(): void {
     this.scholarService.findScholars().subscribe( (res) => {
       this.rowDataScholar = res;
-      debugger;
     }); 
   }
 
