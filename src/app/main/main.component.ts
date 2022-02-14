@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit} from '@angular/core';
-import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
+import { ColDef, ColumnApi, GridApi, GridOptions} from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
 import { MainService } from './services/main.service';
 import { DialogComponent } from '../core/dialog/dialog.component';
@@ -9,6 +9,7 @@ import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { iif } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
   selector: 'app-main',
@@ -33,6 +34,12 @@ export class MainComponent implements OnInit {
   
   defaultColDef: ColDef;
 
+  personas: number = 0;
+
+  becarios: number = 0;
+
+  contratos: number = 0;
+
   grades: string[] = ["N/A", "A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "VP"];
 
   searchPersonsCtrl = new FormControl();
@@ -47,7 +54,7 @@ export class MainComponent implements OnInit {
   ) {
     
     this.columnDefs = [
-      { field: 'saga', headerName: 'Saga', width: 98,
+      { field: 'saga', headerName: 'Saga', maxWidth: 96, minWidth: 96,
         cellStyle: params => {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
@@ -56,7 +63,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'username', headerName: 'Username', width: 98,
+      { field: 'username', headerName: 'Username', maxWidth: 98, minWidth: 98,
         cellStyle: params => {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
@@ -65,7 +72,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'name', headerName: 'Nombre',
+      { field: 'name', headerName: 'Nombre', maxWidth: 200, minWidth: 150,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
@@ -77,7 +84,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'lastname', headerName: 'Apellidos',
+      { field: 'lastname', headerName: 'Apellidos', minWidth: 150,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
@@ -89,7 +96,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'customer', headerName: 'Cliente',
+      { field: 'customer', headerName: 'Cliente', maxWidth: 200, minWidth: 150,
         cellStyle: params => {
           if(params.value?.length > 100) {
             return {borderColor: 'lightcoral'};
@@ -98,7 +105,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'grade', headerName: 'Grado', width: 85,
+      { field: 'grade', headerName: 'Grado', maxWidth: 85, minWidth: 85,
         cellStyle: params => {
           if(params.value?.length > 5 || !this.grades.includes(params.value)) {
             return {borderColor: 'lightcoral'};
@@ -126,7 +133,7 @@ export class MainComponent implements OnInit {
 
       },
 
-      { field: 'role', headerName: 'Rol', width: 170, 
+      { field: 'role', headerName: 'Rol', maxWidth: 170, minWidth: 170,
         cellStyle: params => {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
@@ -139,7 +146,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'hours', headerName: 'Horas', width: 80,
+      { field: 'hours', headerName: 'Horas', maxWidth: 80, minWidth: 80,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
@@ -151,7 +158,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'businesscode', headerName: 'Práctica', width:90,
+      { field: 'businesscode', headerName: 'Práctica', maxWidth:90, minWidth:90,
         cellStyle: params => {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
@@ -160,7 +167,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'department', headerName: 'Departamento', width: 120,
+      { field: 'department', headerName: 'Departamento', maxWidth: 120, minWidth: 120,
         cellStyle: params => {
           if(params.value?.length > 10) {
             return {borderColor: 'lightcoral'};
@@ -169,7 +176,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'center', headerName: 'Geografía', width: 114,
+      { field: 'center', headerName: 'Geografía', maxWidth: 114, minWidth: 114,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           return params.data.center.name;
@@ -183,7 +190,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'active', headerName: 'Estado', width: 98,
+      { field: 'active', headerName: 'Estado', maxWidth: 98, minWidth: 98,
         valueGetter: function (params) {
           if (params.data.active == 1) {
               return 'Activo';
@@ -271,7 +278,7 @@ export class MainComponent implements OnInit {
   );
 }
 
-  onGridReady = (params: { api: GridApi;}) => {
+  onGridReady = (params: { api: GridApi; columnApi: ColumnApi}) => {
     this.api = params.api;
 
     var filter = {
@@ -288,6 +295,15 @@ export class MainComponent implements OnInit {
     };
 
     this.api.setFilterModel(filter);
+    this.api.sizeColumnsToFit();
+    let agGrid = document.getElementById('agGrid');
+    let obs = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.api.sizeColumnsToFit();
+      }
+    });
+    if(agGrid != null)
+      obs.observe(agGrid);
 }
 
   isEditing(): boolean {
@@ -353,6 +369,18 @@ export class MainComponent implements OnInit {
   getPersons() {
     this.mainService.findPersons().subscribe( (res) => {
       this.rowData = res;
+      this.becarios = 0;
+      this.contratos = 0;
+      this.personas = this.rowData.length;
+
+      this.rowData.forEach(person => {
+        if(this.isEmpty(person.grade)) {
+          this.becarios++;
+        }
+        else {
+          this.contratos++;
+        }
+      });
     });
   }
 
@@ -397,5 +425,9 @@ export class MainComponent implements OnInit {
   }
   isEmpty(value: any) {
     return value === undefined || value === null || value === '';
+  }
+
+  resizeGrid() {
+    this.api.sizeColumnsToFit();
   }
 }
