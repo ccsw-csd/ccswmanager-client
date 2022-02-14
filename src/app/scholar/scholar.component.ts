@@ -1,6 +1,7 @@
 import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { Component, OnInit} from '@angular/core';
 import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
+import * as moment from 'moment';
 import { ScholarDto } from 'src/app/core/to/ScholarDto';
 import { ScholarService } from './services/scholar.service';
 
@@ -15,6 +16,13 @@ export class ScholarComponent implements OnInit {
   editar = false;
   saveRows: number [] = [];
 
+  rowDataScholar : ScholarDto[] = [];
+
+  defaultColDef : ColDef;
+
+  gridOptions: GridOptions;
+
+  api: GridApi = new GridApi;
 
   columnDefSch: ColDef[] = [
     { field: 'username', headerName: 'Nombre de usuario', cellStyle: {'background-color': '#F8F8F8'}},
@@ -24,39 +32,47 @@ export class ScholarComponent implements OnInit {
     { field: 'hours', headerName: 'Horas Jornada', cellStyle: {'background-color': '#F8F8F8'}},
     { field: 'details', headerName: 'Detalle', cellStyle: {'background-color': '#F8F8F8'}},
     { field: 'start_date', headerName: 'Fecha inicio', editable: this.isEditing.bind(this),
-    singleClickEdit: true}, 
+      singleClickEdit: true,
+      valueFormatter : function(params) {
+        if(params.data.start_date != null)
+          return moment(params.data.start_date).format('MM/DD/YYYY');
+        else
+          return params.data.start_date;
+      }
+    }, 
     { field: 'end_date', headerName: 'Fecha fin', editable: this.isEditing.bind(this),
-    singleClickEdit: true}, 
+      singleClickEdit: true,
+      valueFormatter : function(params) {
+        if(params.data.start_date != null)
+          return moment(params.data.start_date).format('MM/DD/YYYY');
+        else
+          return params.data.start_date;
+      }
+    }, 
     { field: 'title', headerName: 'Titulación', editable: this.isEditing.bind(this),
-    singleClickEdit: true}, 
+      singleClickEdit: true}, 
     { field: 'action', headerName: 'Acción', editable: this.isEditing.bind(this),
-    singleClickEdit: true,
-    valueGetter: function (params) {
-      if (params.data.action == 1) {
-          return 'Contrato';
-      } else if (params.data.action == 0) {
-          return 'Out';
-      } else {
-          return 'Continuar';
-      }}},
+      singleClickEdit: true, 
+      valueGetter: function (params) {
+        if (params.data.action == 1) {
+            return 'Contrato';
+        } else if (params.data.action == 0) {
+            return 'Out';
+        } else {
+            return 'Continuar';
+        }
+      }},
     { field: 'active', headerName: 'Estado', 
-    valueGetter: function (params) {
-      if (params.data.active == 1) {
-          return 'Activo';
-      } else if (params.data.active == 0) {
-          return 'Baja';
-      } else {
-          return 'Pendiente';
-      }}},
+      valueGetter: function (params) {
+        if (params.data.active == 1) {
+            return 'Activo';
+        } else if (params.data.active == 0) {
+            return 'Baja';
+        } else {
+            return 'Pendiente';
+        }
+      }},
   ];
-
-  rowDataScholar : ScholarDto[] = [];
-
-  defaultColDef : ColDef;
-
-  gridOptions: GridOptions;
-
-  api: GridApi = new GridApi;
 
   constructor( private scholarService: ScholarService ) 
   { 
@@ -68,16 +84,11 @@ export class ScholarComponent implements OnInit {
         filterOptions: ["contains"],
         newRowsAction: 'keep',
       },
-
-
     };
-
-    
 
     this.gridOptions = {
       getRowNodeId: (data) => data.id,
     };
-
   }
 
   ngOnInit(): void {
@@ -98,8 +109,6 @@ export class ScholarComponent implements OnInit {
     };
     
     this.api.setFilterModel(filter);
-
-    
   }
 
   isEditing(): boolean {
