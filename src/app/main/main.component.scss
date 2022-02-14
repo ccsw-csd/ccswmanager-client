@@ -28,3 +28,21 @@
 .input-form {
     width: 360px;
 }
+
+.chip {
+    display:flex;
+    
+
+    mat-chip {
+        background-color: #f5f5f5;
+        margin-top:10px;
+        width: 150px;
+        height: 35px;
+    }
+
+    mat-icon {
+        margin-right: 10px;
+        margin-left: 5px;
+        color: #12abdb;
+    }
+}

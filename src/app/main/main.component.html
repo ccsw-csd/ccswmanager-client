@@ -4,7 +4,17 @@
     </div>
 
     <div>
-        <button *ngIf="!editar" secondary class="edit" (click)="changeMode()">Editar</button>
+        <div *ngIf="!editar" class="chip">
+            <mat-chip-list>
+                <mat-chip><mat-icon>people</mat-icon>{{personas}} Personas</mat-chip>
+                <mat-chip><mat-icon>business_center</mat-icon>{{contratos}} Contratos</mat-chip>
+                <mat-chip><mat-icon>book</mat-icon>{{becarios}} Becarios</mat-chip>
+              </mat-chip-list>
+
+              <button secondary class="edit" (click)="changeMode()">Editar</button>
+        </div>
+
+        
         <div *ngIf="editar" style="display: flex;">
                 <mat-form-field class="input-form">
                     <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">
@@ -23,8 +33,8 @@
             </div>
         </div>
     </div>
-    <div>
-        <ag-grid-angular
+    <div (window:resize)="resizeGrid()">
+        <ag-grid-angular id="agGrid"
             style="height: calc(100vh - 250px); width: 100%;"
             class="ag-theme-alpine"
             [columnDefs]="columnDefs"
