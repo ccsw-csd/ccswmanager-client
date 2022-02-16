@@ -3,34 +3,36 @@
         <h1>Gestión personal</h1>
     </div>
 
-    <div>
-        <div *ngIf="!editar" class="chip">
+    <div *ngIf="!editar" style="display: flex;">
+        <div class="chip">
             <mat-chip-list>
                 <mat-chip><mat-icon>people</mat-icon>{{personas}} Personas</mat-chip>
                 <mat-chip><mat-icon>business_center</mat-icon>{{contratos}} Contratos</mat-chip>
                 <mat-chip><mat-icon>book</mat-icon>{{becarios}} Becarios</mat-chip>
-              </mat-chip-list>
-
-              <button secondary class="edit" (click)="changeMode()">Editar</button>
+            </mat-chip-list>
         </div>
 
+        <div class="edit">
+            <button *ngIf="!ldap" class="warn" style="margin-right: 10px;">Sincronizar LDAP</button>
+            <button secondary (click)="changeMode()">Editar</button>
+        </div>
+    </div>
         
-        <div *ngIf="editar" style="display: flex;">
-                <mat-form-field class="input-form">
-                    <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">
-                    <mat-autocomplete #autocompletePersons="matAutocomplete">
-                    <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
-                    <ng-container *ngIf="!isLoading">
-                        <mat-option *ngFor="let person of persons" [value]="person.username" (click)="addPersonToData(person)">
-                        <span>{{person.name}} {{person.lastname}} <i *ngIf="person.username != null"><b>( {{person.username}} )</b></i></span>
-                        </mat-option>
-                    </ng-container>
-                    </mat-autocomplete>
-                </mat-form-field>
-            <div class="closeEdit">
-                <button  secondary (click)="undoChanges()" style="margin-right: 10px;">Deshacer cambios</button>
-                <button  primary (click)="changeMode()">Guardar y Finalizar</button>
-            </div>
+    <div *ngIf="editar" style="display: flex;">
+        <mat-form-field class="input-form">
+            <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">
+            <mat-autocomplete #autocompletePersons="matAutocomplete">
+            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+            <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let person of persons" [value]="person.username" (click)="addPersonToData(person)">
+                <span>{{person.name}} {{person.lastname}} <i *ngIf="person.username != null"><b>( {{person.username}} )</b></i></span>
+                </mat-option>
+            </ng-container>
+            </mat-autocomplete>
+        </mat-form-field>
+        <div class="closeEdit">
+            <button  secondary (click)="undoChanges()" style="margin-right: 10px;">Deshacer cambios</button>
+            <button  primary (click)="changeMode()">Guardar y Finalizar</button>
         </div>
     </div>
     <div (window:resize)="resizeGrid()">
@@ -46,7 +48,6 @@
             (cellEditingStopped)="onCellEditingStopped($event)"
         >
         </ag-grid-angular>
-        
     </div>
 </div>
 

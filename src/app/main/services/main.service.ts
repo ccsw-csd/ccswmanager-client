@@ -19,8 +19,8 @@ export class MainService {
     return this.http.get<PersonDto[]>(environment.server+ '/person/');
   }
 
-  saveOrUpdatePerson(person: PersonDto) : Observable<PersonDto> {
-    return this.http.post<PersonDto>(environment.server+ '/person/', person);
+  saveOrUpdatePersons(persons: PersonDto[]) : Observable<PersonDto[]> {
+    return this.http.post<PersonDto[]>(environment.server+ '/person/', persons);
   }
 
   findCenters(): Observable<CenterDto[]> {
@@ -29,5 +29,9 @@ export class MainService {
 
   findPersonsByFilter(filter: String): Observable<PersonDto[]> {
     return this.http.get<PersonDto[]>(environment.server + '/person/' + filter);
+  }
+
+  checkLDAP(): Observable<boolean>  {
+    return this.http.get<boolean>(environment.server + '/ldap/');
   }
 }
