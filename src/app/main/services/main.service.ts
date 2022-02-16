@@ -32,6 +32,6 @@ export class MainService {
   }
 
   checkLDAP(): Observable<boolean>  {
-    return this.http.get<boolean>(environment.server + '/person/ldap');
+    return this.http.get<boolean>(environment.server + '/ldap/');
   }
 }
