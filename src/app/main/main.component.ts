@@ -10,6 +10,7 @@ import { iif } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
+import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
 
 @Component({
   selector: 'app-main',
@@ -447,5 +448,11 @@ export class MainComponent implements OnInit {
 
   resizeGrid() {
     this.api.sizeColumnsToFit();
+  }
+
+  openLDAP() {
+    const dialogRef = this.dialog.open(LdapDialogComponent, {
+      data: {}
+    });
   }
 }

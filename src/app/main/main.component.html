@@ -13,7 +13,7 @@
         </div>
 
         <div class="edit">
-            <button *ngIf="!ldap" class="warn" style="margin-right: 10px;">Sincronizar LDAP</button>
+            <button *ngIf="!ldap" class="warn" style="margin-right: 10px;" (click)="openLDAP()">Sincronizar LDAP</button>
             <button secondary (click)="changeMode()">Editar</button>
         </div>
     </div>
