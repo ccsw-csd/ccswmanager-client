@@ -34,4 +34,12 @@ export class MainService {
   checkLDAP(): Observable<boolean>  {
     return this.http.get<boolean>(environment.server + '/ldap/');
   }
+
+  compareLdapToPersons(): Observable<String[][]> {
+    return this.http.get<String[][]>(environment.server + '/ldap/ldap');
+  }
+
+  comparePersonsToLdap(): Observable<String[][]> {
+    return this.http.get<String[][]>(environment.server + '/ldap/persons');
+  }
 }
