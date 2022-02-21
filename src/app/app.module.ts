@@ -25,15 +25,11 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 
 
-
-import { MatDatePickerComponent } from './scholar/mat-date-picker-component';
-
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     ScholarComponent,
-    MatDatePickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +53,6 @@ import { MatDatePickerComponent } from './scholar/mat-date-picker-component';
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],
-  entryComponents: [MatDatePickerComponent],
 })
 export class AppModule {
 

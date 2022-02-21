@@ -1,15 +1,16 @@
+import { PersonDto } from "./PersonDto";
 
 export class ScholarDto {
     id!: number;
-    person_id: String|undefined;
+    person: PersonDto|undefined;
     username: String|undefined;
     name: String|undefined;
     lastname: String|undefined;
     customer: String|undefined;
     hours: number|undefined;
     details: string|undefined;
-    start_date: Date|undefined;
-    end_date: Date|undefined;
+    startDate: Date|undefined;
+    endDate: Date|undefined;
     title: String|undefined;  
     action: String|undefined; 
     active: number|undefined;
