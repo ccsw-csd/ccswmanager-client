@@ -8,9 +8,9 @@
             <div class="loading" id="loading_1"><mat-spinner [diameter]="55"></mat-spinner></div>
             <mat-list id="ldap_list">
                 <mat-list-item *ngFor="let person of ldapToPersons">
-                  <h3 matLine> {{person[1]}} {{person[2]}} </h3>
+                  <h3 matLine> {{person.name}} {{person.lastname}} </h3>
                   <p matLine>
-                    <span> {{person[0]}} </span>
+                    <span> {{person.username}} </span>
                   </p>
                 </mat-list-item>
               </mat-list>
@@ -20,9 +20,9 @@
             <div class="loading" id="loading_2"><mat-spinner [diameter]="55"></mat-spinner></div>
             <mat-list id="persons_list">
                 <mat-list-item *ngFor="let person of personsToLdap">
-                  <h3 matLine> {{person[1]}} {{person[2]}} </h3>
+                  <h3 matLine> {{person.name}} {{person.lastname}} </h3>
                   <p matLine>
-                    <span> {{person[0]}} </span>
+                    <span> {{person.username}} </span>
                   </p>
                 </mat-list-item>
             </mat-list>

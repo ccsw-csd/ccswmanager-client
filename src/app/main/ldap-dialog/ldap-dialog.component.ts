@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MainService } from '../services/main.service';
+import { LdapPerson } from './to/LdapPerson';
 
 @Component({
   selector: 'app-ldap-dialog',
@@ -8,13 +9,13 @@ import { MainService } from '../services/main.service';
   styleUrls: ['./ldap-dialog.component.scss']
 })
 export class LdapDialogComponent implements OnInit {
-  ldapToPersons: String[][] = [];
-  personsToLdap: String[][] = [];
+  ldapToPersons: LdapPerson[] = [];
+  personsToLdap: LdapPerson[] = [];
 
   constructor(
     private mainService: MainService,
     public dialogRef: MatDialogRef<LdapDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {ldap: string[][], persons: string[][]}
+    @Inject(MAT_DIALOG_DATA) public data: {}
     ) { }
 
   ngOnInit(): void {
