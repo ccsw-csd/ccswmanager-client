@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CenterDto } from 'src/app/core/to/CenterDto';
 import { PersonDto } from 'src/app/core/to/PersonDto';
 import { environment } from 'src/environments/environment';
+import { LdapPerson } from '../ldap-dialog/to/LdapPerson';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,11 @@ export class MainService {
     return this.http.get<boolean>(environment.server + '/ldap/');
   }
 
-  compareLdapToPersons(): Observable<String[][]> {
-    return this.http.get<String[][]>(environment.server + '/ldap/ldap');
+  compareLdapToPersons(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/ldap');
   }
 
-  comparePersonsToLdap(): Observable<String[][]> {
-    return this.http.get<String[][]>(environment.server + '/ldap/persons');
+  comparePersonsToLdap(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/persons');
   }
 }
