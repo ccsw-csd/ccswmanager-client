@@ -6,6 +6,7 @@ import { UserResolverService } from './core/services/user-resolver.service';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main.component';
 import { ScholarComponent } from './scholar/scholar.component';
+import { UsersComponent } from './users/users.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
     children: [
       { path: 'main', component: MainComponent,},
       { path: 'scholar', component: ScholarComponent,},
+      { path: 'users', component: UsersComponent,},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
     ]
   },  

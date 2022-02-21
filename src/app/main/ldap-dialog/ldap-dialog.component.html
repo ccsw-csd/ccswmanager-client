@@ -1,0 +1,36 @@
+<div>
+    <h1>Sincronizar LDAP</h1>
+    <h2>La lista de distribución del LDAP no concuerda con los datos de equipo de CCSw. Por favor revise la siguiente información.</h2>
+
+    <div class="lists_container">
+        <div class="ldap_container">
+            <h3 class="list-header">Personas en <b>LDAP</b> que <b>NO</b> están en <b>CCSwManager</b></h3>
+            <div class="loading" id="loading_1"><mat-spinner [diameter]="55"></mat-spinner></div>
+            <mat-list id="ldap_list">
+                <mat-list-item *ngFor="let person of ldapToPersons">
+                  <h3 matLine> {{person.name}} {{person.lastname}} </h3>
+                  <p matLine>
+                    <span> {{person.username}} </span>
+                  </p>
+                </mat-list-item>
+              </mat-list>
+        </div>
+        <div style="width: 425px;">
+            <h3 class="list-header">Personas en <b>CCSwManager</b> que <b>NO</b> están en <b>LDAP</b></h3>
+            <div class="loading" id="loading_2"><mat-spinner [diameter]="55"></mat-spinner></div>
+            <mat-list id="persons_list">
+                <mat-list-item *ngFor="let person of personsToLdap">
+                  <h3 matLine> {{person.name}} {{person.lastname}} </h3>
+                  <p matLine>
+                    <span> {{person.username}} </span>
+                  </p>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button secondary style="margin-right: 10px">Sincronizar Manualmente</button>
+        <button primary (click)="close()">Cerrar</button>
+    </div>
+</div>

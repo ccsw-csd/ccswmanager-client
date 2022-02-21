@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CenterDto } from 'src/app/core/to/CenterDto';
 import { PersonDto } from 'src/app/core/to/PersonDto';
 import { environment } from 'src/environments/environment';
+import { LdapPerson } from '../ldap-dialog/to/LdapPerson';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class MainService {
     return this.http.get<PersonDto[]>(environment.server+ '/person/');
   }
 
-  saveOrUpdatePerson(person: PersonDto) : Observable<PersonDto> {
-    return this.http.post<PersonDto>(environment.server+ '/person/', person);
+  saveOrUpdatePersons(persons: PersonDto[]) : Observable<PersonDto[]> {
+    return this.http.post<PersonDto[]>(environment.server+ '/person/', persons);
   }
 
   findCenters(): Observable<CenterDto[]> {
@@ -29,5 +30,17 @@ export class MainService {
 
   findPersonsByFilter(filter: String): Observable<PersonDto[]> {
     return this.http.get<PersonDto[]>(environment.server + '/person/' + filter);
+  }
+
+  checkLDAP(): Observable<boolean>  {
+    return this.http.get<boolean>(environment.server + '/ldap/');
+  }
+
+  compareLdapToPersons(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/ldap');
+  }
+
+  comparePersonsToLdap(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/persons');
   }
 }

@@ -23,6 +23,7 @@ import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
+import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ScholarComponent } from './scholar/scholar.component';
     AppComponent,
     MainComponent,
     ScholarComponent,
+    LdapDialogComponent
   ],
   imports: [
     BrowserModule,

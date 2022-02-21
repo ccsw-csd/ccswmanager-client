@@ -10,6 +10,7 @@ import { iif } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
+import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
 
 @Component({
   selector: 'app-main',
@@ -47,6 +48,8 @@ export class MainComponent implements OnInit {
   persons: any[] = [];
   errorMsg: string | undefined;
 
+  ldap:boolean = true;
+
   constructor(
     private mainService: MainService,
     public dialog: MatDialog,
@@ -63,7 +66,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'username', headerName: 'Username', maxWidth: 98, minWidth: 98,
+      { field: 'username', headerName: 'Username', maxWidth: 120, minWidth: 120,
         cellStyle: params => {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
@@ -105,7 +108,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'grade', headerName: 'Grado', maxWidth: 85, minWidth: 85,
+      { field: 'grade', headerName: 'Grado', maxWidth: 95, minWidth: 95,
         cellStyle: params => {
           if(params.value?.length > 5 || !this.grades.includes(params.value)) {
             return {borderColor: 'lightcoral'};
@@ -146,7 +149,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'hours', headerName: 'Horas', maxWidth: 80, minWidth: 80,
+      { field: 'hours', headerName: 'Horas', maxWidth: 95, minWidth: 95,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
@@ -158,7 +161,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'businesscode', headerName: 'Práctica', maxWidth:90, minWidth:90,
+      { field: 'businesscode', headerName: 'Práctica', maxWidth:115, minWidth:115,
         cellStyle: params => {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
@@ -167,7 +170,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'department', headerName: 'Departamento', maxWidth: 120, minWidth: 120,
+      { field: 'department', headerName: 'Departamento', maxWidth: 145, minWidth: 145,
         cellStyle: params => {
           if(params.value?.length > 10) {
             return {borderColor: 'lightcoral'};
@@ -353,13 +356,18 @@ export class MainComponent implements OnInit {
   }
 
   save() {
+    var personsChanged: PersonDto[] = [];
+
     this.api.forEachNode(node => {
       if(this.saveRows.includes(node.data.id) || node.data.id == null) {
-        this.mainService.saveOrUpdatePerson(node.data).subscribe(data => {
-          node.updateData(data);
-          this.getPersons();
-        });
+        personsChanged.push(node.data);
       }
+    });
+
+    this.mainService.saveOrUpdatePersons(personsChanged).subscribe(data => {
+      this.rowData = data;
+      this.updateChips();
+      this.checkLDAP();
     });
 
     this.api?.onFilterChanged();
@@ -369,19 +377,30 @@ export class MainComponent implements OnInit {
   getPersons() {
     this.mainService.findPersons().subscribe( (res) => {
       this.rowData = res;
-      this.becarios = 0;
-      this.contratos = 0;
-      this.personas = this.rowData.length;
-
-      this.rowData.forEach(person => {
-        if(this.isEmpty(person.grade)) {
-          this.becarios++;
-        }
-        else {
-          this.contratos++;
-        }
-      });
+      this.updateChips();
+      this.checkLDAP();
     });
+  }
+
+  updateChips() {
+    this.becarios = 0;
+    this.contratos = 0;
+    this.personas = this.rowData.length;
+
+    this.rowData.forEach(person => {
+      if(this.isEmpty(person.grade)) {
+        this.becarios++;
+      }
+      else {
+        this.contratos++;
+      }
+    });
+  }
+
+  checkLDAP() {
+    this.mainService.checkLDAP().subscribe((res) => {
+      this.ldap = res;
+    })
   }
 
   addPersonToData(person: PersonDto) {
@@ -429,5 +448,11 @@ export class MainComponent implements OnInit {
 
   resizeGrid() {
     this.api.sizeColumnsToFit();
+  }
+
+  openLDAP() {
+    const dialogRef = this.dialog.open(LdapDialogComponent, {
+      data: {}
+    });
   }
 }
