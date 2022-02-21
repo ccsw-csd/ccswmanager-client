@@ -16,6 +16,6 @@ export class UserService {
 
 
   findUsuario() : Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(environment.server+ '/usuario/');
+    return this.http.get<Usuario[]>(environment.server+ '/user/');
   }
 }
