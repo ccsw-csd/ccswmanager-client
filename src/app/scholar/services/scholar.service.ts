@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScholarDto } from 'src/app/core/to/ScholarDto';
+import { VScholarDto } from 'src/app/core/to/VScholarDto';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,11 +14,12 @@ export class ScholarService {
     private http: HttpClient,
   ) { }
 
-  findScholars() : Observable<ScholarDto[]> {
-    return this.http.get<ScholarDto[]>(environment.server+ '/scholar/');
+  findScholars() : Observable<VScholarDto[]> {
+    return this.http.get<VScholarDto[]>(environment.server+ '/scholar/');
   }
   
   saveOrUpdateScholar(scholar: ScholarDto) : Observable<ScholarDto> {
+    debugger;
     return this.http.post<ScholarDto>(environment.server+ '/scholar/', scholar);
   }
 }

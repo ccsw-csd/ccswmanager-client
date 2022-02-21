@@ -1,9 +1,10 @@
 import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { Component, OnInit} from '@angular/core';
-import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import * as moment from 'moment';
-import { ScholarDto } from 'src/app/core/to/ScholarDto';
+import { VScholarDto } from 'src/app/core/to/VScholarDto';
 import { ScholarService } from './services/scholar.service';
+
 
 @Component({
   selector: 'app-scholar',
@@ -12,11 +13,12 @@ import { ScholarService } from './services/scholar.service';
 })
 export class ScholarComponent implements OnInit {
 
+  
   buttonText: string = "Editar";
   editar = false;
   saveRows: number [] = [];
 
-  rowDataScholar : ScholarDto[] = [];
+  rowDataScholar : VScholarDto[] = [];
 
   defaultColDef : ColDef;
 
@@ -32,21 +34,44 @@ export class ScholarComponent implements OnInit {
     { field: 'hours', headerName: 'Horas Jornada', cellStyle: {'background-color': '#F8F8F8'}},
     { field: 'details', headerName: 'Detalle', cellStyle: {'background-color': '#F8F8F8'}},
     { field: 'start_date', headerName: 'Fecha inicio', editable: this.isEditing.bind(this),
-      singleClickEdit: true,
-      valueFormatter : function(params) {
+      singleClickEdit: true, cellEditorPopup: false,
+      valueGetter : function(params) {
         if(params.data.start_date != null)
-          return moment(params.data.start_date).format('MM/DD/YYYY');
+          return moment(params.data.start_date).format('DD/MM/YYYY');
         else
           return params.data.start_date;
+      },
+      valueSetter: params => {
+        var newValue = params.newValue;
+        if (newValue == ""){
+          params.data.start_date = null;
+        }
+        else if(newValue != null) {
+          var dateParts = newValue.split('/');
+          params.data.start_date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        }
+        return true;
       }
+      
     }, 
     { field: 'end_date', headerName: 'Fecha fin', editable: this.isEditing.bind(this),
-      singleClickEdit: true,
-      valueFormatter : function(params) {
-        if(params.data.start_date != null)
-          return moment(params.data.start_date).format('MM/DD/YYYY');
+      singleClickEdit: true, cellEditorPopup: false,
+      valueGetter : function(params) {
+        if(params.data.end_date != null)
+          return moment(params.data.end_date).format('DD/MM/YYYY');
         else
-          return params.data.start_date;
+          return params.data.end_date;
+      },
+      valueSetter: params => {
+        var newValue = params.newValue;
+        if (newValue == ""){
+          params.data.end_date = null;
+        }
+        else if(newValue != null) {
+          var dateParts = newValue.split('/');
+          params.data.end_date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        }
+        return true;
       }
     }, 
     { field: 'title', headerName: 'Titulación', editable: this.isEditing.bind(this),
@@ -58,11 +83,35 @@ export class ScholarComponent implements OnInit {
             return 'Contrato';
         } else if (params.data.action == 0) {
             return 'Out';
-        } else {
+        } else if (params.data.action == 2){
             return 'Continuar';
         }
-      }},
-    { field: 'active', headerName: 'Estado', 
+        else{
+          return 'Null';
+        }
+      },
+      valueSetter: params => {
+        var newValue = params.newValue;
+        if(newValue == "Contrato") {
+          params.data.action = 1;
+        }
+        else if (newValue == "Out") {
+          params.data.action = 0;
+        }
+        else if (newValue == "Continuar"){
+          params.data.action = 2;
+        }
+        else{
+          params.data.action = null;
+        }
+        return true;
+      },
+      cellEditor: 'agSelectCellEditor',
+      cellEditorParams: {
+          values: ['Null', 'Out', 'Contrato', 'Continuar'],
+      }
+    },
+    { field: 'active', headerName: 'Estado', cellStyle: {'background-color': '#F8F8F8'},
       valueGetter: function (params) {
         if (params.data.active == 1) {
             return 'Activo';
@@ -71,8 +120,10 @@ export class ScholarComponent implements OnInit {
         } else {
             return 'Pendiente';
         }
-      }},
+      }
+    },
   ];
+
 
   constructor( private scholarService: ScholarService ) 
   { 
@@ -137,7 +188,7 @@ export class ScholarComponent implements OnInit {
 
   save() {
     this.api.forEachNode(node => {
-      if(this.saveRows.includes(node.data.id)) {
+      if(this.saveRows.includes(node.data.id) || node.data.id == null) {
         this.scholarService.saveOrUpdateScholar(node.data).subscribe(data => {
           node.updateData(data);
         });

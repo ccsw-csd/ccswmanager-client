@@ -25,6 +25,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,10 +51,10 @@ import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
     CoreModule,
     LoginModule,
     AgGridModule.withComponents([]),
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 
