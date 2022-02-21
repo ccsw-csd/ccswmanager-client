@@ -23,9 +23,6 @@ export class UsersComponent implements OnInit {
     this.userService.findUsuario().subscribe({
       next: usuarios => {
         this.usuarios = usuarios;  
-        console.log(usuarios[0].id);
-        console.log(usuarios[0].role);
-        console.log(usuarios[0].name);
       }
       ,
       error: err => this.errorMessage = err,
