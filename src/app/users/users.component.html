@@ -1,0 +1,32 @@
+<div>
+    <div>
+        <h1>Gestión usuarios</h1>
+    </div>
+
+    <div> 
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th><b>Id</b></th>
+                    <th><b>Username</b></th>
+                    <th><b>Rol</b></th>
+                    <th><b>Nombre</b></th>
+                    <th><b>Apellidos</b></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let usuario of usuarios'>
+                    <th></th>
+                    <td>{{ usuario.id }}</td>
+                    <td>{{ usuario.username }}</td>
+                    <td>{{ usuario.role }}</td>
+                    <td>{{ usuario.name }}</td>
+                    <td>{{ usuario.lastname }}</td>
+                    <th></th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
