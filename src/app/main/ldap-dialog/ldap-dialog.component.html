@@ -1,6 +1,6 @@
 <div>
     <h1>Sincronizar LDAP</h1>
-    <h2>La lista de distribución del LDAP no concuerda con los datos de equipo de CCSw. Por favor revise la siguiente información.</h2>
+    <p>La lista de distribución del LDAP no concuerda con los datos de equipo de CCSw. Por favor revise la siguiente información.</p>
 
     <div class="lists_container">
         <div class="ldap_container">
@@ -30,7 +30,7 @@
     </div>
 
     <div class="buttons">
-        <button secondary style="margin-right: 10px">Sincronizar Manualmente</button>
+        <button secondary style="margin-right: 10px" (click)="copyList()">Sincronizar Manualmente</button>
         <button primary (click)="close()">Cerrar</button>
     </div>
 </div>
