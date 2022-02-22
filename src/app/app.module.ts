@@ -55,7 +55,7 @@ import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
     MatSnackBarModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 
