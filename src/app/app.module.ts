@@ -13,17 +13,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +50,9 @@ import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
     CoreModule,
     LoginModule,
     AgGridModule.withComponents([]),
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    ClipboardModule,
+    MatSnackBarModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent]

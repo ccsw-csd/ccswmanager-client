@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MainService } from '../services/main.service';
 import { LdapPerson } from './to/LdapPerson';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ldap-dialog',
@@ -14,6 +16,8 @@ export class LdapDialogComponent implements OnInit {
 
   constructor(
     private mainService: MainService,
+    private clipboard: Clipboard,
+    private snackbar: MatSnackBar,
     public dialogRef: MatDialogRef<LdapDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {}
     ) { }
@@ -45,6 +49,24 @@ export class LdapDialogComponent implements OnInit {
     if(list != null) {
       list.style.display = 'block';
     }
+  }
+
+  copyList() {
+    var persons: String[];
+    var list = "";
+
+    this.mainService.findListLdapUsernames().subscribe((usernames) => {
+      persons = usernames;
+      persons.forEach(username => {
+      list += username + "\n";
+      });
+      this.clipboard.copy(list.slice(0,-1));
+
+      this.snackbar.open('Se ha copiado la lista al clipboard, ya puede impotar la lista en el CorporateDirectory', '', {
+        duration: 5000
+      });
+
+    });
   }
 
   close() {
