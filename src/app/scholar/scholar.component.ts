@@ -1,5 +1,7 @@
 import { AstMemoryEfficientTransformer } from '@angular/compiler';
 import { Component, OnInit} from '@angular/core';
+import { DialogComponent } from '../core/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import * as moment from 'moment';
 import { VScholarDto } from 'src/app/core/to/VScholarDto';
@@ -13,8 +15,6 @@ import { ScholarService } from './services/scholar.service';
 })
 export class ScholarComponent implements OnInit {
 
-  
-  buttonText: string = "Editar";
   editar = false;
   saveRows: number [] = [];
 
@@ -27,57 +27,56 @@ export class ScholarComponent implements OnInit {
   api: GridApi = new GridApi;
 
   columnDefSch: ColDef[] = [
-    { field: 'username', headerName: 'Nombre de usuario', cellStyle: {'background-color': '#F8F8F8'}},
-    { field: 'name', headerName: 'Nombre', cellStyle: {'background-color': '#F8F8F8'}}, 
-    { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}}, 
-    { field: 'customer', headerName: 'Cliente', cellStyle: {'background-color': '#F8F8F8'}},
-    { field: 'hours', headerName: 'Horas Jornada', cellStyle: {'background-color': '#F8F8F8'}},
-    { field: 'details', headerName: 'Detalle', cellStyle: {'background-color': '#F8F8F8'}},
-    { field: 'start_date', headerName: 'Fecha inicio', editable: this.isEditing.bind(this),
-      singleClickEdit: true, cellEditorPopup: false,
+    { field: 'username', headerName: 'Username', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 125, maxWidth: 140},
+    { field: 'name', headerName: 'Nombre', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200}, 
+    { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200}, 
+    { field: 'customer', headerName: 'Cliente', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200},
+    { field: 'hours', headerName: 'Horas', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 100, maxWidth: 125},
+    { field: 'startDate', headerName: 'Inicio', editable: this.isEditing.bind(this),
+      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150,
       valueGetter : function(params) {
-        if(params.data.start_date != null)
-          return moment(params.data.start_date).format('DD/MM/YYYY');
+        if(params.data.startDate != null)
+          return moment(params.data.startDate).format('DD/MM/YYYY');
         else
-          return params.data.start_date;
+          return params.data.startDate;
       },
       valueSetter: params => {
         var newValue = params.newValue;
         if (newValue == ""){
-          params.data.start_date = null;
+          params.data.startDate = null;
         }
         else if(newValue != null) {
           var dateParts = newValue.split('/');
-          params.data.start_date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+          params.data.startDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
         }
         return true;
       }
       
     }, 
-    { field: 'end_date', headerName: 'Fecha fin', editable: this.isEditing.bind(this),
-      singleClickEdit: true, cellEditorPopup: false,
+    { field: 'endDate', headerName: 'Fin', editable: this.isEditing.bind(this),
+      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150,
       valueGetter : function(params) {
-        if(params.data.end_date != null)
-          return moment(params.data.end_date).format('DD/MM/YYYY');
+        if(params.data.endDate != null)
+          return moment(params.data.endDate).format('DD/MM/YYYY');
         else
-          return params.data.end_date;
+          return params.data.endDate;
       },
       valueSetter: params => {
         var newValue = params.newValue;
         if (newValue == ""){
-          params.data.end_date = null;
+          params.data.endDate = null;
         }
         else if(newValue != null) {
           var dateParts = newValue.split('/');
-          params.data.end_date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+          params.data.endDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
         }
         return true;
       }
     }, 
     { field: 'title', headerName: 'Titulación', editable: this.isEditing.bind(this),
-      singleClickEdit: true}, 
+      singleClickEdit: true, minWidth: 150, maxWidth: 175}, 
     { field: 'action', headerName: 'Acción', editable: this.isEditing.bind(this),
-      singleClickEdit: true, 
+      singleClickEdit: true, minWidth: 125, maxWidth: 125,
       valueGetter: function (params) {
         if (params.data.action == 1) {
             return 'Contrato';
@@ -87,7 +86,7 @@ export class ScholarComponent implements OnInit {
             return 'Continuar';
         }
         else{
-          return 'Null';
+          return '';
         }
       },
       valueSetter: params => {
@@ -108,11 +107,11 @@ export class ScholarComponent implements OnInit {
       },
       cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
-          values: ['Null', 'Out', 'Contrato', 'Continuar'],
+          values: ['Vacío', 'Out', 'Contrato', 'Continuar'],
       }
     },
     { field: 'active', headerName: 'Estado', cellStyle: {'background-color': '#F8F8F8'},
-      valueGetter: function (params) {
+      minWidth: 125, maxWidth: 125, valueGetter: function (params) {
         if (params.data.active == 1) {
             return 'Activo';
         } else if (params.data.active == 0) {
@@ -125,7 +124,7 @@ export class ScholarComponent implements OnInit {
   ];
 
 
-  constructor( private scholarService: ScholarService ) 
+  constructor( private scholarService: ScholarService, public dialog: MatDialog) 
   { 
     this.defaultColDef = {
       sortable: true,
@@ -135,6 +134,7 @@ export class ScholarComponent implements OnInit {
         filterOptions: ["contains"],
         newRowsAction: 'keep',
       },
+      floatingFilterComponentParams: {suppressFilterButton:true},
     };
 
     this.gridOptions = {
@@ -143,6 +143,10 @@ export class ScholarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getScholars();
+  }
+
+  getScholars(){
     this.scholarService.findScholars().subscribe( (res) => {
       this.rowDataScholar = res;
     }); 
@@ -167,18 +171,29 @@ export class ScholarComponent implements OnInit {
   }
 
   changeMode(): void {
-
-    if(this.buttonText == "Editar") {
-      this.buttonText = "Guardar y Finalizar";
+    if(this.editar == false) {
       this.editar = true;
     }
     else {
-      this.buttonText = "Editar";
       this.editar = false;
       this.save();
     }
   }
 
+  undoChanges(): void {
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: { title: "Atención", description: "Vas a deshacer los cambios que hayas podido hacer en el listado y que no se hayan guardado.<br/>¿Estás seguro que deseas deshacer los cambios?"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.editar = false;
+        this.saveRows = [];
+        this.getScholars();
+      }
+    });
+  }
   onCellEditingStopped(e: any) {
     if(e.oldValue != e.newValue) {
       if(!this.saveRows.includes(e.node.data.id))
@@ -187,13 +202,17 @@ export class ScholarComponent implements OnInit {
 }
 
   save() {
+    var scholarsChanged: VScholarDto[] = [];
+
     this.api.forEachNode(node => {
       if(this.saveRows.includes(node.data.id) || node.data.id == null) {
-        this.scholarService.saveOrUpdateScholar(node.data).subscribe(data => {
-          node.updateData(data);
-        });
+        scholarsChanged.push(node.data);
       }
     });
+    this.scholarService.saveOrUpdateScholars(scholarsChanged).subscribe(data => {
+      this.rowDataScholar = data;
+    });
+
 
     this.api?.onFilterChanged();
     this.saveRows = [];
