@@ -43,4 +43,8 @@ export class MainService {
   comparePersonsToLdap(): Observable<LdapPerson[]> {
     return this.http.get<LdapPerson[]>(environment.server + '/ldap/persons');
   }
+
+  findListLdapUsernames(): Observable<String[]> {
+    return this.http.get<String[]>(environment.server + '/ldap/list');
+  }
 }
