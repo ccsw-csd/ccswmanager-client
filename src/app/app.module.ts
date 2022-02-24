@@ -13,11 +13,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { MainComponent } from './main/main.component';
@@ -54,6 +53,8 @@ import {UsersComponent} from './users/users.component'
     LoginModule,
     AgGridModule.withComponents([]),
     MatAutocompleteModule,
+    ClipboardModule,
+    MatSnackBarModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],

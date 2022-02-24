@@ -10,12 +10,12 @@ export class VScholarDto {
     grade: string|undefined;
     role: string|undefined;
     email: string|undefined;
-    center_id: number|undefined;
+    centerId: number|undefined;
     businesscode: string|undefined;
     details: string|undefined;
-    start_date: Date|undefined;
+    startDate: Date|undefined;
     scholar_id: number|undefined;
-    end_date: Date|undefined;
+    endDate: Date|undefined;
     title: String|undefined;  
     action: String|undefined; 
     active: number|undefined;
