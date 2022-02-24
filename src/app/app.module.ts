@@ -23,6 +23,7 @@ import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
+import {UsersComponent} from './users/users.component'
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
     AppComponent,
     MainComponent,
     ScholarComponent,
-    LdapDialogComponent
+    LdapDialogComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
