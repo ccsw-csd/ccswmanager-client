@@ -16,6 +16,7 @@ export class PersonDto {
     details: string|undefined;
     department: string|undefined;
     businesscode: string|undefined;
+    delete: boolean = false;
     constructor() {}
 }
   
