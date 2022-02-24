@@ -18,8 +18,7 @@ export class ScholarService {
     return this.http.get<VScholarDto[]>(environment.server+ '/scholar/');
   }
   
-  saveOrUpdateScholar(scholar: ScholarDto) : Observable<ScholarDto> {
-    debugger;
-    return this.http.post<ScholarDto>(environment.server+ '/scholar/', scholar);
+  saveOrUpdateScholars(scholar: VScholarDto[]) : Observable<VScholarDto[]> {
+    return this.http.post<VScholarDto[]>(environment.server+ '/scholar/', scholar);
   }
 }
