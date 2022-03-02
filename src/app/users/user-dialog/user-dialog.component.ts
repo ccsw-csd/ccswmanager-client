@@ -19,6 +19,8 @@ export class UserDialogComponent implements OnInit {
   userForm !: FormGroup;
   allUsername !: string[];
   isloading !: boolean;
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  allCustomer : string [] = [];
 
   constructor(
     private formBuilder : FormBuilder,
@@ -31,6 +33,7 @@ export class UserDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getAllCustomer();
     if (this.data.user != null) {
       this.usuario = Object.assign({}, this.data.user);
       this.usuarioCurrent =  Object.assign({}, this.data.user);
@@ -41,10 +44,20 @@ export class UserDialogComponent implements OnInit {
   
     console.log(this.usuario);
     this.userForm = this.formBuilder.group({
-      username : ['', [Validators.required, Validators.pattern(/^\S*$/), Validators.max(10)]],
+      username : ['', [Validators.required, Validators.pattern(/^\S*$/), Validators.maxLength(10)]],
       name : [this.usuario.name],
       lastname : [this.usuario.name],
-      rol : [this.usuario.role, Validators.required]
+      rol : [this.usuario.role, Validators.required],
+      customer : ['']
+    })
+  }
+
+  getAllCustomer()
+  {
+    this.userService.getDistinctCustomer().subscribe(res =>{
+      this.allCustomer = res.filter(item => item != null);
+      this.usuario.customers = this.allCustomer;
+      console.log(res);
     })
   }
 
@@ -56,17 +69,17 @@ export class UserDialogComponent implements OnInit {
       messag = "Es un campo requerido";
     else if(this.userForm.get('username')?.hasError('pattern'))
       messag = "Introduce un usuario sin espacios en blanco.";
-    else if(this.userForm.get('username')?.hasError('max'))
-      messag = "El usuarios debe tener como máximo 10 carácteres."; 
-    else
+    else if(this.userForm.get('username')?.hasError('error'))
       messag = "El usuario que has introducido ya existe. Prueba con otro"; 
+    else
+      messag = "El usuarios debe tener como máximo 10 carácteres."; 
     
     return messag;
   }
 
   onSave()
   {
-
+    
     if(!this.userForm.invalid)
     {
       if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase())

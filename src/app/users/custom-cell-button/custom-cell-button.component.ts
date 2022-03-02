@@ -42,7 +42,8 @@ export class CustomCellButtonComponent implements ICellRendererAngularComp {
   onClickClear() {
     this.usuario = this.params.node.data; 
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: { title: "Atención", description: "¿Estás seguro que deseas eliminar el usuario " + this.usuario.username + "?"}
+      data: { title: "Atención", description: "Está a punto de borrar un usuario del sistema, este usuario perderá su acceso a la herramienta. "
+     +"<br\>¿Está seguro que desea borrar el usuario " + "'"+ this.usuario.username + "'?"}
     });
 
     dialogRef.afterClosed().subscribe(result => {
