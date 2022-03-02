@@ -1,0 +1,31 @@
+<div>
+    <h1>TimeLine Becarios</h1>
+
+    <div class="date">
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de inicio</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [(ngModel)]="startDate" [matDatepicker]="start" required>
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de fin</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [(ngModel)]="endDate" [matDatepicker]="end" required>
+            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+        </mat-form-field>
+        <button secondary (click)="getScholarsByDate()">Buscar</button>
+    </div>
+    <div id="chart">
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [fill]="chartOptions.fill"
+          [grid]="chartOptions.grid"
+          [dataLabels]="chartOptions.dataLabels"
+          [plotOptions]="chartOptions.plotOptions"
+          [xaxis]="chartOptions.xaxis"
+          [yaxis]="chartOptions.yaxis"
+        ></apx-chart>
+      </div>
+</div>
