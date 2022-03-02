@@ -13,6 +13,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LdapDialogComponent implements OnInit {
   ldapToPersons: LdapPerson[] = [];
   personsToLdap: LdapPerson[] = [];
+  tabIndex = "0";
+  ldapToPersonsCcswbec: LdapPerson[] = [];
+  personsCcswbecToLdap: LdapPerson[] = [];
 
   constructor(
     private mainService: MainService,
@@ -23,19 +26,35 @@ export class LdapDialogComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    
-    this.mainService.compareLdapToPersons().subscribe((persons) => {
+
+    this.mainService.compareLdapToPersons("0").subscribe((persons) => {
       if (persons) {
         this.stopLoading('loading_1', 'ldap_list');
       }
       this.ldapToPersons = persons;
     });
 
-    this.mainService.comparePersonsToLdap().subscribe((persons) => {
+    this.mainService.comparePersonsToLdap("0").subscribe((persons) => {
       if (persons) {
         this.stopLoading('loading_2', 'persons_list');
       }
       this.personsToLdap = persons;
+    });
+
+    this.mainService.compareLdapToPersons("1").subscribe((persons) => {
+      if (persons) {
+        console.log(persons);
+        this.stopLoading('loading_3', 'ldap_listBec');
+      }
+      this.ldapToPersonsCcswbec = persons;
+    });
+
+    this.mainService.comparePersonsToLdap("1").subscribe((persons) => {
+      if (persons) {
+        console.log(persons);
+        this.stopLoading('loading_4', 'persons_listBec');
+      }
+      this.personsCcswbecToLdap = persons;
     });
 
   }
@@ -51,11 +70,11 @@ export class LdapDialogComponent implements OnInit {
     }
   }
 
-  copyList() {
+  copyList(grade : boolean) {
     var persons: String[];
     var list = "";
 
-    this.mainService.findListLdapUsernames().subscribe((usernames) => {
+    this.mainService.findListLdapUsernames(grade).subscribe((usernames) => {
       persons = usernames;
       persons.forEach(username => {
       list += username + "\n";

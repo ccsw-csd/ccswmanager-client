@@ -36,15 +36,15 @@ export class MainService {
     return this.http.get<boolean>(environment.server + '/ldap/');
   }
 
-  compareLdapToPersons(): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/ldap');
+  compareLdapToPersons(tipoLista : string): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/ldap/' + tipoLista);
   }
 
-  comparePersonsToLdap(): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/persons');
+  comparePersonsToLdap(tipoLista : string): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/persons/' + tipoLista);
   }
 
-  findListLdapUsernames(): Observable<String[]> {
-    return this.http.get<String[]>(environment.server + '/ldap/list');
+  findListLdapUsernames(grade : boolean): Observable<String[]> {
+    return this.http.get<String[]>(environment.server + '/ldap/list/' + grade);
   }
 }

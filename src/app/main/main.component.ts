@@ -11,6 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-main',
@@ -32,9 +33,9 @@ export class MainComponent implements OnInit {
   centers: string[] = [];
 
   columnDefs: ColDef[];
-  
+
   rowData : PersonDto[] = [];
-  
+
   defaultColDef: ColDef;
 
   personas: number = 0;
@@ -57,7 +58,7 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     @Inject (MatAutocompleteModule) public auto: string
   ) {
-    
+
     this.columnDefs = [
       { field: 'delete', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,
       cellRenderer: function(params) {
@@ -71,7 +72,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -80,7 +81,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -92,7 +93,7 @@ export class MainComponent implements OnInit {
           else if(params.value.length > 50) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -104,7 +105,7 @@ export class MainComponent implements OnInit {
           else if(params.value.length > 100) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -113,7 +114,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 100) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -122,7 +123,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 5 || !this.grades.includes(params.value)) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         },
         valueGetter: function (params) {
           if (params.data.grade == null || params.data.grade == "" || params.data.grade == undefined) {
@@ -150,7 +151,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         },
         cellEditor: 'agSelectCellEditor',
           cellEditorParams: {
@@ -166,7 +167,7 @@ export class MainComponent implements OnInit {
           else if(params.value.length > 10) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -175,7 +176,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -184,7 +185,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 10) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -210,7 +211,7 @@ export class MainComponent implements OnInit {
               return 'Inactivo';
           } else {
               return 'Pendiente';
-          }}, 
+          }},
         valueSetter: params => {
           var newValue = params.newValue;
           if(newValue == "Activo") {
@@ -229,8 +230,8 @@ export class MainComponent implements OnInit {
                     values: ['Activo', 'Inactivo', 'Pendiente'],
                 },
       }];
-  
-    
+
+
     this.defaultColDef = {
       sortable: true,
       filter: 'agTextColumnFilter',
@@ -250,14 +251,14 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.getPersons();
 
     this.mainService.findCenters().subscribe((res) => {
       res.forEach(center => {
         if(center.id != undefined && center.name) {
         this.centers[center.id] = center.name;}
-        
+
       });
       var column = this.api.getColumnDef('center');
       if (column != null) {
@@ -478,7 +479,7 @@ export class MainComponent implements OnInit {
     var rowNode;
     if(event.node.id != undefined)
       rowNode = this.api.getRowNode(event.node.id);
-    
+
     var index = this.rowData.indexOf(rowNode?.data);
     this.rowData.splice(index, 1);
     this.api.setRowData(this.rowData);
@@ -494,6 +495,6 @@ export class MainComponent implements OnInit {
       person.delete = true;
       this.deletePersons.push(person);
     }
-    
+
   }
 }
