@@ -17,6 +17,11 @@ export class LdapDialogComponent implements OnInit {
   ldapToPersonsCcswbec: LdapPerson[] = [];
   personsCcswbecToLdap: LdapPerson[] = [];
 
+  showSpinner1 = true;
+  showSpinner2 = true;
+  showSpinner3 = true;
+  showSpinner4 = true;
+
   constructor(
     private mainService: MainService,
     private clipboard: Clipboard,
@@ -29,45 +34,32 @@ export class LdapDialogComponent implements OnInit {
 
     this.mainService.compareLdapToPersons("0").subscribe((persons) => {
       if (persons) {
-        this.stopLoading('loading_1', 'ldap_list');
+        this.showSpinner1 = false;
       }
       this.ldapToPersons = persons;
     });
 
     this.mainService.comparePersonsToLdap("0").subscribe((persons) => {
       if (persons) {
-        this.stopLoading('loading_2', 'persons_list');
+        this.showSpinner2 = false;
       }
       this.personsToLdap = persons;
     });
 
     this.mainService.compareLdapToPersons("1").subscribe((persons) => {
       if (persons) {
-        console.log(persons);
-        this.stopLoading('loading_3', 'ldap_listBec');
+        this.showSpinner3 = false;
       }
       this.ldapToPersonsCcswbec = persons;
     });
 
     this.mainService.comparePersonsToLdap("1").subscribe((persons) => {
       if (persons) {
-        console.log(persons);
-        this.stopLoading('loading_4', 'persons_listBec');
+        this.showSpinner4 = false;
       }
       this.personsCcswbecToLdap = persons;
     });
 
-  }
-
-  stopLoading(id: string, l_id: string) {
-    var loading = document.getElementById(id);
-    var list = document.getElementById(l_id);
-    if(loading != null) {
-      loading.style.display = 'none';
-    }
-    if(list != null) {
-      list.style.display = 'block';
-    }
   }
 
   copyList(grade : boolean) {

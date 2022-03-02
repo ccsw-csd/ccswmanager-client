@@ -24,7 +24,7 @@
       <div class="lists_container">
           <div class="ldap_container">
               <h3 class="list-header">Personas de <b>CCSW</b> que <b>NO</b> están en la app</h3>
-              <div class="loading" id="loading_1"><mat-spinner [diameter]="55"></mat-spinner></div>
+              <mat-spinner [diameter]="55" *ngIf="showSpinner1"></mat-spinner>
               <mat-list id="ldap_list">
                   <mat-list-item *ngFor="let person of ldapToPersons">
                     <h3 matLine> {{person.name}} {{person.lastname}} </h3>
@@ -36,7 +36,7 @@
           </div>
           <div style="width: 425px;">
               <h3 class="list-header">Personas de la app que <b>NO</b> están en <b>CSSW</b></h3>
-              <div class="loading" id="loading_2"><mat-spinner [diameter]="55"></mat-spinner></div>
+              <mat-spinner [diameter]="55" *ngIf="showSpinner2"></mat-spinner>
               <mat-list id="persons_list">
                   <mat-list-item *ngFor="let person of personsToLdap">
                     <h3 matLine> {{person.name}} {{person.lastname}} </h3>
@@ -53,7 +53,7 @@
     <div class="lists_container">
       <div class="ldap_container">
         <h3 class="list-header">Personas de <b>CCSWBecarios</b> que <b>NO</b> están en la app</h3>
-        <div class="loading" id="loading_3"><mat-spinner [diameter]="55"></mat-spinner></div>
+        <mat-spinner [diameter]="55" *ngIf="showSpinner3"></mat-spinner>
           <mat-list id="ldap_listBec">
               <mat-list-item *ngFor="let person of ldapToPersonsCcswbec">
                 <h3 matLine> {{person.name}} {{person.lastname}} </h3>
@@ -65,7 +65,7 @@
       </div>
       <div style="width: 425px;">
         <h3 class="list-header">Personas de la app que <b>NO</b> están en <b>CSSWBecarios</b></h3>
-        <div class="loading" id="loading_4"><mat-spinner [diameter]="55"></mat-spinner></div>
+        <mat-spinner [diameter]="55" *ngIf="showSpinner4"></mat-spinner>
           <mat-list id="persons_listBec" >
               <mat-list-item *ngFor="let person of personsCcswbecToLdap">
                 <h3 matLine> {{person.name}} {{person.lastname}} </h3>
