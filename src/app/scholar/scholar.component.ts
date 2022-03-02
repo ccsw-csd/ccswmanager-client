@@ -6,6 +6,7 @@ import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import * as moment from 'moment';
 import { VScholarDto } from 'src/app/core/to/VScholarDto';
 import { ScholarService } from './services/scholar.service';
+import { TimelineDialogComponent } from './timeline-dialog/timeline-dialog.component';
 
 
 @Component({
@@ -149,6 +150,7 @@ export class ScholarComponent implements OnInit {
   getScholars(){
     this.scholarService.findScholars().subscribe( (res) => {
       this.rowDataScholar = res;
+      //debugger;
     }); 
   }
 
@@ -194,12 +196,13 @@ export class ScholarComponent implements OnInit {
       }
     });
   }
+
   onCellEditingStopped(e: any) {
     if(e.oldValue != e.newValue) {
       if(!this.saveRows.includes(e.node.data.id))
         this.saveRows.push(e.node.data.id);
     }
-}
+  }
 
   save() {
     var scholarsChanged: VScholarDto[] = [];
@@ -216,6 +219,14 @@ export class ScholarComponent implements OnInit {
 
     this.api?.onFilterChanged();
     this.saveRows = [];
+  }
+
+  openTimeLine(){
+    const dialogRef = this.dialog.open(TimelineDialogComponent, {
+      data: {},
+      width: '80vw',
+      height: '90vh'
+    });
   }
 
 }

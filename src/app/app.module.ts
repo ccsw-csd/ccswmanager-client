@@ -23,7 +23,9 @@ import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
-import {UsersComponent} from './users/users.component'
+import {UsersComponent} from './users/users.component';
+import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
+import { NgApexchartsModule } from "ng-apexcharts";
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import {UsersComponent} from './users/users.component'
     MainComponent,
     ScholarComponent,
     LdapDialogComponent,
-    UsersComponent
+    UsersComponent,
+    TimelineDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import {UsersComponent} from './users/users.component'
     AgGridModule.withComponents([]),
     MatAutocompleteModule,
     ClipboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgApexchartsModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],
