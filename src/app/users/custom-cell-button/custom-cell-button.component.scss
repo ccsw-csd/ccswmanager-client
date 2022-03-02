@@ -1,0 +1,8 @@
+.button-grid{
+    mat-icon{
+        cursor: pointer;
+    }
+    mat-icon:first-child{
+        margin-right: 10px;
+    }
+}

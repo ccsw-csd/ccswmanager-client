@@ -1,0 +1,48 @@
+<div class="container">
+  
+    <h1 *ngIf = "!dataUser">Crear usuario</h1>
+    <h1 *ngIf = "dataUser">Editar usuario</h1>
+
+    <form [formGroup]="userForm">
+        <mat-form-field appearance="legacy">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Introduce el usuario" formControlName = "username" [(ngModel)]="usuario.username">
+            <mat-error *ngIf="userForm.get('username')?.errors">
+                {{getUsernameErrors()}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Introduce el nombre" formControlName = "name" [(ngModel)]="usuario.name" readonly>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>Apeliidos</mat-label>
+            <input matInput placeholder="Introduce los apellidos" formControlName = "lastname" [(ngModel)]="usuario.lastname" readonly>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Rol</mat-label>
+            <mat-select formControlName = "rol" [(ngModel)] = "usuario.role">
+              <mat-option value="Admin">Admin</mat-option>
+              <mat-option value="Gestor">Gestor</mat-option>
+            </mat-select>
+            <mat-error *ngIf="userForm.get('rol')?.errors">
+                Es un campo requerido
+            </mat-error>
+          </mat-form-field>
+
+
+          <div class = "button-action">
+            <button primary (click)="onClose()">Cancelar</button>
+            <button primary (click)="onSave()">Guardar</button>
+          </div>
+    </form>
+    
+    <div class="buttons">
+    </div>
+</div>
+<div class="loadWrapper" *ngIf="isloading">
+  <mat-spinner></mat-spinner>
+</div>

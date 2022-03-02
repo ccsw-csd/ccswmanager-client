@@ -23,8 +23,11 @@ import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
-import {UsersComponent} from './users/users.component'
-
+import {UsersComponent} from './users/users.component';
+import { UserDialogComponent } from './users/user-dialog/user-dialog.component'
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cell-button.component';
 
 @NgModule({
   declarations: [
@@ -32,9 +35,12 @@ import {UsersComponent} from './users/users.component'
     MainComponent,
     ScholarComponent,
     LdapDialogComponent,
-    UsersComponent
+    UsersComponent,
+    UserDialogComponent,
+    CustomCellButtonComponent,
   ],
-  imports: [
+  imports: 
+  [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -51,10 +57,12 @@ import {UsersComponent} from './users/users.component'
     MatSlideToggleModule,
     CoreModule,
     LoginModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([CustomCellButtonComponent]),
     MatAutocompleteModule,
     ClipboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],
