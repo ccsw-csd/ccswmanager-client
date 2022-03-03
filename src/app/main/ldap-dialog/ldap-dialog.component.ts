@@ -32,28 +32,28 @@ export class LdapDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.mainService.compareLdapToPersons("0").subscribe((persons) => {
+    this.mainService.compareLdapToPersons().subscribe((persons) => {
       if (persons) {
         this.showSpinner1 = false;
       }
       this.ldapToPersons = persons;
     });
 
-    this.mainService.comparePersonsToLdap("0").subscribe((persons) => {
+    this.mainService.comparePersonsToLdap().subscribe((persons) => {
       if (persons) {
         this.showSpinner2 = false;
       }
       this.personsToLdap = persons;
     });
 
-    this.mainService.compareLdapToPersons("1").subscribe((persons) => {
+    this.mainService.compareLdapToPersonsBecarios().subscribe((persons) => {
       if (persons) {
         this.showSpinner3 = false;
       }
       this.ldapToPersonsCcswbec = persons;
     });
 
-    this.mainService.comparePersonsToLdap("1").subscribe((persons) => {
+    this.mainService.comparePersonsToLdapBecarios().subscribe((persons) => {
       if (persons) {
         this.showSpinner4 = false;
       }
@@ -62,11 +62,11 @@ export class LdapDialogComponent implements OnInit {
 
   }
 
-  copyList(grade : boolean) {
+  copyList(contrato : boolean) {
     var persons: String[];
     var list = "";
 
-    this.mainService.findListLdapUsernames(grade).subscribe((usernames) => {
+    this.mainService.findListLdapUsernames(contrato).subscribe((usernames) => {
       persons = usernames;
       persons.forEach(username => {
       list += username + "\n";
