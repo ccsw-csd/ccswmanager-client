@@ -3,14 +3,14 @@
 
     <div class="listas-dis">
       <div class="lista-ccsw">
-        <p>La lista de distribución 'ccsw' del LDAP no concuerda con la app:
+        <p>La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
           <span ng-if="ldapToPersons">{{ldapToPersons.length}} insertar | </span>
           <span ng-if="personsToLdap">{{personsToLdap.length}} eliminar</span>
         </p>
         <button secondary *ngIf="ldapToPersons && personsToLdap" (click)="copyList(true)">Sincronizar Manualmente</button>
       </div>
       <div class="lista-ccswbec">
-        <p>La lista de distribución 'ccsw' del LDAP no concuerda con la app:
+        <p>La lista de distribución <strong>CCSWBecarios</strong> del LDAP no concuerda con la app:
           <span ng-if="ldapToPersonsCcswbec">{{ldapToPersonsCcswbec.length}} insertar | </span>
           <span ng-if="personsCcswbecToLdap">{{personsCcswbecToLdap.length}} eliminar</span>
         </p>
