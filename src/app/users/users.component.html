@@ -2,13 +2,16 @@
     <div>
         <h1>Gestión usuarios</h1>
     </div>
-
+    <div class = "new-user">
+        <button primary (click)="addUser()">Nuevo usuario</button>
+    </div>
     <div>
         <ag-grid-angular 
             style="height: calc(100vh - 200px); width: 500%;"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSch"
             [rowData]="usuarios"
+            [frameworkComponents]="frameworkComponents"
             [defaultColDef]="defaultColDef"
         >    
         </ag-grid-angular>
@@ -16,4 +19,4 @@
 </div>
 <div class="loadWrapper" *ngIf="isloading">
     <mat-spinner></mat-spinner>
-  </div>
+</div>

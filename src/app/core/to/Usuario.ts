@@ -1,7 +1,7 @@
 export interface Usuario {
     id: number;
-    username: String|undefined; 
-    role: String;
-    name: String|undefined;
-    lastname: String|undefined;
+    username: string; 
+    role: string;
+    name: string;
+    lastname: string;
 }
