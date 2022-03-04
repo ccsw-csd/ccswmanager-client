@@ -14,8 +14,8 @@ export class LdapDialogComponent implements OnInit {
   ldapToPersons: LdapPerson[] = [];
   personsToLdap: LdapPerson[] = [];
   tabIndex = "0";
-  ldapToPersonsCcswbec: LdapPerson[] = [];
-  personsCcswbecToLdap: LdapPerson[] = [];
+  ldapToPersonsCcswScholars: LdapPerson[] = [];
+  personsCcswScholarsToLdap: LdapPerson[] = [];
 
   showSpinner1 = true;
   showSpinner2 = true;
@@ -46,27 +46,27 @@ export class LdapDialogComponent implements OnInit {
       this.personsToLdap = persons;
     });
 
-    this.mainService.compareLdapToPersonsBecarios().subscribe((persons) => {
+    this.mainService.compareLdapToPersonsScholars().subscribe((persons) => {
       if (persons) {
         this.showSpinner3 = false;
       }
-      this.ldapToPersonsCcswbec = persons;
+      this.ldapToPersonsCcswScholars = persons;
     });
 
-    this.mainService.comparePersonsToLdapBecarios().subscribe((persons) => {
+    this.mainService.comparePersonsToLdapScholars().subscribe((persons) => {
       if (persons) {
         this.showSpinner4 = false;
       }
-      this.personsCcswbecToLdap = persons;
+      this.personsCcswScholarsToLdap = persons;
     });
 
   }
 
-  copyList(contrato : boolean) {
+  copyList(contract : boolean) {
     var persons: String[];
     var list = "";
 
-    this.mainService.findListLdapUsernames(contrato).subscribe((usernames) => {
+    this.mainService.findListLdapUsernames(contract).subscribe((usernames) => {
       persons = usernames;
       persons.forEach(username => {
       list += username + "\n";

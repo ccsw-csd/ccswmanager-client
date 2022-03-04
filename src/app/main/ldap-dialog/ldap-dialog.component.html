@@ -6,15 +6,17 @@
         <p>La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
           <span ng-if="ldapToPersons">{{ldapToPersons.length}} insertar | </span>
           <span ng-if="personsToLdap">{{personsToLdap.length}} eliminar</span>
-        </p>
-        <button secondary *ngIf="ldapToPersons && personsToLdap" (click)="copyList(true)">Sincronizar Manualmente</button>
+
+        <button secondary style="margin-left: 114px;" *ngIf="ldapToPersons.length  || personsToLdap.length" (click)="copyList(true)">Sincronizar Manualmente</button>
+      </p>
       </div>
       <div class="lista-ccswbec">
         <p>La lista de distribución <strong>CCSWBecarios</strong> del LDAP no concuerda con la app:
-          <span ng-if="ldapToPersonsCcswbec">{{ldapToPersonsCcswbec.length}} insertar | </span>
-          <span ng-if="personsCcswbecToLdap">{{personsCcswbecToLdap.length}} eliminar</span>
-        </p>
-        <button secondary *ngIf="ldapToPersonsCcswbec && personsCcswbecToLdap"(click)="copyList(false)">Sincronizar Manualmente</button>
+          <span ng-if="ldapToPersonsCcswbec">{{ldapToPersonsCcswScholars.length}} insertar | </span>
+          <span ng-if="personsCcswbecToLdap">{{personsCcswScholarsToLdap.length}} eliminar</span>
+
+        <button secondary  style="margin-left: 75px" *ngIf="ldapToPersonsCcswScholars.length || personsCcswScholarsToLdap.length"(click)="copyList(false)">Sincronizar Manualmente</button>
+      </p>
       </div>
     </div>
 
@@ -55,7 +57,7 @@
         <h3 class="list-header">Personas de <b>CCSWBecarios</b> que <b>NO</b> están en la app</h3>
         <mat-spinner [diameter]="55" *ngIf="showSpinner3"></mat-spinner>
           <mat-list id="ldap_listBec">
-              <mat-list-item *ngFor="let person of ldapToPersonsCcswbec">
+              <mat-list-item *ngFor="let person of ldapToPersonsCcswScholars">
                 <h3 matLine> {{person.name}} {{person.lastname}} </h3>
                 <p matLine>
                   <span> {{person.username}} </span>
@@ -67,7 +69,7 @@
         <h3 class="list-header">Personas de la app que <b>NO</b> están en <b>CSSWBecarios</b></h3>
         <mat-spinner [diameter]="55" *ngIf="showSpinner4"></mat-spinner>
           <mat-list id="persons_listBec" >
-              <mat-list-item *ngFor="let person of personsCcswbecToLdap">
+              <mat-list-item *ngFor="let person of personsCcswScholarsToLdap">
                 <h3 matLine> {{person.name}} {{person.lastname}} </h3>
                 <p matLine>
                   <span> {{person.username}} </span>
