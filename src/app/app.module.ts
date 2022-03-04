@@ -16,6 +16,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
@@ -55,6 +57,7 @@ import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cel
     MatSortModule,
     MatRadioModule,
     MatSlideToggleModule,
+    MatTabsModule,
     CoreModule,
     LoginModule,
     AgGridModule.withComponents([CustomCellButtonComponent]),
