@@ -1,3 +1,4 @@
+/*
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from "moment";
 import { ScholarService } from '../services/scholar.service';
@@ -28,6 +29,7 @@ export type ChartOptions = {
   plotOptions: ApexPlotOptions;
 };
 */
+/*
 @Component({
   selector: 'app-timeline-dialog',
   templateUrl: './timeline-dialog.component.html',
@@ -80,7 +82,7 @@ export class TimelineDialogComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.getScholarsByDate();
+    //this.getScholarsByDate();
   }
 
   dateRange(){
@@ -93,9 +95,9 @@ export class TimelineDialogComponent implements OnInit {
   }
 
   getScholarsByDate(){
-    this.scholarService.findScholarsByDate(this.startDate, this.endDate).subscribe( (res) => {
+    this.scholarService.findScholarsByDateTimeline(this.startDate, this.endDate).subscribe( (res) => {
       this.scholarData = res;
-
+      /*
       //TODO limpiar todo esto
       this.chartOptions = {
         series: [
@@ -129,7 +131,91 @@ export class TimelineDialogComponent implements OnInit {
           }
         }
       };
+      */
+      /*
+      window.ApexCharts.exec("chart", "updateSeries", [
+        {
+          data: res
+        }
+      ]);
+      *//*
+      debugger;
     });
   }
   
+}
+*/
+
+import { Component, OnInit } from '@angular/core';
+import { VScholarTimeLine } from 'src/app/core/to/VScholarTimeLine';
+import { ScholarService } from '../services/scholar.service';
+
+@Component({
+  selector: 'app-timeline-dialog',
+  templateUrl: './timeline-dialog.component.html',
+  styleUrls: ['./timeline-dialog.component.scss']
+})
+export class TimelineDialogComponent implements OnInit {
+  minDate: Date | undefined;
+  maxDate: Date | undefined;
+  startDate : Date | undefined;
+  endDate : Date | undefined;
+  scholarData : VScholarTimeLine[] = [];
+  
+  single: any[] | undefined;
+  view: any = [700, 400];
+
+  // options
+  showXAxis: boolean = true;
+  showYAxis: boolean = true;
+  gradient: boolean = false;
+  showLegend: boolean = true;
+  showXAxisLabel: boolean = true;
+  yAxisLabel: string = 'Country';
+  showYAxisLabel: boolean = true;
+  xAxisLabel: string = 'Population';
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  constructor(private scholarService: ScholarService) {
+    this.dateRange();
+    //Object.assign(this, { single });
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  dateRange(){
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const currentDay = currentDate.getDate();
+    this.minDate = new Date(currentYear, currentMonth - 2, currentDay);
+    this.maxDate = new Date(currentYear, currentMonth + 12, currentDay);
+  }
+
+  getScholarsByDate(){
+    this.scholarService.findScholarsByDateTimeline(this.startDate, this.endDate).subscribe( (res) => {
+      this.scholarData = res;
+    });
+  }
+
+  //cuando se hace click encima
+  /*
+  onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  //cuando se pone el raton encima
+  onActivate(data): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+  //cuando se quita el raton encima
+  onDeactivate(data): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
+  */
 }

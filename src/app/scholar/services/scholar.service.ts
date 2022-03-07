@@ -23,7 +23,7 @@ export class ScholarService {
     return this.http.post<VScholarDto[]>(environment.server+ '/scholar/', scholar);
   }
 
-  findScholarsByDate(startDate? : Date, endDate?: Date) : Observable<VScholarTimeLine[]> {
+  findScholarsByDateTimeline(startDate? : Date, endDate?: Date) : Observable<VScholarTimeLine[]> {
     let data = {
       startDate: startDate != null ? startDate : null, 
       endDate: endDate != null ? endDate : null

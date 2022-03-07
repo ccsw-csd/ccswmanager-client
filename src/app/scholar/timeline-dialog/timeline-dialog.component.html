@@ -16,6 +16,7 @@
         </mat-form-field>
         <button secondary (click)="getScholarsByDate()">Buscar</button>
     </div>
+    <!--
     <div id="chart">
         <apx-chart
           [series]="chartOptions.series"
@@ -27,5 +28,19 @@
           [xaxis]="chartOptions.xaxis"
           [yaxis]="chartOptions.yaxis"
         ></apx-chart>
-      </div>
+    </div>
+    -->
+    <ngx-charts-bar-horizontal
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="single"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-horizontal>
 </div>
