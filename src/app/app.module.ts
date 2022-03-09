@@ -25,9 +25,7 @@ import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
 import {UsersComponent} from './users/users.component';
 import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
-
-import { NgxChartsModule } from '@swimlane/ngx-charts'; 
-import { BarChartModule } from '@swimlane/ngx-charts';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -59,8 +57,7 @@ import { BarChartModule } from '@swimlane/ngx-charts';
     MatAutocompleteModule,
     ClipboardModule,
     MatSnackBarModule,
-    NgxChartsModule,
-    BarChartModule,
+    NgApexchartsModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],
