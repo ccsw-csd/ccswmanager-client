@@ -26,15 +26,12 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
 import {UsersComponent} from './users/users.component';
-<<<<<<< HEAD
 import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
 import { NgApexchartsModule } from "ng-apexcharts";
-=======
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cell-button.component';
->>>>>>> develop
 
 @NgModule({
   declarations: [
@@ -43,12 +40,9 @@ import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cel
     ScholarComponent,
     LdapDialogComponent,
     UsersComponent,
-<<<<<<< HEAD
-    TimelineDialogComponent
-=======
+    TimelineDialogComponent,
     UserDialogComponent,
     CustomCellButtonComponent,
->>>>>>> develop
   ],
   imports: 
   [
@@ -73,12 +67,9 @@ import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cel
     MatAutocompleteModule,
     ClipboardModule,
     MatSnackBarModule,
-<<<<<<< HEAD
-    NgApexchartsModule
-=======
+    NgApexchartsModule,
     MatFormFieldModule,
     MatInputModule,
->>>>>>> develop
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],
