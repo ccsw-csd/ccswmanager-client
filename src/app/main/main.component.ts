@@ -155,7 +155,7 @@ export class MainComponent implements OnInit {
         },
         cellEditor: 'agSelectCellEditor',
           cellEditorParams: {
-              values: ['Project Manager', 'Team Leader', 'Technical Lead', 'Analista', 'Developer', 'Tester'],
+              values: ['', 'Project Manager', 'Team Leader', 'Technical Lead', 'Analista', 'Developer', 'Tester'],
         }
       },
 
@@ -237,7 +237,7 @@ export class MainComponent implements OnInit {
       filter: 'agTextColumnFilter',
       floatingFilter: true,
       filterParams: {
-        filterOptions: ["contains"],
+        filterOptions: ["contains","equals"],
         newRowsAction: 'keep',
       },
       floatingFilterComponentParams: {suppressFilterButton:true},
@@ -292,20 +292,23 @@ export class MainComponent implements OnInit {
   onGridReady = (params: { api: GridApi; columnApi: ColumnApi}) => {
     this.api = params.api;
 
-    var filter = {
-
+    const filter = {
       department: {
         type: 'contains',
         filter: 'CCSw'
       },
-
       active: {
-        type: 'contains',
+        type: 'equals',
         filter: 'Activo'
       }
     };
 
+    const sort = [
+      {colId: 'lastname', sort: 'asc'}
+    ];
+
     this.api.setFilterModel(filter);
+    this.api.setSortModel(sort);
     this.api.sizeColumnsToFit();
     let agGrid = document.getElementById('agGrid');
     let obs = new ResizeObserver(entries => {

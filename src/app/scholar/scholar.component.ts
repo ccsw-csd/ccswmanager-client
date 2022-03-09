@@ -107,7 +107,7 @@ export class ScholarComponent implements OnInit {
       },
       cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
-          values: ['Vacío', 'Out', 'Contrato', 'Continuar'],
+          values: ['', 'Out', 'Contrato', 'Continuar'],
       }
     },
     { field: 'active', headerName: 'Estado', cellStyle: {'background-color': '#F8F8F8'},

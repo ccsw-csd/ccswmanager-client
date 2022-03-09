@@ -14,7 +14,7 @@ export class LayoutComponent implements OnInit {
   @ViewChild('sidenav') 
   private sideNav?: MatSidenav;
 
-  openNav? : boolean = true;
+  openNav? : boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
