@@ -13,6 +13,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LdapDialogComponent implements OnInit {
   ldapToPersons: LdapPerson[] = [];
   personsToLdap: LdapPerson[] = [];
+  tabIndex = "0";
+  ldapToPersonsCcswScholars: LdapPerson[] = [];
+  personsCcswScholarsToLdap: LdapPerson[] = [];
+
+  showSpinner1 = true;
+  showSpinner2 = true;
+  showSpinner3 = true;
+  showSpinner4 = true;
 
   constructor(
     private mainService: MainService,
@@ -23,39 +31,42 @@ export class LdapDialogComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    
+
     this.mainService.compareLdapToPersons().subscribe((persons) => {
       if (persons) {
-        this.stopLoading('loading_1', 'ldap_list');
+        this.showSpinner1 = false;
       }
       this.ldapToPersons = persons;
     });
 
     this.mainService.comparePersonsToLdap().subscribe((persons) => {
       if (persons) {
-        this.stopLoading('loading_2', 'persons_list');
+        this.showSpinner2 = false;
       }
       this.personsToLdap = persons;
     });
 
+    this.mainService.compareLdapToPersonsScholars().subscribe((persons) => {
+      if (persons) {
+        this.showSpinner3 = false;
+      }
+      this.ldapToPersonsCcswScholars = persons;
+    });
+
+    this.mainService.comparePersonsToLdapScholars().subscribe((persons) => {
+      if (persons) {
+        this.showSpinner4 = false;
+      }
+      this.personsCcswScholarsToLdap = persons;
+    });
+
   }
 
-  stopLoading(id: string, l_id: string) {
-    var loading = document.getElementById(id);
-    var list = document.getElementById(l_id);
-    if(loading != null) {
-      loading.style.display = 'none';
-    }
-    if(list != null) {
-      list.style.display = 'block';
-    }
-  }
-
-  copyList() {
+  copyList(contract : boolean) {
     var persons: String[];
     var list = "";
 
-    this.mainService.findListLdapUsernames().subscribe((usernames) => {
+    this.mainService.findListLdapUsernames(contract).subscribe((usernames) => {
       persons = usernames;
       persons.forEach(username => {
       list += username + "\n";

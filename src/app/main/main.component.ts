@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit} from '@angular/core';
-import { ColDef, ColumnApi, GridApi, GridOptions} from 'ag-grid-community';
+import { CellClickedEvent, ColDef, ColumnApi, GridApi, GridOptions} from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
 import { MainService } from './services/main.service';
 import { DialogComponent } from '../core/dialog/dialog.component';
@@ -11,6 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-main',
@@ -23,16 +24,18 @@ export class MainComponent implements OnInit {
 
   gridOptions: GridOptions;
 
-  saveRows: number [] = [];
+  saveRows: PersonDto [] = [];
+
+  deletePersons: PersonDto [] = [];
 
   api: GridApi = new GridApi;
 
   centers: string[] = [];
 
   columnDefs: ColDef[];
-  
+
   rowData : PersonDto[] = [];
-  
+
   defaultColDef: ColDef;
 
   personas: number = 0;
@@ -55,14 +58,21 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     @Inject (MatAutocompleteModule) public auto: string
   ) {
-    
+
     this.columnDefs = [
+      { field: 'delete', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,
+      cellRenderer: function(params) {
+        return '<span><i class="material-icons" style="margin-top:10px; color: lightcoral;">clear</i></span>'
+      },
+      onCellClicked: (event: CellClickedEvent) => this.delete(event), sortable:false, hide: true
+      },
+
       { field: 'saga', headerName: 'Saga', maxWidth: 96, minWidth: 96,
         cellStyle: params => {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -71,7 +81,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 25) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -83,7 +93,7 @@ export class MainComponent implements OnInit {
           else if(params.value.length > 50) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -95,7 +105,7 @@ export class MainComponent implements OnInit {
           else if(params.value.length > 100) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -104,7 +114,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 100) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -113,7 +123,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 5 || !this.grades.includes(params.value)) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         },
         valueGetter: function (params) {
           if (params.data.grade == null || params.data.grade == "" || params.data.grade == undefined) {
@@ -141,7 +151,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         },
         cellEditor: 'agSelectCellEditor',
           cellEditorParams: {
@@ -157,7 +167,7 @@ export class MainComponent implements OnInit {
           else if(params.value.length > 10) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -166,7 +176,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -175,7 +185,7 @@ export class MainComponent implements OnInit {
           if(params.value?.length > 10) {
             return {borderColor: 'lightcoral'};
           }
-          return {borderColor: 'transparent'}; 
+          return {borderColor: 'transparent'};
         }
       },
 
@@ -201,7 +211,7 @@ export class MainComponent implements OnInit {
               return 'Inactivo';
           } else {
               return 'Pendiente';
-          }}, 
+          }},
         valueSetter: params => {
           var newValue = params.newValue;
           if(newValue == "Activo") {
@@ -220,8 +230,8 @@ export class MainComponent implements OnInit {
                     values: ['Activo', 'Inactivo', 'Pendiente'],
                 },
       }];
-  
-    
+
+
     this.defaultColDef = {
       sortable: true,
       filter: 'agTextColumnFilter',
@@ -236,21 +246,19 @@ export class MainComponent implements OnInit {
       singleClickEdit: true
     };
 
-    this.gridOptions = {
-      getRowNodeId: (data) => data.id,
-    };
+    this.gridOptions = {};
 
   }
 
   ngOnInit(): void {
-    
+
     this.getPersons();
 
     this.mainService.findCenters().subscribe((res) => {
       res.forEach(center => {
         if(center.id != undefined && center.name) {
         this.centers[center.id] = center.name;}
-        
+
       });
       var column = this.api.getColumnDef('center');
       if (column != null) {
@@ -317,11 +325,15 @@ export class MainComponent implements OnInit {
 
     if(this.editar == false) {
       this.editar = true;
+      this.gridOptions.columnApi?.setColumnVisible('delete', true);
+      this.api.sizeColumnsToFit();
     }
     else {
       if(this.validations()) {
         this.searchPersonsCtrl.setValue("");
         this.editar = false;
+        this.gridOptions.columnApi?.setColumnVisible('delete', false);
+        this.api.sizeColumnsToFit();
         this.save();
       }
       else {
@@ -341,7 +353,10 @@ export class MainComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.editar = false;
+        this.gridOptions.columnApi?.setColumnVisible('delete', false);
+        this.api.sizeColumnsToFit();
         this.saveRows = [];
+        this.deletePersons = [];
         this.searchPersonsCtrl.setValue("");
         this.getPersons();
       }
@@ -350,8 +365,8 @@ export class MainComponent implements OnInit {
 
   onCellEditingStopped(e: any) {
     if(e.oldValue != e.newValue) {
-      if(!this.saveRows.includes(e.node.data.id))
-        this.saveRows.push(e.node.data.id);
+      if(!this.saveRows.includes(e.node.data))
+        this.saveRows.push(e.node.data);
     }
   }
 
@@ -359,10 +374,12 @@ export class MainComponent implements OnInit {
     var personsChanged: PersonDto[] = [];
 
     this.api.forEachNode(node => {
-      if(this.saveRows.includes(node.data.id) || node.data.id == null) {
+      if(this.saveRows.includes(node.data)){
         personsChanged.push(node.data);
       }
     });
+
+    personsChanged = personsChanged.concat(this.deletePersons);
 
     this.mainService.saveOrUpdatePersons(personsChanged).subscribe(data => {
       this.rowData = data;
@@ -372,6 +389,7 @@ export class MainComponent implements OnInit {
 
     this.api?.onFilterChanged();
     this.saveRows = [];
+    this.deletePersons = [];
   }
 
   getPersons() {
@@ -418,6 +436,7 @@ export class MainComponent implements OnInit {
     }
     this.rowData = this.rowData.concat([person]);
     this.searchPersonsCtrl.setValue("");
+    this.saveRows.push(person);
   }
 
   validations(): boolean {
@@ -454,5 +473,28 @@ export class MainComponent implements OnInit {
     const dialogRef = this.dialog.open(LdapDialogComponent, {
       data: {}
     });
+  }
+
+  delete(event: CellClickedEvent) {
+    var rowNode;
+    if(event.node.id != undefined)
+      rowNode = this.api.getRowNode(event.node.id);
+
+    var index = this.rowData.indexOf(rowNode?.data);
+    this.rowData.splice(index, 1);
+    this.api.setRowData(this.rowData);
+
+    var person: PersonDto = rowNode?.data;
+
+    if(this.saveRows.includes(person)) {
+      var indexSave = this.saveRows.indexOf(person);
+      this.saveRows.splice(indexSave, 1);
+    }
+
+    if(person.id != null && person.id != undefined) {
+      person.delete = true;
+      this.deletePersons.push(person);
+    }
+
   }
 }

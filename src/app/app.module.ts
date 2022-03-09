@@ -16,6 +16,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
@@ -24,8 +26,15 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
 import {UsersComponent} from './users/users.component';
+<<<<<<< HEAD
 import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
 import { NgApexchartsModule } from "ng-apexcharts";
+=======
+import { UserDialogComponent } from './users/user-dialog/user-dialog.component'
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cell-button.component';
+>>>>>>> develop
 
 @NgModule({
   declarations: [
@@ -34,9 +43,15 @@ import { NgApexchartsModule } from "ng-apexcharts";
     ScholarComponent,
     LdapDialogComponent,
     UsersComponent,
+<<<<<<< HEAD
     TimelineDialogComponent
+=======
+    UserDialogComponent,
+    CustomCellButtonComponent,
+>>>>>>> develop
   ],
-  imports: [
+  imports: 
+  [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -51,13 +66,19 @@ import { NgApexchartsModule } from "ng-apexcharts";
     MatSortModule,
     MatRadioModule,
     MatSlideToggleModule,
+    MatTabsModule,
     CoreModule,
     LoginModule,
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([CustomCellButtonComponent]),
     MatAutocompleteModule,
     ClipboardModule,
     MatSnackBarModule,
+<<<<<<< HEAD
     NgApexchartsModule
+=======
+    MatFormFieldModule,
+    MatInputModule,
+>>>>>>> develop
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],
