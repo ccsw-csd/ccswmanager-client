@@ -29,9 +29,9 @@ export class UserService {
     return this.http.get<string[]>(environment.server+ '/user/allUsername');
   }
 
-  deleteUser(username : string) : Observable<any>
+  deleteUser(id : number) : Observable<any>
   {
-    return this.http.delete(environment.server + '/user/' + username );
+    return this.http.delete(environment.server + '/user/' + id );
   }
 
   getDistinctCustomer() : Observable<string[]>
