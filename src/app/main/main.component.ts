@@ -386,7 +386,6 @@ export class MainComponent implements OnInit {
 
     this.mainService.saveOrUpdatePersons(personsChanged).subscribe(data => {
       this.rowData = data;
-      this.updateChips();
       this.checkLDAP();
     });
 
@@ -398,7 +397,6 @@ export class MainComponent implements OnInit {
   getPersons() {
     this.mainService.findPersons().subscribe( (res) => {
       this.rowData = res;
-      this.updateChips();
       this.checkLDAP();
     });
   }
@@ -406,10 +404,11 @@ export class MainComponent implements OnInit {
   updateChips() {
     this.becarios = 0;
     this.contratos = 0;
-    this.personas = this.rowData.length;
+    this.personas = 0;
 
-    this.rowData.forEach(person => {
-      if(this.isEmpty(person.grade)) {
+    this.api.forEachNodeAfterFilter(node => {
+      this.personas++;
+      if(this.isEmpty(node.data.grade)) {
         this.becarios++;
       }
       else {
@@ -470,6 +469,11 @@ export class MainComponent implements OnInit {
 
   resizeGrid() {
     this.api.sizeColumnsToFit();
+  }
+
+  firstDataRendered(){
+    this.resizeGrid();
+    this.updateChips();
   }
 
   openLDAP() {
