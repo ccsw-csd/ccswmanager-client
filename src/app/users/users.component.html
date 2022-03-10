@@ -5,7 +5,7 @@
     <div class = "new-user">
         <button primary (click)="addUser()">Nuevo usuario</button>
     </div>
-    <div>
+    <div (window:resize)="resizeGrid()">
         <ag-grid-angular 
             style="height: calc(100vh - 250px); width: 100%;"
             class="ag-theme-alpine"
@@ -13,7 +13,7 @@
             [rowData]="usuarios"
             [frameworkComponents]="frameworkComponents"
             [defaultColDef]="defaultColDef"
-            [gridOptions]="gridOptions"
+            (gridReady)="onGridReady($event)"
         >    
         </ag-grid-angular>
     </div>
