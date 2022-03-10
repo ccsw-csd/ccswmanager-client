@@ -26,6 +26,7 @@
             (gridReady)="onGridReady($event)"
             [stopEditingWhenCellsLoseFocus] = true
             (cellEditingStopped)="onCellEditingStopped($event)"
+            (firstDataRendered)="resizeGrid()"
         >
         </ag-grid-angular>
     </div>

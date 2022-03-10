@@ -46,6 +46,7 @@
             [gridOptions] = "gridOptions"
             (gridReady)="onGridReady($event)"
             (cellEditingStopped)="onCellEditingStopped($event)"
+            (firstDataRendered)="resizeGrid()"
         >
         </ag-grid-angular>
     </div>
