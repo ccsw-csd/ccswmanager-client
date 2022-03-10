@@ -1,7 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit} from '@angular/core';
 import { Usuario } from '../core/to/Usuario';
 import { UserService } from './users.service';
-import { ColDef} from 'ag-grid-community';
+import { ColDef, GridOptions} from 'ag-grid-community';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { CustomCellButtonComponent } from './custom-cell-button/custom-cell-button.component';
@@ -13,6 +13,7 @@ import { CustomCellButtonComponent } from './custom-cell-button/custom-cell-butt
 })
 export class UsersComponent implements OnInit {
   
+  gridOptions !: GridOptions;
   usuarios: Usuario[] = [];
   allUsername !: string[];
   defaultColDef !: ColDef;
@@ -31,13 +32,14 @@ export class UsersComponent implements OnInit {
 
     columnDefSch: ColDef[] = 
     [
-      { field: 'username', headerName: 'Nombre de usuario', sortable: true, cellStyle: {'background-color': '#F8F8F8'}},
-      { field: 'name', headerName: 'Nombre', sortable: true, cellStyle: {'background-color': '#F8F8F8'}}, 
-      { field: 'lastname', headerName: 'Apellidos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}}, 
-      { field: 'role', headerName: 'Rol', sortable: true, cellStyle: {'background-color': '#F8F8F8'}},
+      { field: 'username', headerName: 'Nombre de usuario', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, width: 264},
+      { field: 'name', headerName: 'Nombre', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, width: 264}, 
+      { field: 'lastname', headerName: 'Apellidos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, width: 264}, 
+      { field: 'role', headerName: 'Rol', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, width: 264},
+      { field: 'customers', headerName: 'Equipos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, width: 264},
       { headerName: 'Acción', cellRenderer: 'btnCellRenderer', cellRendererParams: {
         onClick: this.onBtnClick.bind(this)
-      },cellStyle: {'background-color': '#F8F8F8'}, filter : false}
+      },cellStyle: {'background-color': '#F8F8F8'}, filter : false, width: 264}
     ]
         
   ngOnInit(): void {
@@ -81,6 +83,4 @@ export class UsersComponent implements OnInit {
   {
     this.getUsuarios();
   }
-
-
 }

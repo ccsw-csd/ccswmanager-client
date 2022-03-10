@@ -7,12 +7,13 @@
     </div>
     <div>
         <ag-grid-angular 
-            style="height: calc(100vh - 200px); width: 500%;"
+            style="height: calc(100vh - 250px); width: 100%;"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSch"
             [rowData]="usuarios"
             [frameworkComponents]="frameworkComponents"
             [defaultColDef]="defaultColDef"
+            [gridOptions]="gridOptions"
         >    
         </ag-grid-angular>
     </div>

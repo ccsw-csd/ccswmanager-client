@@ -56,7 +56,6 @@ export class UserDialogComponent implements OnInit {
   {
     this.userService.getDistinctCustomer().subscribe(res =>{
       this.allCustomer = res.filter(item => item != null);
-      this.usuario.customers = this.allCustomer;
       console.log(res);
     })
   }
@@ -82,7 +81,8 @@ export class UserDialogComponent implements OnInit {
     
     if(!this.userForm.invalid)
     {
-      if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase())
+      if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase()
+        && this.usuario.customers == this.allCustomer)
       {
         this.onClose();
       }

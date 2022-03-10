@@ -48,7 +48,7 @@ export class CustomCellButtonComponent implements ICellRendererAngularComp {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.deleteUser(this.usuario.id).subscribe(res =>{
+        this.userService.deleteUser(this.usuario.username).subscribe(res =>{
           this.params.onClick();
         })
       }
