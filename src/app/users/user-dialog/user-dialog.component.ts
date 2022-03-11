@@ -33,6 +33,7 @@ export class UserDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getAllCustomer();
     if (this.data.user != null) {
       this.usuario = Object.assign({}, this.data.user);
       this.usuarioCurrent =  Object.assign({}, this.data.user);
