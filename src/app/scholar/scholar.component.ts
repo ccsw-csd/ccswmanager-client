@@ -8,6 +8,7 @@ import { VScholarDto } from 'src/app/core/to/VScholarDto';
 import { ScholarService } from './services/scholar.service';
 import { TimelineDialogComponent } from './timeline-dialog/timeline-dialog.component';
 
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
   selector: 'app-scholar',
@@ -30,9 +31,9 @@ export class ScholarComponent implements OnInit {
   columnDefSch: ColDef[] = [
     { field: 'username', headerName: 'Username', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 125, maxWidth: 140},
     { field: 'name', headerName: 'Nombre', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200}, 
-    { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200}, 
+    { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150}, 
     { field: 'customer', headerName: 'Cliente', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200},
-    { field: 'hours', headerName: 'Horas', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 100, maxWidth: 125},
+    { field: 'hours', headerName: 'Horas', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 80},
     { field: 'startDate', headerName: 'Inicio', editable: this.isEditing.bind(this),
       singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150,
       valueGetter : function(params) {
@@ -108,7 +109,7 @@ export class ScholarComponent implements OnInit {
       },
       cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
-          values: ['Vacío', 'Out', 'Contrato', 'Continuar'],
+          values: ['', 'Out', 'Contrato', 'Continuar'],
       }
     },
     { field: 'active', headerName: 'Estado', cellStyle: {'background-color': '#F8F8F8'},
@@ -132,10 +133,11 @@ export class ScholarComponent implements OnInit {
       filter: 'agTextColumnFilter',
       floatingFilter: true,
       filterParams: {
-        filterOptions: ["contains"],
+        filterOptions: ["contains","equals"],
         newRowsAction: 'keep',
       },
       floatingFilterComponentParams: {suppressFilterButton:true},
+      suppressMenu:true
     };
 
     this.gridOptions = {
@@ -157,15 +159,28 @@ export class ScholarComponent implements OnInit {
   onGridReady = (params: { api: GridApi;}) => {
     this.api = params.api;
 
-    var filter = {
-
+    const filter = {
       active: {
-        type: 'contains',
+        type: 'equals',
         filter: 'Activo'
       }
     };
+
+    const sort = [
+      {colId: 'lastname', sort: 'asc'}
+    ];
     
     this.api.setFilterModel(filter);
+    this.api.setSortModel(sort);
+    this.api.sizeColumnsToFit();
+    let agGrid = document.getElementById('agGridSholar');
+    let obs = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.api.sizeColumnsToFit();
+      }
+    });
+    if(agGrid != null)
+      obs.observe(agGrid);
   }
 
   isEditing(): boolean {
@@ -228,5 +243,8 @@ export class ScholarComponent implements OnInit {
       height: '90vh'
     });
   }
-
+  
+  resizeGrid() {
+    this.api.sizeColumnsToFit();
+  }
 }

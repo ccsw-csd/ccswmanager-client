@@ -41,7 +41,6 @@ export class UserDialogComponent implements OnInit {
     else
       this.dataUser = false;
   
-    console.log(this.usuario);
     this.userForm = this.formBuilder.group({
       username : ['', [Validators.required, Validators.pattern(/^\S*$/), Validators.maxLength(10)]],
       name : [this.usuario.name],
@@ -51,6 +50,12 @@ export class UserDialogComponent implements OnInit {
     })
   }
 
+  getAllCustomer()
+  {
+    this.userService.getDistinctCustomer().subscribe(res =>{
+      this.allCustomer = res.filter(item => item != null);
+    })
+  }
 
   getUsernameErrors() : string
   {
@@ -73,7 +78,8 @@ export class UserDialogComponent implements OnInit {
     
     if(!this.userForm.invalid)
     {
-      if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase())
+      if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase()
+        && this.usuario.customers == this.allCustomer)
       {
         this.onClose();
       }
