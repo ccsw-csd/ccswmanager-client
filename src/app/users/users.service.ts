@@ -15,7 +15,6 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
-
   findUsuario() : Observable<Usuario[]> {
     return this.http.get<Usuario[]>(environment.server+ '/user/');
   }
@@ -35,4 +34,8 @@ export class UserService {
     return this.http.delete(environment.server + '/user/' + id );
   }
 
+  getDistinctCustomer() : Observable<string[]>
+  {
+    return this.http.get<string[]>(environment.server + '/user/customers');
+  }
 }
