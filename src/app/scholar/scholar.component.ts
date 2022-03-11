@@ -152,7 +152,6 @@ export class ScholarComponent implements OnInit {
   getScholars(){
     this.scholarService.findScholars().subscribe( (res) => {
       this.rowDataScholar = res;
-      //debugger;
     }); 
   }
 
@@ -243,7 +242,7 @@ export class ScholarComponent implements OnInit {
       height: '90vh'
     });
   }
-  
+
   resizeGrid() {
     this.api.sizeColumnsToFit();
   }
