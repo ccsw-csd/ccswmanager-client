@@ -15,8 +15,8 @@
         </div>
     </div>
 
-    <div>
-        <ag-grid-angular
+    <div (window:resize)="resizeGrid()">
+        <ag-grid-angular id="agGridSholar"
             style="height: calc(100vh - 250px); width: 100%;"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSch"
@@ -26,7 +26,8 @@
             (gridReady)="onGridReady($event)"
             [stopEditingWhenCellsLoseFocus] = true
             (cellEditingStopped)="onCellEditingStopped($event)"
-        >    
+            (firstDataRendered)="resizeGrid()"
+        >
         </ag-grid-angular>
     </div>
 

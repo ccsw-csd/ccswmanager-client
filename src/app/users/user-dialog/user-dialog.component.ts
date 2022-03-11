@@ -33,7 +33,6 @@ export class UserDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getAllCustomer();
     if (this.data.user != null) {
       this.usuario = Object.assign({}, this.data.user);
       this.usuarioCurrent =  Object.assign({}, this.data.user);
@@ -42,7 +41,6 @@ export class UserDialogComponent implements OnInit {
     else
       this.dataUser = false;
   
-    console.log(this.usuario);
     this.userForm = this.formBuilder.group({
       username : ['', [Validators.required, Validators.pattern(/^\S*$/), Validators.maxLength(10)]],
       name : [this.usuario.name],
@@ -56,7 +54,6 @@ export class UserDialogComponent implements OnInit {
   {
     this.userService.getDistinctCustomer().subscribe(res =>{
       this.allCustomer = res.filter(item => item != null);
-      console.log(res);
     })
   }
 
