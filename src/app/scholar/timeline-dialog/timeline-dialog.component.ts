@@ -1,17 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ScholarService } from '../services/scholar.service';
 import { VScholarTimeLine } from 'src/app/core/to/VScholarTimeLine';
-import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexPlotOptions,
-  ApexXAxis,
-  ApexFill,
-  ApexDataLabels,
-  ApexYAxis,
-  ApexGrid
-} from "ng-apexcharts";
+import { ChartComponent } from "ng-apexcharts";
 
 
 @Component({
@@ -20,14 +10,13 @@ import {
   styleUrls: ['./timeline-dialog.component.scss']
 })
 export class TimelineDialogComponent implements OnInit {
-  //minDate: Date | undefined;
-  //maxDate: Date | undefined;
+
   @ViewChild("chart") chart: ChartComponent | undefined;
   public chartOptions: Partial<any>;
   startDate : Date | undefined;
   endDate : Date | undefined;
   scholarData : VScholarTimeLine[] = [];
-
+  errorTexto : String | undefined;
   
   
   constructor(private scholarService: ScholarService) {
@@ -72,8 +61,17 @@ export class TimelineDialogComponent implements OnInit {
   }
 
   onSave(){
+    if(this.endDate == null){
+      this.errorTexto = "El fecha de fin no puede estar vacío";
+    }
     if(this.startDate != null && this.endDate != null){
-      this.getScholarsByDate();
+      if(this.startDate > this.endDate){
+        this.errorTexto = "El fecha de fin no puede ser anterior a la fecha de inicio";
+        this.endDate = undefined;
+      }
+      else{
+        this.getScholarsByDate();
+      }
     }
   }
 
@@ -87,7 +85,7 @@ export class TimelineDialogComponent implements OnInit {
   }
 
   getScholarsByDate(){
-    this.scholarService.findScholarsByDateTimeline(this.startDate, this.endDate).subscribe( (res) => {
+    this.scholarService.findScholarsTimelineByDate(this.startDate, this.endDate).subscribe( (res) => {
       this.scholarData = res;
 
       this.chartOptions.series = [{

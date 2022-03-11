@@ -10,10 +10,10 @@
                 <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                 <mat-datepicker #start></mat-datepicker>
             </mat-form-field>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" style="margin-left: 10px">
                 <mat-label>Fecha de fin</mat-label>
                 <input name="endDate" matInput [(ngModel)]="endDate" [matDatepicker]="end" required/>
-                <mat-error>El fecha de fin no puede estar vacío</mat-error>
+                <mat-error>{{errorTexto}}</mat-error>
                 <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                 <mat-datepicker #end></mat-datepicker>
             </mat-form-field>
