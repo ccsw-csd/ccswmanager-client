@@ -33,7 +33,6 @@ export class UserDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getAllCustomer();
     if (this.data.user != null) {
       this.usuario = Object.assign({}, this.data.user);
       this.usuarioCurrent =  Object.assign({}, this.data.user);
@@ -46,15 +45,7 @@ export class UserDialogComponent implements OnInit {
       username : ['', [Validators.required, Validators.pattern(/^\S*$/), Validators.maxLength(10)]],
       name : [this.usuario.name],
       lastname : [this.usuario.name],
-      rol : [this.usuario.role, Validators.required],
-      customer : ['']
-    })
-  }
-
-  getAllCustomer()
-  {
-    this.userService.getDistinctCustomer().subscribe(res =>{
-      this.allCustomer = res.filter(item => item != null);
+      rol : [this.usuario.role, Validators.required]
     })
   }
 
@@ -79,8 +70,7 @@ export class UserDialogComponent implements OnInit {
     
     if(!this.userForm.invalid)
     {
-      if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase()
-        && this.usuario.customers == this.allCustomer)
+      if(this.usuario.username === this.usuarioCurrent.username && this.usuario.role.toUpperCase() === this.usuarioCurrent.role.toUpperCase())
       {
         this.onClose();
       }
