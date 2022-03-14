@@ -24,18 +24,9 @@ export class UserService {
     return this.http.put(environment.server+ '/user/save', useruario)
   }
 
-  getAllUsernames() : Observable<string[]>
-  {
-    return this.http.get<string[]>(environment.server+ '/user/allUsername');
-  }
 
   deleteUser(id : number) : Observable<any>
   {
     return this.http.delete(environment.server + '/user/' + id );
-  }
-
-  getDistinctCustomer() : Observable<string[]>
-  {
-    return this.http.get<string[]>(environment.server + '/user/customers');
   }
 }

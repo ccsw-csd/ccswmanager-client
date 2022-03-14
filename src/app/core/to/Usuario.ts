@@ -4,5 +4,4 @@ export interface Usuario {
     role: string;
     name: string;
     lastname: string;
-    customers : string[];
 }
