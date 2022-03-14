@@ -5,6 +5,7 @@ import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { CustomCellButtonComponent } from './custom-cell-button/custom-cell-button.component';
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
   selector: 'app-users',
@@ -91,5 +92,13 @@ export class UsersComponent implements OnInit {
   onGridReady(params : {api: GridApi}) {
     this.api = params.api;
     this.api.sizeColumnsToFit();
-    }
+    let agGrid = document.getElementById('agGridUser');
+    let obs = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.api.sizeColumnsToFit();
+      }
+    });
+    if(agGrid != null)
+      obs.observe(agGrid);
+  }
 }
