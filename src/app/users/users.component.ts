@@ -5,6 +5,7 @@ import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { CustomCellButtonComponent } from './custom-cell-button/custom-cell-button.component';
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
   selector: 'app-users',
@@ -33,14 +34,13 @@ export class UsersComponent implements OnInit {
 
     columnDefSch: ColDef[] = 
     [
-      { field: 'username', headerName: 'Nombre de usuario', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 160, minWidth: 130},
-      { field: 'name', headerName: 'Nombre', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 230, minWidth : 130, tooltipField: 'name'}, 
-      { field: 'lastname', headerName: 'Apellidos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 320, minWidth: 180, tooltipField: 'lastname'}, 
-      { field: 'role', headerName: 'Rol', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 100, minWidth: 90},
-      { field: 'customers', headerName: 'Equipos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, minWidth: 200, tooltipField: 'customers'},
+      { field: 'username', headerName: 'Nombre de usuario', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 270, minWidth: 130},
+      { field: 'name', headerName: 'Nombre', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 270, minWidth : 130, tooltipField: 'name'}, 
+      { field: 'lastname', headerName: 'Apellidos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, minWidth: 180, tooltipField: 'lastname'}, 
+      { field: 'role', headerName: 'Rol', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 210, minWidth: 90},
       { headerName: 'Acción', cellRenderer: 'btnCellRenderer', cellRendererParams: {
         onClick: this.onBtnClick.bind(this)
-      },cellStyle: {'background-color': '#F8F8F8'}, filter : false, maxWidth: 120, minWidth: 100}
+      },cellStyle: {'background-color': '#F8F8F8'}, filter : false, maxWidth: 190, minWidth: 100}
     ]
         
   ngOnInit(): void {
@@ -92,5 +92,13 @@ export class UsersComponent implements OnInit {
   onGridReady(params : {api: GridApi}) {
     this.api = params.api;
     this.api.sizeColumnsToFit();
-    }
+    let agGrid = document.getElementById('agGridUser');
+    let obs = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.api.sizeColumnsToFit();
+      }
+    });
+    if(agGrid != null)
+      obs.observe(agGrid);
+  }
 }

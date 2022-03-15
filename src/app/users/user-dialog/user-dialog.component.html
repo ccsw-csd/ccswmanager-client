@@ -32,12 +32,6 @@
                 Es un campo requerido
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Equipos</mat-label>
-            <mat-select formControlName="customer" multiple [(ngModel)] = "usuario.customers">
-              <mat-option *ngFor="let custom of allCustomer" [value]="custom">{{custom}}</mat-option>
-            </mat-select>
-          </mat-form-field>
           <div class = "button-action">
             <button primary (click)="onClose()">Cancelar</button>
             <button primary (click)="onSave()">Guardar</button>
