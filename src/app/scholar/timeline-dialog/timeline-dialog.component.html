@@ -13,7 +13,7 @@
             <mat-form-field appearance="fill" style="margin-left: 10px">
                 <mat-label>Fecha de fin</mat-label>
                 <input name="endDate" matInput [(ngModel)]="endDate" [matDatepicker]="end" required/>
-                <mat-error>{{errorTexto}}</mat-error>
+                <mat-error>{{errorText}}</mat-error>
                 <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                 <mat-datepicker #end></mat-datepicker>
             </mat-form-field>

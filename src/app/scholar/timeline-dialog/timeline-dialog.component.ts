@@ -16,7 +16,7 @@ export class TimelineDialogComponent implements OnInit {
   startDate : Date | undefined;
   endDate : Date | undefined;
   scholarData : VScholarTimeLine[] = [];
-  errorTexto : String | undefined;
+  errorText : String | undefined;
   
   
   constructor(private scholarService: ScholarService) {
@@ -62,11 +62,11 @@ export class TimelineDialogComponent implements OnInit {
 
   onSave(){
     if(this.endDate == null){
-      this.errorTexto = "El fecha de fin no puede estar vacío";
+      this.errorText = "El fecha de fin no puede estar vacío";
     }
     if(this.startDate != null && this.endDate != null){
       if(this.startDate > this.endDate){
-        this.errorTexto = "El fecha de fin no puede ser anterior a la fecha de inicio";
+        this.errorText = "El fecha de fin no puede ser anterior a la fecha de inicio";
         this.endDate = undefined;
       }
       else{
