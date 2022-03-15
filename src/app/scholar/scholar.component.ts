@@ -6,6 +6,8 @@ import { ColDef, GridApi, GridOptions} from 'ag-grid-community';
 import * as moment from 'moment';
 import { VScholarDto } from 'src/app/core/to/VScholarDto';
 import { ScholarService } from './services/scholar.service';
+import { TimelineDialogComponent } from './timeline-dialog/timeline-dialog.component';
+
 import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
@@ -233,8 +235,15 @@ export class ScholarComponent implements OnInit {
     this.saveRows = [];
   }
 
+  openTimeLine(){
+    const dialogRef = this.dialog.open(TimelineDialogComponent, {
+      data: {},
+      width: '80vw',
+      height: '90vh'
+    });
+  }
+
   resizeGrid() {
     this.api.sizeColumnsToFit();
   }
-
 }

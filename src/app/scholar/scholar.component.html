@@ -4,6 +4,9 @@
     </div>
 
     <div *ngIf="!editar" style="display: flex;">
+        <div class="timeline">
+            <button secondary (click)="openTimeLine()">TimeLine</button>
+        </div>
         <div class="edit">
             <button secondary (click)="changeMode()">Editar</button>
         </div>

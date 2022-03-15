@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScholarDto } from 'src/app/core/to/ScholarDto';
 import { VScholarDto } from 'src/app/core/to/VScholarDto';
+import { VScholarTimeLine } from 'src/app/core/to/VScholarTimeLine';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,5 +21,13 @@ export class ScholarService {
   
   saveOrUpdateScholars(scholar: VScholarDto[]) : Observable<VScholarDto[]> {
     return this.http.post<VScholarDto[]>(environment.server+ '/scholar/', scholar);
+  }
+
+  findScholarsTimelineByDate(startDate? : Date, endDate?: Date) : Observable<VScholarTimeLine[]> {
+    let data = {
+      startDate: startDate != null ? startDate : null, 
+      endDate: endDate != null ? endDate : null
+    };
+    return this.http.post<VScholarTimeLine[]>(environment.server+ '/scholar/dateFilter', data);
   }
 }

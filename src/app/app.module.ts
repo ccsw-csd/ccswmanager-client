@@ -26,6 +26,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
 import {UsersComponent} from './users/users.component';
+import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
+import { NgApexchartsModule } from "ng-apexcharts";
 import { UserDialogComponent } from './users/user-dialog/user-dialog.component'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -38,6 +40,7 @@ import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cel
     ScholarComponent,
     LdapDialogComponent,
     UsersComponent,
+    TimelineDialogComponent,
     UserDialogComponent,
     CustomCellButtonComponent,
   ],
@@ -64,6 +67,7 @@ import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cel
     MatAutocompleteModule,
     ClipboardModule,
     MatSnackBarModule,
+    NgApexchartsModule,
     MatFormFieldModule,
     MatInputModule,
   ],
