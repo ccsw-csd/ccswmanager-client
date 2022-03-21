@@ -22,8 +22,8 @@ export class UsersComponent implements OnInit {
   isloading !: boolean;
   editar = false;
   frameworkComponents: { btnCellRenderer: typeof CustomCellButtonComponent; };
-  
-  constructor( 
+
+  constructor(
     private userService: UserService,
     public dialog: MatDialog
      ) {
@@ -32,20 +32,20 @@ export class UsersComponent implements OnInit {
       }
     }
 
-    columnDefSch: ColDef[] = 
+    columnDefSch: ColDef[] =
     [
       { field: 'username', headerName: 'Nombre de usuario', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 270, minWidth: 130},
-      { field: 'name', headerName: 'Nombre', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 270, minWidth : 130, tooltipField: 'name'}, 
-      { field: 'lastname', headerName: 'Apellidos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, minWidth: 180, tooltipField: 'lastname'}, 
+      { field: 'name', headerName: 'Nombre', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 270, minWidth : 130, tooltipField: 'name'},
+      { field: 'lastname', headerName: 'Apellidos', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, minWidth: 180, tooltipField: 'lastname'},
       { field: 'role', headerName: 'Rol', sortable: true, cellStyle: {'background-color': '#F8F8F8'}, maxWidth: 210, minWidth: 90},
       { headerName: 'Acción', cellRenderer: 'btnCellRenderer', cellRendererParams: {
         onClick: this.onBtnClick.bind(this)
       },cellStyle: {'background-color': '#F8F8F8'}, filter : false, maxWidth: 190, minWidth: 100}
     ]
-        
+
   ngOnInit(): void {
     this.getUsuarios();
-    
+
     this.defaultColDef = {
       filter: 'agTextColumnFilter',
       floatingFilter: true,
@@ -79,7 +79,7 @@ export class UsersComponent implements OnInit {
       this.getUsuarios();
     });
   }
-  
+
   onBtnClick(e : any)
   {
     this.getUsuarios();

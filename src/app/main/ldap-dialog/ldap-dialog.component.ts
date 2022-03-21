@@ -32,28 +32,28 @@ export class LdapDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.mainService.compareLdapToPersons().subscribe((persons) => {
+    this.mainService.compareLdapToPersons(true).subscribe((persons) => {
       if (persons) {
         this.showSpinner1 = false;
       }
       this.ldapToPersons = persons;
     });
 
-    this.mainService.comparePersonsToLdap().subscribe((persons) => {
+    this.mainService.comparePersonsToLdap(true).subscribe((persons) => {
       if (persons) {
         this.showSpinner2 = false;
       }
       this.personsToLdap = persons;
     });
 
-    this.mainService.compareLdapToPersonsScholars().subscribe((persons) => {
+    this.mainService.compareLdapToPersons(false).subscribe((persons) => {
       if (persons) {
         this.showSpinner3 = false;
       }
       this.ldapToPersonsCcswScholars = persons;
     });
 
-    this.mainService.comparePersonsToLdapScholars().subscribe((persons) => {
+    this.mainService.comparePersonsToLdap(false).subscribe((persons) => {
       if (persons) {
         this.showSpinner4 = false;
       }

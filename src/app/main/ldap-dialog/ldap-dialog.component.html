@@ -4,12 +4,12 @@
     <div class="list-dis" >
       <div class="list-text">
         <p>La lista de distribución <strong>CCSW</strong> del LDAP no concuerda con la app:
-          <span ng-if="ldapToPersons">{{ldapToPersons.length}} insertar | </span>
-          <span ng-if="personsToLdap">{{personsToLdap.length}} eliminar</span>
+          <span ng-if="ldapToPersons">{{ldapToPersons.length}} eliminar | </span>
+          <span ng-if="personsToLdap">{{personsToLdap.length}} insertar</span>
         </p>
         <p>La lista de distribución <strong>CCSWBecarios</strong> del LDAP no concuerda con la app:
-          <span ng-if="ldapToPersonsCcswbec">{{ldapToPersonsCcswScholars.length}} insertar | </span>
-          <span ng-if="personsCcswbecToLdap">{{personsCcswScholarsToLdap.length}} eliminar</span>
+          <span ng-if="ldapToPersonsCcswbec">{{ldapToPersonsCcswScholars.length}} eliminar | </span>
+          <span ng-if="personsCcswbecToLdap">{{personsCcswScholarsToLdap.length}} insertar </span>
         </p>
       </div>
       <div class="list-bt" >
@@ -35,7 +35,7 @@
                 </mat-list>
           </div>
           <div style="width: 425px;">
-              <h3 class="list-header">Personas de la app que <b>NO</b> están en <b>CSSW</b></h3>
+              <h3 class="list-header">Personas de la app que <b>NO</b> están en <b>CCSW</b></h3>
               <mat-spinner [diameter]="55" *ngIf="showSpinner2"></mat-spinner>
               <mat-list id="persons_list">
                   <mat-list-item *ngFor="let person of personsToLdap">
