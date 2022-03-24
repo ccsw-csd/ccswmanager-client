@@ -12,6 +12,7 @@ import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.componen
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { PersonRoleDto } from '../core/to/PersonRoleDto';
 
 @Component({
   selector: 'app-main',
@@ -45,6 +46,8 @@ export class MainComponent implements OnInit {
   contratos: number = 0;
 
   grades: string[] = ["N/A", "A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "VP"];
+
+  personRoles : string[] = [];
 
   searchPersonsCtrl = new FormControl();
   isLoading = false;
@@ -145,17 +148,15 @@ export class MainComponent implements OnInit {
         }
 
       },
-
       { field: 'role', headerName: 'Rol', maxWidth: 170, minWidth: 170,
-        cellStyle: params => {
-          if(params.value?.length > 50) {
-            return {borderColor: 'lightcoral'};
-          }
-          return {borderColor: 'transparent'};
-        },
         cellEditor: 'agSelectCellEditor',
-          cellEditorParams: {
-              values: ['', 'Project Manager', 'Team Leader', 'Technical Lead', 'Analista', 'UX', 'Arquitecto', 'Dev. Fullstack', 'Dev. Frontend', 'Dev. Backend', 'Tester / QA', 'Otro'],
+        cellEditorParams: {
+          values: this.personRoles,
+        },
+        valueSetter: params => {
+          var newValue = params.newValue;
+          params.data.role = newValue;
+          return true;
         }
       },
 
@@ -252,6 +253,18 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.mainService.findPersonRoles().subscribe((res) => {
+      res.forEach(pRole => {
+        if(pRole.id != undefined && pRole.role) {
+        this.personRoles[pRole.id] = pRole.role;}
+
+      });
+      var column = this.api.getColumnDef('role');
+      if (column != null) {
+        column.cellEditorParams = { values: this.personRoles}
+    }});
+
+    console.log(this.personRoles);
     this.getPersons();
 
     this.mainService.findCenters().subscribe((res) => {
@@ -394,6 +407,7 @@ export class MainComponent implements OnInit {
     this.deletePersons = [];
   }
 
+
   getPersons() {
     this.mainService.findPersons().subscribe( (res) => {
       this.rowData = res;
@@ -435,6 +449,9 @@ export class MainComponent implements OnInit {
     }
     if(person.center == null) {
       person.center = {id:6, name: 'Valencia'};
+    }
+    if (person.role == null){
+      person.role = "";
     }
     this.rowData = this.rowData.concat([person]);
     this.searchPersonsCtrl.setValue("");
