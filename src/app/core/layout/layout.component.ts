@@ -33,9 +33,9 @@ export class LayoutComponent implements OnInit {
   private checkUserDetails() : void {
     let user = this.authService.getUserInfo();
 
-    if (user == null || user.username == null) {
+    if (user == null || user.username == null || user.role == null) {
       this.authService.clearCredentials();
-      this.router.navigate(['main']);
+      this.router.navigate(['login']);
     }
   }
 
