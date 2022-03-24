@@ -155,7 +155,7 @@ export class MainComponent implements OnInit {
         },
         cellEditor: 'agSelectCellEditor',
           cellEditorParams: {
-              values: ['', 'Project Manager', 'Team Leader', 'Technical Lead', 'Analista', 'Developer', 'Tester'],
+              values: ['', 'Project Manager', 'Team Leader', 'Technical Lead', 'Analista', 'UX', 'Arquitecto', 'Dev. Fullstack', 'Dev. Frontend', 'Dev. Backend', 'Tester / QA', 'Otro'],
         }
       },
 
