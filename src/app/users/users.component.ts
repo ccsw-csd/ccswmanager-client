@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { CustomCellButtonComponent } from './custom-cell-button/custom-cell-button.component';
 import ResizeObserver from 'resize-observer-polyfill';
+import { AuthService } from '../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -25,11 +27,12 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
      ) {
       this.frameworkComponents = {
         btnCellRenderer: CustomCellButtonComponent
       }
+
     }
 
     columnDefSch: ColDef[] =
