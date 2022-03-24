@@ -37,11 +37,11 @@ export class ScholarComponent implements OnInit {
     { field: 'startDate', headerName: 'Inicio', editable: this.isEditing.bind(this),
       singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150, comparator : this.dateComparator,
       valueGetter : function(params) {
-        if(params.data.endDate != null){
-          return moment(params.data.endDate).format('DD/MM/YYYY');
+        if(params.data.startDate != null){
+          return moment(params.data.startDate).format('DD/MM/YYYY');
         }
         else
-          return params.data.endDate;
+          return params.data.startDate;
       },
       valueSetter: params => {
         var newValue = params.newValue;
@@ -57,7 +57,7 @@ export class ScholarComponent implements OnInit {
 
     },
     { field: 'endDate', headerName: 'Fin', editable: this.isEditing.bind(this),
-      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150,
+      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150, comparator : this.dateComparator,
       valueGetter : function(params) {
         if(params.data.endDate != null)
           return moment(params.data.endDate).format('DD/MM/YYYY');
