@@ -50,6 +50,6 @@ export class MainService {
   }
 
   findPersonRoles(): Observable<PersonRoleDto[]> {
-    return this.http.get<PersonRoleDto[]>(environment.server + '/personRoles/');
+    return this.http.get<PersonRoleDto[]>(environment.server + '/person-roles/');
   }
 }
