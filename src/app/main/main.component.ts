@@ -256,27 +256,28 @@ export class MainComponent implements OnInit {
     this.mainService.findPersonRoles().subscribe((res) => {
       res.forEach(pRole => {
         if(pRole.id != undefined && pRole.role) {
-        this.personRoles[pRole.id] = pRole.role;}
-
+          this.personRoles[pRole.id] = pRole.role;
+        }
+        this.personRoles[0] = '';
       });
       var column = this.api.getColumnDef('role');
       if (column != null) {
         column.cellEditorParams = { values: this.personRoles}
-    }});
-
-    console.log(this.personRoles);
+      }
+      });
     this.getPersons();
 
     this.mainService.findCenters().subscribe((res) => {
       res.forEach(center => {
         if(center.id != undefined && center.name) {
-        this.centers[center.id] = center.name;}
-
+        this.centers[center.id] = center.name;
+      }
       });
       var column = this.api.getColumnDef('center');
       if (column != null) {
         column.cellEditorParams = { values: this.centers}
-    }});
+      }
+    });
 
     this.searchPersonsCtrl.valueChanges
     .pipe(
