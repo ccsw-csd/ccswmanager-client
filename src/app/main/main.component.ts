@@ -145,7 +145,7 @@ export class MainComponent implements OnInit {
             params.data.grade = newValue;
           }
           return true;
-        }
+        } 
 
       },
       { field: 'role', headerName: 'Rol', maxWidth: 170, minWidth: 170,
