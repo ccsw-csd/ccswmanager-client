@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CenterDto } from 'src/app/core/to/CenterDto';
 import { PersonDto } from 'src/app/core/to/PersonDto';
+import { PersonRoleDto } from 'src/app/core/to/PersonRoleDto';
 import { environment } from 'src/environments/environment';
 import { LdapPerson } from '../ldap-dialog/to/LdapPerson';
 
@@ -46,5 +47,9 @@ export class MainService {
 
   findListLdapUsernames(contract : boolean): Observable<String[]> {
     return this.http.get<String[]>(environment.server + '/ldap/list/' + contract);
+  }
+
+  findPersonRoles(): Observable<PersonRoleDto[]> {
+    return this.http.get<PersonRoleDto[]>(environment.server + '/person-roles/');
   }
 }

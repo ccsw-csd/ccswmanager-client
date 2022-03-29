@@ -7,7 +7,7 @@
       <a mat-list-item routerLinkActive="item-active" routerLink="/scholar">
         <span>Gestión Becarios</span>
       </a>
-      <a mat-list-item routerLinkActive="item-active" routerLink="/users">
+      <a *ngIf="!isAdmin"  mat-list-item routerLinkActive="item-active" routerLink="/users">
         <span>Gestión Usuarios</span>
       </a>
       <a mat-list-item routerLinkActive="item-active" routerLink="/pyramid">

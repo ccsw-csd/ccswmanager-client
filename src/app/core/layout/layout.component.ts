@@ -17,7 +17,7 @@ export class LayoutComponent implements OnInit {
   openNav? : boolean = false;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute, 
     private authService: AuthService,
     public dialog: MatDialog,
     public router: Router,

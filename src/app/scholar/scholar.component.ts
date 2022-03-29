@@ -30,15 +30,16 @@ export class ScholarComponent implements OnInit {
 
   columnDefSch: ColDef[] = [
     { field: 'username', headerName: 'Username', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 125, maxWidth: 140},
-    { field: 'name', headerName: 'Nombre', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200}, 
-    { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150}, 
+    { field: 'name', headerName: 'Nombre', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200},
+    { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150},
     { field: 'customer', headerName: 'Cliente', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200},
     { field: 'hours', headerName: 'Horas', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 80},
     { field: 'startDate', headerName: 'Inicio', editable: this.isEditing.bind(this),
-      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150,
+      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150, comparator : this.dateComparator,
       valueGetter : function(params) {
-        if(params.data.startDate != null)
+        if(params.data.startDate != null){
           return moment(params.data.startDate).format('DD/MM/YYYY');
+        }
         else
           return params.data.startDate;
       },
@@ -53,10 +54,10 @@ export class ScholarComponent implements OnInit {
         }
         return true;
       }
-      
-    }, 
+
+    },
     { field: 'endDate', headerName: 'Fin', editable: this.isEditing.bind(this),
-      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150,
+      singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150, comparator : this.dateComparator,
       valueGetter : function(params) {
         if(params.data.endDate != null)
           return moment(params.data.endDate).format('DD/MM/YYYY');
@@ -74,9 +75,9 @@ export class ScholarComponent implements OnInit {
         }
         return true;
       }
-    }, 
+    },
     { field: 'title', headerName: 'Titulación', editable: this.isEditing.bind(this),
-      singleClickEdit: true, minWidth: 150, maxWidth: 175}, 
+      singleClickEdit: true, minWidth: 150, maxWidth: 175},
     { field: 'action', headerName: 'Acción', editable: this.isEditing.bind(this),
       singleClickEdit: true, minWidth: 125, maxWidth: 125,
       valueGetter: function (params) {
@@ -126,8 +127,8 @@ export class ScholarComponent implements OnInit {
   ];
 
 
-  constructor( private scholarService: ScholarService, public dialog: MatDialog) 
-  { 
+  constructor( private scholarService: ScholarService, public dialog: MatDialog)
+  {
     this.defaultColDef = {
       sortable: true,
       filter: 'agTextColumnFilter',
@@ -135,7 +136,7 @@ export class ScholarComponent implements OnInit {
       filterParams: {
         filterOptions: ["contains","equals"],
         newRowsAction: 'keep',
-      },
+        },
       floatingFilterComponentParams: {suppressFilterButton:true},
       suppressMenu:true
     };
@@ -152,7 +153,7 @@ export class ScholarComponent implements OnInit {
   getScholars(){
     this.scholarService.findScholars().subscribe( (res) => {
       this.rowDataScholar = res;
-    }); 
+    });
   }
 
   onGridReady = (params: { api: GridApi;}) => {
@@ -166,9 +167,9 @@ export class ScholarComponent implements OnInit {
     };
 
     const sort = [
-      {colId: 'lastname', sort: 'asc'}
+      {colId: 'endDate', sort: 'asc'}
     ];
-    
+
     this.api.setFilterModel(filter);
     this.api.setSortModel(sort);
     this.api.sizeColumnsToFit();
@@ -246,4 +247,24 @@ export class ScholarComponent implements OnInit {
   resizeGrid() {
     this.api.sizeColumnsToFit();
   }
+
+   dateComparator(date1 : any, date2 : any) {
+    var date1Number = date1 && moment(date1, "DD/MM/YYYY").valueOf();
+    var date2Number = date2 && moment(date2, "DD/MM/YYYY").valueOf();
+
+
+    if (date1Number == null && date2Number == null) {
+      return 0;
+    }
+
+    if (date1Number == null) {
+      return -1;
+    } else if (date2Number == null) {
+      return 1;
+    }
+
+    return date1Number - date2Number;
+  }
+
+
 }

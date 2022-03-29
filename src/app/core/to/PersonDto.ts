@@ -5,9 +5,9 @@ export class PersonDto {
     saga: String|undefined;
     username: String|undefined;
     name: String|undefined;
-    email: String|undefined;  
-    lastname: String|undefined; 
-    center: CenterDto | undefined; 
+    email: String|undefined;
+    lastname: String|undefined;
+    center: CenterDto | undefined;
     grade: string|undefined;
     customer: string|undefined;
     role: string|undefined;
@@ -19,4 +19,3 @@ export class PersonDto {
     delete: boolean = false;
     constructor() {}
 }
-  
