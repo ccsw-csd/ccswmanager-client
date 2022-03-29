@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '../core/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ColDef, GridApi, GridOptions, ValueGetterParams} from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions, ValueGetterParams, ValueFormatterParams, CellClassParams} from 'ag-grid-community';
 import * as moment from 'moment';
 import ResizeObserver from 'resize-observer-polyfill';
-import { PyramidDto } from '../core/to/PyramidDto';
 import { PyramidService } from './services/pyramid.service';
 import { ChartComponent } from "ng-apexcharts";
 import { HttpParams } from '@angular/common/http';
@@ -42,124 +41,44 @@ export class PyramidComponent implements OnInit {
       }
     },
     { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.A1 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     },
     { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.A2 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     }, 
     { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },  
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.B1 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     }, 
     { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF', "font-weight":"bold"};
-        }
-        return {backgroundColor: '#F8F8F8', "font-weight":"bold"};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.B2 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     },
     { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.B3 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     },
     { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.C1 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     },
     { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.C2 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     }, 
     { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.C3 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     }, 
     { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.D1 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     },
     { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
-      cellStyle: params => {
-        if (params.data.rowName == 1) {
-          return {backgroundColor: '#FFFFFF'};
-        }
-        return {backgroundColor: '#F8F8F8'};
-      },
-      editable: this.isEditing.bind(this), 
-      valueGetter: function (params) {
-        return (Math.round(params.data.D2 * 100) / 100).toFixed(2);
-      }
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+      valueFormatter: this.valueGetFormatDecimals,
     },
   ];
 
@@ -168,12 +87,6 @@ export class PyramidComponent implements OnInit {
   { 
     this.defaultColDef = {
       sortable: true,
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
-      filterParams: {
-        filterOptions: ["contains","equals"],
-        newRowsAction: 'keep',
-      },
       floatingFilterComponentParams: {suppressFilterButton:true},
       suppressMenu:true
     };
@@ -283,6 +196,17 @@ export class PyramidComponent implements OnInit {
       return params.data.rowName == 1;
     else
       return false;
+  }
+
+  cellStyleEditableBackground(params: CellClassParams){
+      if (params.data.rowName == 1) {
+        return {backgroundColor: '#FFFFFF'};
+      }
+      return {backgroundColor: '#F8F8F8'};
+  }
+
+  valueGetFormatDecimals(params: ValueFormatterParams) {
+    return (Math.round(params.value * 100) / 100).toFixed(2);
   }
 
   changeMode(): void {

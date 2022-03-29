@@ -13,6 +13,7 @@
             [stopEditingWhenCellsLoseFocus] = true
             (cellEditingStopped)="onCellEditingStopped($event)"
             (firstDataRendered)="resizeGrid()"
+            
         >
         </ag-grid-angular>
         <div *ngIf="!editar" style="display: flex;">
