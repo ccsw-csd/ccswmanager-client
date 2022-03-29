@@ -13,11 +13,11 @@ export class PyramidService {
     private http: HttpClient
   ) { }
 
-  returnPyramidIndexCost() : Observable<PyramidDto[]> {
-    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/');
+  getPyramidIndexCost() : Observable<Map<String, Number>[]> {
+    return this.http.get<Map<String, Number>[]>(environment.server+ '/pyramid/');
   }
 
-  saveOrUpdatePyramidCosts(pyramid: PyramidDto[]) : Observable<PyramidDto[]> {
-    return this.http.post<PyramidDto[]>(environment.server+ '/pyramid/', pyramid);
+  saveOrUpdatePyramidCosts(pyramid: Map<String, Number>[]) : Observable<Map<String, Number>[]> {
+    return this.http.post<Map<String, Number>[]>(environment.server+ '/pyramid/', pyramid);
   }
 }
