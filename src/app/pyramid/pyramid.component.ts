@@ -7,6 +7,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { PyramidService } from './services/pyramid.service';
 import { ChartComponent } from "ng-apexcharts";
 import { HttpParams } from '@angular/common/http';
+import { PyramidDto } from '../core/to/PyramidDto';
 
 @Component({
   selector: 'app-pyramid',
@@ -24,12 +25,23 @@ export class PyramidComponent implements OnInit {
   saveRows: number [] = [];
 
   rowDataPyramidMap : Map<String, Number>[] = [];
+  rowDataPyramidChartLeft : PyramidDto[] = [];
+  rowDataPyramidChartRight : PyramidDto[] = [];
+
+  rowProfilePyramidGraphLeft : string[] = [];
+  rowIndexPyramidGraphLeft : number[] = [];
 
   defaultColDef : ColDef;
+  defaultColDefChartLeft : ColDef;
+  defaultColDefChartRight : ColDef;
 
   gridOptions: GridOptions;
+  gridOptionsLeft: GridOptions;
+  gridOptionsRight: GridOptions;
 
   api: GridApi = new GridApi;
+  apiLeft: GridApi = new GridApi;
+  apiRight: GridApi = new GridApi;
 
   columnDefSch: ColDef[] = [
     { field: 'rowName', headerName: '', cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold"}, minWidth: 80, maxWidth: 80,
@@ -82,6 +94,17 @@ export class PyramidComponent implements OnInit {
     },
   ];
 
+  columnDefSchChartLeft: ColDef[] = [
+    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 },
+    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 },
+    { field: 'index', headerName: 'INDEX', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100,
+      valueFormatter: this.valueGetFormatDecimals
+    }
+  ];
+  columnDefSchChartRight: ColDef[] = [
+    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 },
+    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 }
+  ];
 
   constructor( private pyramidService: PyramidService, public dialog: MatDialog) 
   { 
@@ -91,15 +114,47 @@ export class PyramidComponent implements OnInit {
       suppressMenu:true
     };
 
+    this.defaultColDefChartLeft = {
+      sortable: true,
+      floatingFilterComponentParams: {suppressFilterButton:true},
+      suppressMenu:true
+    };
+
+    this.defaultColDefChartRight = {
+      sortable: true,
+      floatingFilterComponentParams: {suppressFilterButton:true},
+      suppressMenu:true
+    };
+
     this.gridOptions = {
+      getRowNodeId: (data) => data.id,
+    };
+
+    this.gridOptionsLeft = {
+      getRowNodeId: (data) => data.id,
+    };
+
+    this.gridOptionsRight = {
       getRowNodeId: (data) => data.id,
     };
     
     this.chartOptionsLeft = {
       series: [
         {
-          name: "basic",
-          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+          name: "index",
+          data: [
+            10.28562386264736,
+            9.090909090909092,
+            0,
+            0,
+            0,
+            0,
+            42.10869251569605,
+            34.407971591199974,
+            14.4268673526852,
+            0,
+            110.32006441313769,
+          ]
         }
       ],
       chart: {
@@ -116,16 +171,17 @@ export class PyramidComponent implements OnInit {
       },
       xaxis: {
         categories: [
-          "South Korea",
-          "Canada",
-          "United Kingdom",
-          "Netherlands",
-          "Italy",
-          "France",
-          "Japan",
-          "United States",
-          "China",
-          "Germany"
+          "A1",
+          "B2",
+          "C3",
+          "A2",
+          "B3",
+          "D1",
+          "C1",
+          "D2",
+          "B1",
+          "C2",
+          "TOTAL"
         ]
       }
     };
@@ -168,11 +224,86 @@ export class PyramidComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPyramidsIndexCosts();
+    this.getPyramidsGridLeft();
+    this.getPyramidsGridRight();
   }
 
   getPyramidsIndexCosts(){
     this.pyramidService.getPyramidIndexCost().subscribe( (res) => {
       this.rowDataPyramidMap = res;
+    }); 
+  }
+
+  getPyramidsGridLeft(){
+    this.pyramidService.getPyramidsProfileCountIndex().subscribe( (res) => {
+      this.rowDataPyramidChartLeft = res;
+
+      res.forEach(element => {
+        this.rowProfilePyramidGraphLeft.push(element.profile!);
+        this.rowIndexPyramidGraphLeft.push(element.index!);
+      });
+    }); 
+    //debugger;
+
+    
+    /*
+    this.chartOptionsLeft.updateSeries([
+      {
+        name: 'series_1',
+        data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380, 10]
+      }
+    ])
+    
+    this.chartOptionsLeft = {
+      series: [
+        {
+          name: "index",
+          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        }
+      ],
+      xaxis: {
+        categories: [
+          "South Korea",
+          "Canada",
+          "United Kingdom",
+          "Netherlands",
+          "Italy",
+          "France",
+          "Japan",
+          "United States",
+          "China",
+          "Germany"
+        ]
+      }
+    };*/
+/*
+    this.chartOptionsLeft.series = [{
+      //data: this.rowProfilePyramidGraphLeft
+      name: "index",
+      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+    }];
+
+    this.chartOptionsLeft.xaxis = [{
+      //categories: this.rowIndexPyramidGraphLeft
+      categories: [
+        "South Korea",
+        "Canada",
+        "United Kingdom",
+        "Netherlands",
+        "Italy",
+        "France",
+        "Japan",
+        "United States",
+        "China",
+        "Germany"
+      ]
+    }];*/
+  }
+
+  getPyramidsGridRight(){
+    this.pyramidService.getPyramidsProfileCount().subscribe( (res) => {
+      this.rowDataPyramidChartRight = res;
+      debugger;
     }); 
   }
   
@@ -188,6 +319,35 @@ export class PyramidComponent implements OnInit {
     });
     if(agGrid != null)
       obs.observe(agGrid);
+  }
+
+  onGridReadyLeft = (params: { api: GridApi;}) => {
+    this.apiLeft = params.api;
+    
+    this.apiLeft.sizeColumnsToFit();
+    let agGridLeft = document.getElementById('agGridChartLeft');
+    let obs = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.apiLeft.sizeColumnsToFit();
+      }
+    });
+    if(agGridLeft != null)
+      obs.observe(agGridLeft);
+  }
+
+  
+  onGridReadyRight = (params: { api: GridApi;}) => {
+    this.apiRight = params.api;
+    
+    this.apiRight.sizeColumnsToFit();
+    let agGridRight = document.getElementById('agGridChartRight');
+    let obs = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        this.apiRight.sizeColumnsToFit();
+      }
+    });
+    if(agGridRight != null)
+      obs.observe(agGridRight);
   }
 
 
@@ -260,5 +420,13 @@ export class PyramidComponent implements OnInit {
   
   resizeGrid() {
     this.api.sizeColumnsToFit();
+  }
+
+  resizeGridLeft() {
+    this.apiLeft.sizeColumnsToFit();
+  }
+
+  resizeGridRight() {
+    this.apiRight.sizeColumnsToFit();
   }
 }

@@ -13,9 +13,9 @@
             [stopEditingWhenCellsLoseFocus] = true
             (cellEditingStopped)="onCellEditingStopped($event)"
             (firstDataRendered)="resizeGrid()"
-            
         >
         </ag-grid-angular>
+        
         <div *ngIf="!editar" style="display: flex;">
             <div class="edit">
                 <button secondary (click)="changeMode()">Editar</button>
@@ -28,21 +28,32 @@
             </div>
         </div>
     </div>
-    <!-- 
+    
     <div>
-        <div>
+        <div id="left">
+            <ag-grid-angular id="gridChartLeft"
+            class="ag-theme-alpine"
+            [columnDefs]="columnDefSchChartLeft"
+            [rowData]="rowDataPyramidChartLeft"
+            [defaultColDef]="defaultColDefChartLeft"
+            [gridOptions] = "gridOptionsLeft"
+            (gridReady)="onGridReadyLeft($event)"
+            (firstDataRendered)="resizeGridLeft()"
+            >
+            </ag-grid-angular>
+        <!--
             <div id="gridChartLeft" (window:resize)="resizeGrid()">
                 <ag-grid-angular id="agGridChartLeft"
+                    style="width: 100%; height: 100%;"
                     class="ag-theme-alpine"
                     [columnDefs]="columnDefSchChartLeft"
                     [rowData]="rowDataPyramidChartLeft"
                     [defaultColDef]="defaultColDefChartLeft"
-                    [gridOptions] = "gridOptions"
-                    (gridReady)="onGridReady($event)"
-                    (firstDataRendered)="resizeGrid()"
+                    (gridReady)="onGridReadyLeft($event)"
                 >
                 </ag-grid-angular>
             </div>
+        -->
             <div id="chartLeft">
                 <apx-chart
                     [series]="chartOptionsLeft.series"
@@ -53,19 +64,33 @@
                 ></apx-chart>
             </div>
         </div>
-        <div>
+
+        
+        <div id="right">
+            <ag-grid-angular id="gridChartRight"
+            class="ag-theme-alpine"
+            [columnDefs]="columnDefSchChartRight"
+            [rowData]="rowDataPyramidChartRight"
+            [defaultColDef]="defaultColDefChartRight"
+            [gridOptions] = "gridOptionsRight"
+            (gridReady)="onGridReadyRight($event)"
+            (firstDataRendered)="resizeGridRight()"
+            >
+            </ag-grid-angular>
+            <!--
             <div id="gridChartRight" (window:resize)="resizeGrid()">
                 <ag-grid-angular id="agGridChartRight"
                     class="ag-theme-alpine"
                     [columnDefs]="columnDefSchChartRight"
                     [rowData]="rowDataPyramidChartRight"
                     [defaultColDef]="defaultColDefChartRight"
-                    [gridOptions] = "gridOptions"
-                    (gridReady)="onGridReady($event)"
-                    (firstDataRendered)="resizeGrid()"
+                    [gridOptions] = "gridOptionsRight"
+                    (gridReady)="onGridReadyRight($event)"
+                    (firstDataRendered)="resizeGridRight()"
                 >
                 </ag-grid-angular>
             </div>
+            -->
             <div id="chartRight">
                 <apx-chart
                     [series]="chartOptionsRight.series"
@@ -74,8 +99,7 @@
                     [plotOptions]="chartOptionsRight.plotOptions"
                     [xaxis]="chartOptionsRight.xaxis"
                 ></apx-chart>
-                </div>
+            </div>
         </div>
     </div>
-    -->
 </div>

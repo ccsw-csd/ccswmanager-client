@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PyramidDto } from 'src/app/core/to/PyramidDto';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,5 +19,13 @@ export class PyramidService {
 
   saveOrUpdatePyramidCosts(pyramid: Map<String, Number>[]) : Observable<Map<String, Number>[]> {
     return this.http.post<Map<String, Number>[]>(environment.server+ '/pyramid/', pyramid);
+  }
+
+  getPyramidsProfileCountIndex() : Observable<PyramidDto[]> {
+    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/leftGraph');
+  }  
+
+  getPyramidsProfileCount() : Observable<PyramidDto[]> {
+    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/rightGraph');
   }
 }
