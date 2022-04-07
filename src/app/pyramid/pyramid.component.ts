@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '../core/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ColDef, GridApi, GridOptions, ValueGetterParams, ValueFormatterParams, CellClassParams} from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions, ValueFormatterParams, CellClassParams} from 'ag-grid-community';
 import * as moment from 'moment';
 import ResizeObserver from 'resize-observer-polyfill';
 import { PyramidService } from './services/pyramid.service';
 import { ChartComponent } from "ng-apexcharts";
-import { HttpParams } from '@angular/common/http';
 import { PyramidDto } from '../core/to/PyramidDto';
 
 @Component({
@@ -142,19 +141,7 @@ export class PyramidComponent implements OnInit {
       series: [
         {
           name: "index",
-          data: [
-            10.28562386264736,
-            9.090909090909092,
-            0,
-            0,
-            0,
-            0,
-            42.10869251569605,
-            34.407971591199974,
-            14.4268673526852,
-            0,
-            110.32006441313769,
-          ]
+          data: []
         }
       ],
       chart: {
@@ -170,27 +157,15 @@ export class PyramidComponent implements OnInit {
         enabled: false
       },
       xaxis: {
-        categories: [
-          "A1",
-          "B2",
-          "C3",
-          "A2",
-          "B3",
-          "D1",
-          "C1",
-          "D2",
-          "B1",
-          "C2",
-          "TOTAL"
-        ]
+        categories: []
       }
     };
 
     this.chartOptionsRight = {
       series: [
         {
-          name: "basic",
-          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+          name: "index",
+          data: []
         }
       ],
       chart: {
@@ -206,18 +181,7 @@ export class PyramidComponent implements OnInit {
         enabled: false
       },
       xaxis: {
-        categories: [
-          "South Korea",
-          "Canada",
-          "United Kingdom",
-          "Netherlands",
-          "Italy",
-          "France",
-          "Japan",
-          "United States",
-          "China",
-          "Germany"
-        ]
+        categories: []
       }
     };
   }
@@ -238,72 +202,27 @@ export class PyramidComponent implements OnInit {
     this.pyramidService.getPyramidsProfileCountIndex().subscribe( (res) => {
       this.rowDataPyramidChartLeft = res;
 
-      res.forEach(element => {
-        this.rowProfilePyramidGraphLeft.push(element.profile!);
-        this.rowIndexPyramidGraphLeft.push(element.index!);
-      });
+      this.chartOptionsLeft.series = [{
+        name: "index",
+        data: res.map((elem) => ({
+          'x': elem.profile,
+          'y': elem.index?.toFixed(2)
+        }))
+      }];
     }); 
-    //debugger;
-
-    
-    /*
-    this.chartOptionsLeft.updateSeries([
-      {
-        name: 'series_1',
-        data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380, 10]
-      }
-    ])
-    
-    this.chartOptionsLeft = {
-      series: [
-        {
-          name: "index",
-          data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-        }
-      ],
-      xaxis: {
-        categories: [
-          "South Korea",
-          "Canada",
-          "United Kingdom",
-          "Netherlands",
-          "Italy",
-          "France",
-          "Japan",
-          "United States",
-          "China",
-          "Germany"
-        ]
-      }
-    };*/
-/*
-    this.chartOptionsLeft.series = [{
-      //data: this.rowProfilePyramidGraphLeft
-      name: "index",
-      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-    }];
-
-    this.chartOptionsLeft.xaxis = [{
-      //categories: this.rowIndexPyramidGraphLeft
-      categories: [
-        "South Korea",
-        "Canada",
-        "United Kingdom",
-        "Netherlands",
-        "Italy",
-        "France",
-        "Japan",
-        "United States",
-        "China",
-        "Germany"
-      ]
-    }];*/
   }
 
   getPyramidsGridRight(){
     this.pyramidService.getPyramidsProfileCount().subscribe( (res) => {
       this.rowDataPyramidChartRight = res;
-      debugger;
+
+      this.chartOptionsRight.series = [{
+        name: "count",
+        data: res.map((elem) => ({
+          'x': elem.profile,
+          'y': elem.count
+        }))
+      }];
     }); 
   }
   

@@ -38,41 +38,45 @@
 
 }
 
+#down{
+    margin-top: 5%;
+    height: auto;
+    width: 100%;
+}
 
 #left{
     width: 50%; 
-    height: 400px;
+    height: auto;
     float: left;
-    margin-top: 5%;
-    //margin-right: 1%;  
 
     #gridChartLeft{
-        height:  calc(332px - 180px);
-        width: 50%;
+        height: calc(710px - 180px);
+        max-width: 50%;
+        min-width: 30%;
         float: left;
     }
 
     #chartLeft{
-        width: 50%;
-        float: right;
+        width: calc(70% - 20%);
+        float: left;
     }
 }
 
 #right{
     width: 50%; 
-    height: 400px;
+    height: auto;
     float: left;
-    margin-top: 5%;
-    //margin-right: 1%;  
+    display: flex;
 
     #gridChartRight{
-        height:  calc(332px - 180px);
-        width: 50%;
+        height: calc(500px - 180px);
+        max-width: 40%;
+        min-width: 20%;
         float: left;
     }
 
     #chartRight{
-        width: 50%;
-        float: right;
+        width: calc(70% - 20%);
+        float: left;
     }
 }
