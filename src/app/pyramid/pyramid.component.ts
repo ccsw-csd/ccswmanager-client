@@ -51,44 +51,44 @@ export class PyramidComponent implements OnInit {
           return "COST";
       }
     },
-    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
-      valueFormatter: this.valueGetFormatDecimals,
-    }, 
-    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
-      valueFormatter: this.valueGetFormatDecimals,
-    }, 
-    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
-      valueFormatter: this.valueGetFormatDecimals,
-    }, 
-    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
-      valueFormatter: this.valueGetFormatDecimals,
-    }, 
-    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80, 
-      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
+    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
+      valueFormatter: this.valueGetFormatDecimals,
+    },
+    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
+      valueFormatter: this.valueGetFormatDecimals,
+    },
+    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
+      valueFormatter: this.valueGetFormatDecimals,
+    },
+    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
+      valueFormatter: this.valueGetFormatDecimals,
+    },
+    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80,
+      cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
       valueFormatter: this.valueGetFormatDecimals,
     },
   ];
@@ -105,8 +105,8 @@ export class PyramidComponent implements OnInit {
     { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70 }
   ];
 
-  constructor( private pyramidService: PyramidService, public dialog: MatDialog) 
-  { 
+  constructor( private pyramidService: PyramidService, public dialog: MatDialog)
+  {
     this.defaultColDef = {
       sortable: true,
       floatingFilterComponentParams: {suppressFilterButton:true},
@@ -138,7 +138,7 @@ export class PyramidComponent implements OnInit {
     this.gridOptionsRight = {
       getRowNodeId: (data) => data.id,
     };
-    
+
     this.chartOptionsLeft = {
       series: [
         {
@@ -156,7 +156,7 @@ export class PyramidComponent implements OnInit {
         }
       },
       dataLabels: {
-        enabled: false
+        enabled: true
       },
       xaxis: {
         categories: []
@@ -180,7 +180,7 @@ export class PyramidComponent implements OnInit {
         }
       },
       dataLabels: {
-        enabled: false
+        enabled: true
       },
       xaxis: {
         categories: []
@@ -197,7 +197,7 @@ export class PyramidComponent implements OnInit {
   getPyramidsIndexCosts(){
     this.pyramidService.getPyramidIndexCost().subscribe( (res) => {
       this.rowDataPyramidMap = res;
-    }); 
+    });
   }
 
   getPyramidsGridLeft(){
@@ -212,7 +212,7 @@ export class PyramidComponent implements OnInit {
           'y': elem.index?.toFixed(2)
         }))
       }];
-    }); 
+    });
   }
 
   getPyramidsGridRight(){
@@ -227,12 +227,12 @@ export class PyramidComponent implements OnInit {
           'y': elem.count
         }))
       }];
-    }); 
+    });
   }
-  
+
   onGridReady = (params: { api: GridApi;}) => {
     this.api = params.api;
-    
+
     this.api.sizeColumnsToFit();
     let agGrid = document.getElementById('agGridPyramid');
     let obs = new ResizeObserver(entries => {
@@ -246,7 +246,7 @@ export class PyramidComponent implements OnInit {
 
   onGridReadyLeft = (params: { api: GridApi;}) => {
     this.apiLeft = params.api;
-    
+
     this.apiLeft.sizeColumnsToFit();
     let agGridLeft = document.getElementById('agGridChartLeft');
     let obs = new ResizeObserver(entries => {
@@ -258,10 +258,10 @@ export class PyramidComponent implements OnInit {
       obs.observe(agGridLeft);
   }
 
-  
+
   onGridReadyRight = (params: { api: GridApi;}) => {
     this.apiRight = params.api;
-    
+
     this.apiRight.sizeColumnsToFit();
     let agGridRight = document.getElementById('agGridChartRight');
     let obs = new ResizeObserver(entries => {
@@ -323,7 +323,7 @@ export class PyramidComponent implements OnInit {
         this.saveRows.push(e.node.data.id);
     }
   }
-  
+
   save() {
     var pyramidCostsChanged: Map<String, Number>[] = [];
     this.api.forEachNode(node => {
@@ -342,7 +342,7 @@ export class PyramidComponent implements OnInit {
     this.getPyramidsGridLeft();
     this.getPyramidsGridRight();
   }
-  
+
   resizeGrid() {
     this.api.sizeColumnsToFit();
   }

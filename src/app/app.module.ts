@@ -33,6 +33,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cell-button.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
+import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { PyramidComponent } from './pyramid/pyramid.component';
     TimelineDialogComponent,
     UserDialogComponent,
     CustomCellButtonComponent,
+    PyramidTeamComponent,
   ],
   imports: 
   [
