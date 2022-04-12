@@ -339,6 +339,8 @@ export class PyramidComponent implements OnInit {
 
     this.api?.onFilterChanged();
     this.saveRows = [];
+    this.getPyramidsGridLeft();
+    this.getPyramidsGridRight();
   }
   
   resizeGrid() {
