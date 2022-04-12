@@ -2,8 +2,8 @@
   <div>
       <h1>Pyramid Teams Index</h1>
   </div>
-  <div id = "costesValencia" (window:resize)="resizeGrid()">
-      <ag-grid-angular id="agGridPyramid"
+  <div id = "total" (window:resize)="resizeGrid()">
+      <ag-grid-angular id="agGridPyramidTotal"
           class="ag-theme-alpine"
           [columnDefs]="columnDefSch"
           [rowData]="rowDataPyramidMap"
@@ -15,27 +15,24 @@
       </ag-grid-angular>
   </div>
 
-  <div class="costesGrupos" (window:resize)="resizeGrid()">
+  <div class="groups">
     <div #teamsDivComponent *ngFor="let team of rowTeams">
       <h2>{{team.customerName}}</h2>
       <div class="gridAndChart" >
 
         <div class="grid">
-          <ag-grid-angular #grid id="agGridPyramidDynamic"
+          <ag-grid-angular #grid id="agGridPyramidGroup"
               class="ag-theme-alpine"
               [columnDefs]="columnDefSchGroup"
               [rowData]="team.customerList"
               [defaultColDef]="defaultColDef"
               [gridOptions] = "gridOptions"
-              (gridReady)="onGridReady($event)"
-              (firstDataRendered)="resizeGrid()"
               (gridSizeChanged)="onGridSizeChanged($event)"
           >
           </ag-grid-angular>
         </div>
           <div #chart class="chart" id="{{team.customerName}}"
           >
-
         </div>
       </div>
     </div>

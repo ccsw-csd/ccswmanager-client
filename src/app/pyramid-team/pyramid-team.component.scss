@@ -1,7 +1,7 @@
 @import "./src/assets/scss/master";
 
 
-#agGridPyramid{
+#agGridPyramidTotal{
     width: 60%;
     justify-content: center;
     margin-left: 10px;
@@ -13,14 +13,14 @@
   text-align: center;
 }
 
-#costesValencia {
+#total {
   display: flex;
   justify-content:center;
   height: 158px;
   width: 100%;
 }
 
-.costesGrupos{
+.groups{
   display: flex;
   overflow: hidden;
   flex-direction: column;
@@ -38,7 +38,7 @@
       height: 100%;
       margin-right: 10px;
       margin-left: 10px;
-      #agGridPyramidDynamic{
+      #agGridPyramidGroup{
         height: calc(710px - 180px);
       }
     }
@@ -52,6 +52,4 @@
       min-width: 30%;
     }
   }
-
-
 }

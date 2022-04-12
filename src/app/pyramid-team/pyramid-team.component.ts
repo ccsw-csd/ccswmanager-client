@@ -17,7 +17,6 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
 
   @ViewChildren('grid') gridComponents : QueryList<ElementRef> | any;
 
-
   rowDataPyramidMap : Map<String, Number>[] = [];
 
   dataRow: number [] = [];
@@ -44,7 +43,7 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
 
   columnDefSchGroup : ColDef[] = [
     { field: 'profile', headerName: 'PERFIL',
-    cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold", 'text-align': 'center'}, minWidth: 40, },
+    cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold", 'text-align': 'center'}, minWidth: 40 },
     { field: 'count', headerName: 'COUNT', singleClickEdit: false, minWidth: 40,
     valueFormatter: this.valueGetFormatInteger,cellStyle: {'text-align': 'center'}},
     { field: 'index', headerName: 'INDEX', singleClickEdit: false, minWidth: 40,
@@ -52,7 +51,7 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
   ];
 
   columnDefSch: ColDef[] = [
-    { field: 'rowName', headerName: '', cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold"}, minWidth: 60,
+    { field: 'rowName', headerName: '', cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold"}, minWidth: 80, maxWidth: 80,
       valueGetter: function (params) {
         if (params.data.rowName == 0)
           return "INDEX";
@@ -92,9 +91,7 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
     },
   ];
 
-
-  constructor( private pyramidTeamService: PyramidTeamService, public dialog: MatDialog)
-  {
+  constructor( private pyramidTeamService: PyramidTeamService, public dialog: MatDialog){
     this.defaultColDef = {
       sortable: true,
       floatingFilterComponentParams: {suppressFilterButton:true},
@@ -106,13 +103,11 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
     };
 
     this.chartMap = new Map();
-
   }
 
   ngOnInit(): void {
     this.getPyramidsIndexCosts();
     this.getPyramidTeams();
-
   }
 
   getPyramidsIndexCosts(){
@@ -126,14 +121,13 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
       this.rowTeams = res;
       this.getCustomerData();
     });
-
   }
 
   onGridReady = (params: { api: GridApi;}) => {
     this.api = params.api;
 
     this.api.sizeColumnsToFit();
-    let agGrid = document.getElementById('agGridPyramid');
+    let agGrid = document.getElementById('agGridPyramidTotal');
     let obs = new ResizeObserver(entries => {
       for (let entry of entries) {
         this.api.sizeColumnsToFit();
@@ -153,11 +147,10 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
 
   resizeGrid() {
     this.api.sizeColumnsToFit();
-
   }
 
   onGridSizeChanged(params: GridSizeChangedEvent) {
-    var gridWidth = document.getElementById('agGridPyramid')!.offsetWidth;
+    var gridWidth = document.getElementById('agGridPyramidGroup')!.offsetWidth;
     var columnsToShow = [];
     var columnsToHide = [];
     var totalColsWidth = 0;
@@ -180,8 +173,7 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
     params.api.sizeColumnsToFit();
   }
 
-  getCustomerData()
-  {
+  getCustomerData(){
     this.rowTeams.forEach(e => this.createCharts(e.customerName, e.customerList));
   }
 
@@ -223,6 +215,4 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
 
     this.chartMap.set(title, chartPyramid);
   }
-
-
 }
