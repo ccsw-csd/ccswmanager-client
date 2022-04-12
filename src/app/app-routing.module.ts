@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main.component';
 import { ScholarComponent } from './scholar/scholar.component';
 import { UsersComponent } from './users/users.component';
+import { PyramidComponent } from './pyramid/pyramid.component';
+import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 
 
 const routes: Routes = [
@@ -23,9 +25,11 @@ const routes: Routes = [
       { path: 'main', component: MainComponent,},
       { path: 'scholar', component: ScholarComponent,},
       { path: 'users', component: UsersComponent,},
+      { path: 'pyramid', component: PyramidComponent,},
+      { path: 'pyramid-team', component: PyramidTeamComponent,},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },
     ]
-  },  
+  },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

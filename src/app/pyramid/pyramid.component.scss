@@ -1,0 +1,82 @@
+@import "./src/assets/scss/master";
+
+#indexCost{
+    display: flex;
+}
+
+#agGridPyramid{
+    height:  calc(332px - 180px);
+    width: 60%;
+    margin-left:calc(5% - 0%);
+    float: left;
+}
+
+.edit {
+    margin-right: auto;
+    margin-left:10%;
+
+    button {
+        width: 150px;
+        margin-bottom: 20px;
+        padding: 5px;
+        margin-right: 0px;
+    }
+}
+
+.closeEdit {
+
+    margin-right: auto;
+    margin-left:10%;
+    width: 310px;
+
+    button {
+        width: 150px;
+        margin-bottom: 20px;
+        padding: 5px;
+        margin-right: 0px;
+    }
+
+}
+
+#down{
+    margin-top: 5%;
+    height: auto;
+    width: 100%;
+}
+
+#left{
+    width: 50%; 
+    height: auto;
+    float: left;
+
+    #gridChartLeft{
+        height: calc(710px - 180px);
+        max-width: 50%;
+        min-width: 30%;
+        float: left;
+    }
+
+    #chartLeft{
+        width: calc(70% - 20%);
+        float: left;
+    }
+}
+
+#right{
+    width: 50%; 
+    height: auto;
+    float: left;
+    display: flex;
+
+    #gridChartRight{
+        height: calc(500px - 180px);
+        max-width: 40%;
+        min-width: 20%;
+        float: left;
+    }
+
+    #chartRight{
+        width: calc(70% - 20%);
+        float: left;
+    }
+}
