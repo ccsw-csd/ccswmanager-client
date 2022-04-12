@@ -1,0 +1,57 @@
+@import "./src/assets/scss/master";
+
+
+#agGridPyramid{
+    width: 60%;
+    justify-content: center;
+    margin-left: 10px;
+    float: left;
+}
+
+
+.grid-cell-centered {
+  text-align: center;
+}
+
+#costesValencia {
+  display: flex;
+  justify-content:center;
+  height: 158px;
+  width: 100%;
+}
+
+.costesGrupos{
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  row-gap: 20px;
+  margin-top: 20px;
+  h2{
+    text-align: center;
+  }
+  .gridAndChart{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    .grid{
+      width: 30%;
+      height: 100%;
+      margin-right: 10px;
+      margin-left: 10px;
+      #agGridPyramidDynamic{
+        height: calc(710px - 180px);
+      }
+    }
+    .chart{
+      display: flex;
+      flex-direction: row;
+      justify-content:center;
+      align-items: center;
+      height: 100%;
+      max-width: 50%;
+      min-width: 30%;
+    }
+  }
+
+
+}
