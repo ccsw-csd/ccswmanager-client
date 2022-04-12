@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogComponent } from '../core/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ColDef, GridApi, GridOptions, ValueFormatterParams, CellClassParams} from 'ag-grid-community';
+import { ColDef, GridApi, GridOptions, ValueFormatterParams, CellClassParams, FirstDataRenderedEvent, GridSizeChangedEvent} from 'ag-grid-community';
 import * as moment from 'moment';
 import ResizeObserver from 'resize-observer-polyfill';
 import { PyramidService } from './services/pyramid.service';
@@ -94,15 +94,15 @@ export class PyramidComponent implements OnInit {
   ];
 
   columnDefSchChartLeft: ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 },
-    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 },
-    { field: 'index', headerName: 'INDEX', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100,
+    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 },
+    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 },
+    { field: 'index', headerName: 'INDEX', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100,
       valueFormatter: this.valueGetFormatDecimals
     }
   ];
   columnDefSchChartRight: ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 },
-    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 100 }
+    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 },
+    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 }
   ];
 
   constructor( private pyramidService: PyramidService, public dialog: MatDialog) 
@@ -116,13 +116,15 @@ export class PyramidComponent implements OnInit {
     this.defaultColDefChartLeft = {
       sortable: true,
       floatingFilterComponentParams: {suppressFilterButton:true},
-      suppressMenu:true
+      suppressMenu:true,
+      resizable: true,
     };
 
     this.defaultColDefChartRight = {
       sortable: true,
       floatingFilterComponentParams: {suppressFilterButton:true},
-      suppressMenu:true
+      suppressMenu:true,
+      resizable: true,
     };
 
     this.gridOptions = {
@@ -202,9 +204,10 @@ export class PyramidComponent implements OnInit {
     this.pyramidService.getPyramidsProfileCountIndex().subscribe( (res) => {
       this.rowDataPyramidChartLeft = res;
 
+      let resChart = res.filter(data => data.profile != 'TOTAL');
       this.chartOptionsLeft.series = [{
         name: "index",
-        data: res.map((elem) => ({
+        data: resChart.map((elem) => ({
           'x': elem.profile,
           'y': elem.index?.toFixed(2)
         }))
@@ -216,9 +219,10 @@ export class PyramidComponent implements OnInit {
     this.pyramidService.getPyramidsProfileCount().subscribe( (res) => {
       this.rowDataPyramidChartRight = res;
 
+      let resChart = res.filter(data => data.profile != 'TOTAL');
       this.chartOptionsRight.series = [{
         name: "count",
-        data: res.map((elem) => ({
+        data: resChart.map((elem) => ({
           'x': elem.profile,
           'y': elem.count
         }))
@@ -343,9 +347,35 @@ export class PyramidComponent implements OnInit {
 
   resizeGridLeft() {
     this.apiLeft.sizeColumnsToFit();
+    this.apiLeft.setDomLayout('autoHeight');
   }
 
   resizeGridRight() {
     this.apiRight.sizeColumnsToFit();
+    this.apiRight.setDomLayout('autoHeight');
+  }
+
+  onGridSizeChanged(params: GridSizeChangedEvent) {
+    var gridWidth = document.getElementById('left')!.offsetWidth;
+    var columnsToShow = [];
+    var columnsToHide = [];
+    var totalColsWidth = 0;
+    var allColumns = params.columnApi.getAllColumns();
+
+    if (allColumns && allColumns.length > 0) {
+      for (var i = 0; i < allColumns.length; i++) {
+        var column = allColumns[i];
+        totalColsWidth += column.getMinWidth() || 0;
+        if (totalColsWidth > gridWidth) {
+          columnsToHide.push(column.getColId());
+        } else {
+          columnsToShow.push(column.getColId());
+        }
+      }
+    }
+
+    params.columnApi.setColumnsVisible(columnsToShow, true);
+    params.columnApi.setColumnsVisible(columnsToHide, false);
+    params.api.sizeColumnsToFit();
   }
 }

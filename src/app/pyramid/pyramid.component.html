@@ -29,8 +29,8 @@
         </div>
     </div>
     
-    <div id="down" (window:resize)="resizeGrid()">
-        <div id="left" (window:resize)="resizeGrid()">
+    <div id="down" >
+        <div id="left" (window:resize)="resizeGridLeft()">
             <ag-grid-angular id="gridChartLeft"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSchChartLeft"
@@ -39,6 +39,7 @@
             [gridOptions] = "gridOptionsLeft"
             (gridReady)="onGridReadyLeft($event)"
             (firstDataRendered)="resizeGridLeft()"
+            (gridSizeChanged)="onGridSizeChanged($event)"
             >
             </ag-grid-angular>
             <div id="chartLeft">
@@ -52,7 +53,7 @@
             </div>
         </div>
         
-        <div id="right" (window:resize)="resizeGrid()">
+        <div id="right" (window:resize)="resizeGridRight()">
             <ag-grid-angular id="gridChartRight"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSchChartRight"
@@ -61,6 +62,7 @@
             [gridOptions] = "gridOptionsRight"
             (gridReady)="onGridReadyRight($event)"
             (firstDataRendered)="resizeGridRight()"
+            (gridSizeChanged)="onGridSizeChanged($event)"
             >
             </ag-grid-angular>
             <div id="chartRight">

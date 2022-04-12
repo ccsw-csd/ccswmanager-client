@@ -22,10 +22,10 @@ export class PyramidService {
   }
 
   getPyramidsProfileCountIndex() : Observable<PyramidDto[]> {
-    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/leftGraph');
+    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/profileCountIndexGraph');
   }  
 
   getPyramidsProfileCount() : Observable<PyramidDto[]> {
-    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/rightGraph');
+    return this.http.get<PyramidDto[]>(environment.server+ '/pyramid/profileCountGraph');
   }
 }
