@@ -51,58 +51,58 @@ export class PyramidComponent implements OnInit {
           return "COST";
       }
     },
-    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     }, 
-    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     }, 
-    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     }, 
-    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     }, 
-    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80, maxWidth: 100,
+    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80, 
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this), 
       valueFormatter: this.valueGetFormatDecimals,
     },
   ];
 
   columnDefSchChartLeft: ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 },
-    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 },
-    { field: 'index', headerName: 'INDEX', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100,
+    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70 },
+    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70 },
+    { field: 'index', headerName: 'INDEX', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70,
       valueFormatter: this.valueGetFormatDecimals
     }
   ];
   columnDefSchChartRight: ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 },
-    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70, maxWidth: 100 }
+    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70 },
+    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 70 }
   ];
 
   constructor( private pyramidService: PyramidService, public dialog: MatDialog) 
