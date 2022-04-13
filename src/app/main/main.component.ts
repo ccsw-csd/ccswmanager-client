@@ -48,6 +48,7 @@ export class MainComponent implements OnInit {
   grades: string[] = ["N/A", "A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "VP"];
 
   personRoles : string[] = [];
+  provinces: string[] = [];
 
   searchPersonsCtrl = new FormControl();
   isLoading = false;
@@ -145,7 +146,7 @@ export class MainComponent implements OnInit {
             params.data.grade = newValue;
           }
           return true;
-        } 
+        }
 
       },
       { field: 'role', headerName: 'Rol', maxWidth: 170, minWidth: 170,
@@ -159,7 +160,6 @@ export class MainComponent implements OnInit {
           return true;
         }
       },
-
       { field: 'hours', headerName: 'Horas', maxWidth: 95, minWidth: 95,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
@@ -200,6 +200,17 @@ export class MainComponent implements OnInit {
           var id = this.centers.indexOf(newValue);
           params.data.center.id = id;
           params.data.center.name = newValue;
+          return true;
+        }
+      },
+      { field: 'province', headerName: 'Provincia', maxWidth: 170, minWidth: 170,
+        cellEditor: 'agSelectCellEditor',
+        cellEditorParams: {
+          values: this.provinces,
+        },
+        valueSetter: params => {
+          var newValue = params.newValue;
+          params.data.province = newValue;
           return true;
         }
       },
@@ -253,18 +264,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.mainService.findPersonRoles().subscribe((res) => {
-      res.forEach(pRole => {
-        if(pRole.id != undefined && pRole.role) {
-          this.personRoles[pRole.id] = pRole.role;
-        }
-        this.personRoles[0] = '';
-      });
-      var column = this.api.getColumnDef('role');
-      if (column != null) {
-        column.cellEditorParams = { values: this.personRoles}
-      }
-      });
+    this.getPersonRoles();
+    this.getProvinces();
     this.getPersons();
 
     this.mainService.findCenters().subscribe((res) => {
@@ -302,6 +303,38 @@ export class MainComponent implements OnInit {
     }
   );
 }
+
+  getPersonRoles()
+  {
+    this.mainService.findPersonRoles().subscribe((res) => {
+      res.forEach(pRole => {
+        if(pRole.id != undefined && pRole.role) {
+          this.personRoles[pRole.id] = pRole.role;
+        }
+        this.personRoles[0] = '';
+      });
+      var column = this.api.getColumnDef('role');
+      if (column != null) {
+        column.cellEditorParams = { values: this.personRoles}
+      }
+      });
+  }
+
+  getProvinces()
+  {
+    this.mainService.findProvince().subscribe((res) => {
+      res.forEach(provinceKey => {
+        if(provinceKey.id != undefined && provinceKey.province) {
+          this.provinces[provinceKey.id] = provinceKey.province;
+        }
+        this.provinces[0] = '';
+      });
+      var column = this.api.getColumnDef('province');
+      if (column != null) {
+        column.cellEditorParams = { values: this.provinces}
+      }
+    });
+  }
 
   onGridReady = (params: { api: GridApi; columnApi: ColumnApi}) => {
     this.api = params.api;
@@ -454,6 +487,10 @@ export class MainComponent implements OnInit {
     if (person.role == null){
       person.role = "";
     }
+    if (person.province == null){
+      person.province = person.center.name;
+    }
+
     this.rowData = this.rowData.concat([person]);
     this.searchPersonsCtrl.setValue("");
     this.saveRows.push(person);

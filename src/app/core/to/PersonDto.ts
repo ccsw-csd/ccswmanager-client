@@ -11,6 +11,7 @@ export class PersonDto {
     grade: string|undefined;
     customer: string|undefined;
     role: string|undefined;
+    province : string | undefined;
     active: number|undefined;
     hours: number|undefined;
     details: string|undefined;

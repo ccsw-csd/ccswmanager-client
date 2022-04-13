@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CenterDto } from 'src/app/core/to/CenterDto';
 import { PersonDto } from 'src/app/core/to/PersonDto';
 import { PersonRoleDto } from 'src/app/core/to/PersonRoleDto';
+import { ProvinceDto } from 'src/app/core/to/ProvinceDto';
 import { environment } from 'src/environments/environment';
 import { LdapPerson } from '../ldap-dialog/to/LdapPerson';
 
@@ -51,5 +52,9 @@ export class MainService {
 
   findPersonRoles(): Observable<PersonRoleDto[]> {
     return this.http.get<PersonRoleDto[]>(environment.server + '/person-roles/');
+  }
+
+  findProvince(): Observable<ProvinceDto[]> {
+    return this.http.get<ProvinceDto[]>(environment.server + '/province/');
   }
 }
