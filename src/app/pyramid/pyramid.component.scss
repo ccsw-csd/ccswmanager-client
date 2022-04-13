@@ -2,12 +2,13 @@
 
 #indexCost{
     display: flex;
+    justify-content: center;
 }
 
 #agGridPyramid{
     height:  calc(332px - 180px);
     width: 60%;
-    margin-left:calc(5% - 0%);
+    //margin-left:calc(5% - 0%);
     float: left;
 }
 
