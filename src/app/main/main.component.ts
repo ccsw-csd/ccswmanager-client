@@ -11,8 +11,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
-import {MatTabsModule} from '@angular/material/tabs';
-import { PersonRoleDto } from '../core/to/PersonRoleDto';
 
 @Component({
   selector: 'app-main',
@@ -190,7 +188,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'center', headerName: 'Geografía', maxWidth: 114, minWidth: 114,
+      { field: 'center', headerName: 'Oficina', maxWidth: 114, minWidth: 114,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           return params.data.center.name;
@@ -200,17 +198,29 @@ export class MainComponent implements OnInit {
           var id = this.centers.indexOf(newValue);
           params.data.center.id = id;
           params.data.center.name = newValue;
+
           return true;
         }
       },
-      { field: 'province', headerName: 'Provincia', maxWidth: 170, minWidth: 170,
+      { field: 'province', headerName: 'Localización', maxWidth: 170, minWidth: 170,
         cellEditor: 'agSelectCellEditor',
-        cellEditorParams: {
-          values: this.provinces,
+        valueGetter: function (params) {
+          if (params.data.province == null || params.data.province == "" || params.data.province == undefined) {
+              return '';
+          }
+          else {
+            return params.data.province.province;
+          }
         },
         valueSetter: params => {
           var newValue = params.newValue;
-          params.data.province = newValue;
+          var id = this.provinces.indexOf(newValue);
+          if (newValue == null || newValue == "" || newValue == undefined) {
+            params.data.province = null;
+          }
+          else{
+            params.data.province = {id: id, province: newValue};
+          }
           return true;
         }
       },
@@ -265,8 +275,20 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
 
     this.getPersonRoles();
-    this.getProvinces();
     this.getPersons();
+
+    this.mainService.findProvince().subscribe((res) => {
+      res.forEach(provinceKey => {
+        if(provinceKey.id != undefined && provinceKey.province) {
+          this.provinces[provinceKey.id] = provinceKey.province;
+        }
+        this.provinces[0] = '';
+      });
+      var column = this.api.getColumnDef('province');
+      if (column != null) {
+        column.cellEditorParams = { values: this.provinces}
+      }
+    });
 
     this.mainService.findCenters().subscribe((res) => {
       res.forEach(center => {
@@ -318,22 +340,6 @@ export class MainComponent implements OnInit {
         column.cellEditorParams = { values: this.personRoles}
       }
       });
-  }
-
-  getProvinces()
-  {
-    this.mainService.findProvince().subscribe((res) => {
-      res.forEach(provinceKey => {
-        if(provinceKey.id != undefined && provinceKey.province) {
-          this.provinces[provinceKey.id] = provinceKey.province;
-        }
-        this.provinces[0] = '';
-      });
-      var column = this.api.getColumnDef('province');
-      if (column != null) {
-        column.cellEditorParams = { values: this.provinces}
-      }
-    });
   }
 
   onGridReady = (params: { api: GridApi; columnApi: ColumnApi}) => {
@@ -488,8 +494,10 @@ export class MainComponent implements OnInit {
       person.role = "";
     }
     if (person.province == null){
-      person.province = person.center.name;
+        var idProvince = this.provinces.findIndex(province => province == person.center?.name);
+        person.province = {id: idProvince, province: this.provinces[idProvince]};
     }
+
 
     this.rowData = this.rowData.concat([person]);
     this.searchPersonsCtrl.setValue("");
