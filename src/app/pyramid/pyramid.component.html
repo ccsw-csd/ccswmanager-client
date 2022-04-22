@@ -13,9 +13,10 @@
             [stopEditingWhenCellsLoseFocus] = true
             (cellEditingStopped)="onCellEditingStopped($event)"
             (firstDataRendered)="resizeGrid()"
+            (gridSizeChanged)="resizeGrid()"
         >
         </ag-grid-angular>
-        
+
         <div *ngIf="!editar" style="display: flex;">
             <div class="edit">
                 <button secondary (click)="changeMode()">Editar</button>
@@ -28,7 +29,6 @@
             </div>
         </div>
     </div>
-    
     <div id="down" >
         <div id="left" (window:resize)="resizeGridLeft()">
             <ag-grid-angular id="gridChartLeft"
@@ -52,7 +52,7 @@
                 ></apx-chart>
             </div>
         </div>
-        
+
         <div id="right" (window:resize)="resizeGridRight()">
             <ag-grid-angular id="gridChartRight"
             class="ag-theme-alpine"

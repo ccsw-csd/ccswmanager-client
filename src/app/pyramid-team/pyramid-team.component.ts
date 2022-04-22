@@ -15,7 +15,6 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
 
   @ViewChildren('chart') chartComponents : QueryList<ElementRef> | any;
 
-  @ViewChildren('grid') gridComponents : QueryList<ElementRef> | any;
 
   rowDataPyramidMap : Map<String, Number>[] = [];
 
@@ -59,34 +58,34 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
           return "COST";
       }
     },
-    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80,
+    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80,
+    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80,
+    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80,
+    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80,
+    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80,
+    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80,
+    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80,
+    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80,
+    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
-    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80,
+    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 75,
       valueFormatter: this.valueGetFormatDecimals,
     },
   ];
