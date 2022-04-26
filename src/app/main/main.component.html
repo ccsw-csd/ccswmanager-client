@@ -13,11 +13,13 @@
         </div>
 
         <div class="edit">
-            <button *ngIf="!ldap" class="warn" style="margin-right: 10px;" (click)="openLDAP()">Sincronizar LDAP</button>
-            <button secondary (click)="changeMode()">Editar</button>
+            <button *ngIf="!ldap" class="warn"  (click)="openLDAP()">Sincronizar LDAP</button>
+            <button  secondary (click)="resetFilters()">Limpiar Filtros</button>
+            <button  secondary (click)="changeMode()">Editar</button>
+            <button secondary (click)="onBtExport()">Exportar a Excel</button>
         </div>
     </div>
-        
+
     <div *ngIf="editar" style="display: flex;">
         <mat-form-field class="input-form">
             <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">

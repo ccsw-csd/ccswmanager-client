@@ -4,17 +4,28 @@
     margin-right: 0;
     margin-left:auto;
     display:block;
-
     button {
         width: 150px;
         margin-bottom: 20px;
         padding: 5px;
-        margin-right: 0px;
+        margin-right: 10px;
     }
 }
 
 .warn {
     background-color: $warn;
+    color: white;
+    margin-right: 20px;
+}
+
+.primary {
+    background-color: $primary;
+    color: white;
+    margin-right: 20px;
+}
+
+.danger {
+    background-color: #ff8a80;
     color: white;
     margin-right: 20px;
 }
