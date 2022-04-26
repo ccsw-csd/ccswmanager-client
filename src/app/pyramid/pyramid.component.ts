@@ -20,6 +20,8 @@ export class PyramidComponent implements OnInit {
   public chartOptionsLeft: Partial<any>;
   public chartOptionsRight: Partial<any>;
 
+  isLoading !: boolean;
+
   editar = false;
   saveRows: number [] = [];
 
@@ -53,56 +55,56 @@ export class PyramidComponent implements OnInit {
     },
     { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
     { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 75,
       cellStyle: this.cellStyleEditableBackground, editable: this.isEditing.bind(this),
-      valueFormatter: this.valueGetFormatDecimals,
+      valueFormatter: this.valueGetFormatDecimals, headerClass: "ag-right-aligned-header"
     },
   ];
 
   columnDefSchChartLeft: ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8','text-align': 'center'}, minWidth: 70 },
-    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8','text-align': 'center'}, minWidth: 70 },
-    { field: 'index', headerName: 'INDEX', cellStyle: {'background-color': '#F8F8F8','text-align': 'center'}, minWidth: 70,
+    { field: 'profile', headerName: 'PERFIL', cellStyle: this.cellStyleEditableBackground, headerClass: "ag-right-aligned-header", minWidth: 70 },
+    { field: 'count', headerName: 'COUNT',  cellStyle: this.cellStyleEditableBackground, headerClass: "ag-right-aligned-header", minWidth: 70 },
+    { field: 'index', headerName: 'INDEX', cellStyle: this.cellStyleEditableBackground, headerClass: "ag-right-aligned-header", minWidth: 70 ,
       valueFormatter: this.valueGetFormatDecimals
     }
   ];
   columnDefSchChartRight: ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL', cellStyle: {'background-color': '#F8F8F8','text-align': 'center'}, minWidth: 70 },
-    { field: 'count', headerName: 'COUNT', cellStyle: {'background-color': '#F8F8F8','text-align': 'center'}, minWidth: 70 }
+    { field: 'profile', headerName: 'PERFIL', cellStyle: this.cellStyleEditableBackground, headerClass: "ag-right-aligned-header", minWidth: 70 },
+    { field: 'count', headerName: 'COUNT', cellStyle: this.cellStyleEditableBackground, headerClass: "ag-right-aligned-header", minWidth: 70 }
   ];
 
   constructor( private pyramidService: PyramidService, public dialog: MatDialog)
@@ -212,6 +214,7 @@ export class PyramidComponent implements OnInit {
           'y': elem.index?.toFixed(2)
         }))
       }];
+      this.isLoading = false;
     });
   }
 
@@ -227,6 +230,8 @@ export class PyramidComponent implements OnInit {
           'y': elem.count
         }))
       }];
+
+
     });
   }
 
@@ -283,9 +288,13 @@ export class PyramidComponent implements OnInit {
 
   cellStyleEditableBackground(params: CellClassParams){
       if (params.data.rowName == 1) {
-        return {backgroundColor: '#FFFFFF'};
+        return {backgroundColor: '#FFFFFF',textAlign: 'right'};
       }
-      return {backgroundColor: '#F8F8F8'};
+
+      return {
+        backgroundColor: '#F8F8F8',
+        textAlign: 'right'
+      };
   }
 
   valueGetFormatDecimals(params: ValueFormatterParams) {
@@ -325,6 +334,7 @@ export class PyramidComponent implements OnInit {
   }
 
   save() {
+    this.isLoading = true;
     var pyramidCostsChanged: Map<String, Number>[] = [];
     this.api.forEachNode(node => {
       if(this.saveRows.includes(node.data.id) || node.data.id == null) {
@@ -341,6 +351,7 @@ export class PyramidComponent implements OnInit {
     this.saveRows = [];
     this.getPyramidsGridLeft();
     this.getPyramidsGridRight();
+
   }
 
   resizeGrid() {
@@ -355,7 +366,9 @@ export class PyramidComponent implements OnInit {
   resizeGridRight() {
     this.apiRight.sizeColumnsToFit();
     this.apiRight.setDomLayout('autoHeight');
+
   }
+
 
   onGridSizeChanged(params: GridSizeChangedEvent) {
     var gridWidth = document.getElementById('left')!.offsetWidth;
@@ -379,5 +392,7 @@ export class PyramidComponent implements OnInit {
     params.columnApi.setColumnsVisible(columnsToShow, true);
     params.columnApi.setColumnsVisible(columnsToHide, false);
     params.api.sizeColumnsToFit();
+
+
   }
 }
