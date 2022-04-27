@@ -11,6 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
+import { CsvExportModule } from 'ag-grid-community';
 
 @Component({
   selector: 'app-main',
@@ -54,6 +55,8 @@ export class MainComponent implements OnInit {
   errorMsg: string | undefined;
 
   ldap:boolean = true;
+
+  filterModel : any;
 
   constructor(
     private mainService: MainService,
@@ -361,6 +364,7 @@ export class MainComponent implements OnInit {
     ];
 
     this.api.setFilterModel(filter);
+    this.filterModel = this.api.getFilterModel();
     this.api.setSortModel(sort);
     this.api.sizeColumnsToFit();
     let agGrid = document.getElementById('agGrid');
@@ -371,7 +375,12 @@ export class MainComponent implements OnInit {
     });
     if(agGrid != null)
       obs.observe(agGrid);
-}
+  }
+
+  resetFilters()
+  {
+    this.api.setFilterModel(this.filterModel);
+  }
 
   isEditing(): boolean {
     return this.editar;
@@ -543,6 +552,14 @@ export class MainComponent implements OnInit {
     const dialogRef = this.dialog.open(LdapDialogComponent, {
       data: {}
     });
+  }
+
+  onBtExport() {
+    var excelParams = {
+      fileName: 'PersonalCCsW',
+      columnSeparator: ';',
+    }
+    this.api.exportDataAsCsv(excelParams);
   }
 
   delete(event: CellClickedEvent) {

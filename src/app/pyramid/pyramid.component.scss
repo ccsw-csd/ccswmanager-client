@@ -17,10 +17,14 @@
     margin-left:10%;
 
     button {
-        width: 150px;
+        width: 100px;
         margin-bottom: 20px;
         padding: 5px;
         margin-right: 0px;
+
+        mat-icon{
+          color: #12abdb;
+        }
     }
 }
 
