@@ -28,6 +28,8 @@ export class ScholarComponent implements OnInit {
 
   api: GridApi = new GridApi;
 
+  public dialogRef : TimelineDialogComponent | any;
+
   columnDefSch: ColDef[] = [
     { field: 'username', headerName: 'Username', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 125, maxWidth: 140},
     { field: 'name', headerName: 'Nombre', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200},
@@ -237,7 +239,7 @@ export class ScholarComponent implements OnInit {
   }
 
   openTimeLine(){
-    const dialogRef = this.dialog.open(TimelineDialogComponent, {
+    this.dialogRef = this.dialog.open(TimelineDialogComponent, {
       data: {},
       width: '80vw',
       height: '90vh'
@@ -247,6 +249,8 @@ export class ScholarComponent implements OnInit {
   resizeGrid() {
     this.api.sizeColumnsToFit();
   }
+
+
 
    dateComparator(date1 : any, date2 : any) {
     var date1Number = date1 && moment(date1, "DD/MM/YYYY").valueOf();
@@ -265,6 +269,7 @@ export class ScholarComponent implements OnInit {
 
     return date1Number - date2Number;
   }
+
 
 
 }

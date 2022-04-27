@@ -17,8 +17,8 @@ export class TimelineDialogComponent implements OnInit {
   endDate : Date | undefined;
   scholarData : VScholarTimeLine[] = [];
   errorText : String | undefined;
-  
-  
+
+
   constructor(private scholarService: ScholarService) {
     this.dateRange();
 
@@ -55,7 +55,7 @@ export class TimelineDialogComponent implements OnInit {
       }
     };
   }
-  
+
   ngOnInit(): void {
     this.getScholarsByDate();
   }

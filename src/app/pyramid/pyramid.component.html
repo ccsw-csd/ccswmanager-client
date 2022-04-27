@@ -2,6 +2,8 @@
     <div>
         <h1>Pyramid Index</h1>
     </div>
+
+
     <div id="indexCost" (window:resize)="resizeGrid()">
         <ag-grid-angular id="agGridPyramid"
             class="ag-theme-alpine"
@@ -13,9 +15,10 @@
             [stopEditingWhenCellsLoseFocus] = true
             (cellEditingStopped)="onCellEditingStopped($event)"
             (firstDataRendered)="resizeGrid()"
+            (gridSizeChanged)="resizeGrid()"
         >
         </ag-grid-angular>
-        
+
         <div *ngIf="!editar" style="display: flex;">
             <div class="edit">
                 <button secondary (click)="changeMode()">Editar</button>
@@ -28,9 +31,12 @@
             </div>
         </div>
     </div>
-    
     <div id="down" >
-        <div id="left" (window:resize)="resizeGridLeft()">
+      <div class="loadWrapper" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+    </div>
+        <div id="left" (window:resize)="resizeGridLeft()" >
+
             <ag-grid-angular id="gridChartLeft"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSchChartLeft"
@@ -52,8 +58,9 @@
                 ></apx-chart>
             </div>
         </div>
-        
+
         <div id="right" (window:resize)="resizeGridRight()">
+
             <ag-grid-angular id="gridChartRight"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSchChartRight"
@@ -76,4 +83,6 @@
             </div>
         </div>
     </div>
+
+
 </div>
