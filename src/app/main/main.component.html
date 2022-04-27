@@ -6,7 +6,7 @@
     <div *ngIf="!editar" style="display: flex;">
         <div class="chip">
             <mat-chip-list>
-              <button secondary (click)="onBtExport()">Exportar</button>
+              <button *ngIf="!ldap" class="warn"  (click)="openLDAP()">Sincronizar LDAP</button>
                 <mat-chip><mat-icon>people</mat-icon>{{personas}} Personas</mat-chip>
                 <mat-chip><mat-icon>business_center</mat-icon>{{contratos}} Contratos</mat-chip>
                 <mat-chip><mat-icon>book</mat-icon>{{becarios}} Becarios</mat-chip>
@@ -14,10 +14,9 @@
         </div>
 
         <div class="edit">
-            <button *ngIf="!ldap" class="warn"  (click)="openLDAP()">Sincronizar LDAP</button>
-            <button  secondary (click)="resetFilters()">Limpiar Filtros</button>
-
-            <button  secondary (click)="changeMode()">Editar</button>
+            <button secondary (click)="changeMode()"><mat-icon>edit</mat-icon></button>
+            <button secondary (click)="onBtExport()"><mat-icon>file_download</mat-icon></button>
+            <button secondary (click)="resetFilters()"><mat-icon>filter_alt_off</mat-icon></button>
         </div>
     </div>
 
