@@ -556,7 +556,7 @@ export class MainComponent implements OnInit {
 
   onBtExport() {
     var excelParams = {
-      fileName: 'Personas'
+      fileName: 'PersonalCCsW'
     }
     this.api.exportDataAsCsv(excelParams);
   }
