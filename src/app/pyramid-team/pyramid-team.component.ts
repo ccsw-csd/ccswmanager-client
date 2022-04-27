@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CellClassParams, ColDef, GridApi, GridOptions, GridSizeChangedEvent, ValueFormatterParams } from 'ag-grid-community';
+import { CellClassParams, ColDef, GridApi, GridOptions, GridSizeChangedEvent, HeaderClassParams, ValueFormatterParams } from 'ag-grid-community';
 import ResizeObserver from 'resize-observer-polyfill';
 import * as ApexCharts from 'apexcharts';
 import { PyramidTeamsDto } from '../core/to/PyramidTeamsDto';
@@ -15,7 +15,6 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
 
   @ViewChildren('chart') chartComponents : QueryList<ElementRef> | any;
 
-  @ViewChildren('grid') gridComponents : QueryList<ElementRef> | any;
 
   rowDataPyramidMap : Map<String, Number>[] = [];
 
@@ -42,16 +41,16 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
   }
 
   columnDefSchGroup : ColDef[] = [
-    { field: 'profile', headerName: 'PERFIL',
-    cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold", 'text-align': 'center'}, minWidth: 40 },
-    { field: 'count', headerName: 'COUNT', singleClickEdit: false, minWidth: 40,
-    valueFormatter: this.valueGetFormatInteger,cellStyle: {'text-align': 'center'}},
-    { field: 'index', headerName: 'INDEX', singleClickEdit: false, minWidth: 40,
-    valueFormatter: this.valueGetFormatDecimals,cellStyle: {'text-align': 'center'}},
+    { field: 'profile', headerName: 'PERFIL', headerClass: "ag-right-aligned-header",
+    cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold", 'text-align': 'right'}, minWidth: 40 },
+    { field: 'count', headerName: 'COUNT', singleClickEdit: false, minWidth: 40,headerClass: "ag-right-aligned-header",
+    valueFormatter: this.valueGetFormatInteger,cellStyle: this.cellStyleRight,},
+    { field: 'index', headerName: 'INDEX', singleClickEdit: false, minWidth: 40,headerClass: "ag-right-aligned-header",
+    valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight,},
   ];
 
   columnDefSch: ColDef[] = [
-    { field: 'rowName', headerName: '', cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold"}, minWidth: 80, maxWidth: 80,
+    { field: 'rowName', headerName: '', headerClass: "ag-right-aligned-header",  cellStyle: {'background-color': '#F8F8F8', "font-weight":"bold", "text-align" : "right"}, minWidth: 80, maxWidth: 80,
       valueGetter: function (params) {
         if (params.data.rowName == 0)
           return "INDEX";
@@ -59,35 +58,35 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
           return "COST";
       }
     },
-    { field: 'A1', headerName: 'A1', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'A1', headerName: 'A1',  singleClickEdit: true, minWidth: 75,headerClass: "ag-right-aligned-header",
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight,
     },
-    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'A2', headerName: 'A2', singleClickEdit: true, minWidth: 75,headerClass: "ag-right-aligned-header",
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight,
     },
-    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'B1', headerName: 'B1', singleClickEdit: true, minWidth: 75,headerClass: "ag-right-aligned-header",
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight,
     },
-    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'B2', headerName: 'B2', singleClickEdit: true, minWidth: 75,headerClass: "ag-right-aligned-header",
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight,
     },
-    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'B3', headerName: 'B3', singleClickEdit: true, minWidth: 75,
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight, headerClass: "ag-right-aligned-header",
     },
-    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'C1', headerName: 'C1', singleClickEdit: true, minWidth: 75,
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight, headerClass: "ag-right-aligned-header",
     },
-    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'C2', headerName: 'C2', singleClickEdit: true, minWidth: 75,
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight, headerClass: "ag-right-aligned-header",
     },
-    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'C3', headerName: 'C3', singleClickEdit: true, minWidth: 75,
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight, headerClass: "ag-right-aligned-header",
     },
-    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'D1', headerName: 'D1', singleClickEdit: true, minWidth: 75,
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight, headerClass: "ag-right-aligned-header",
     },
-    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 80,
-      valueFormatter: this.valueGetFormatDecimals,
+    { field: 'D2', headerName: 'D2', singleClickEdit: true, minWidth: 75,
+      valueFormatter: this.valueGetFormatDecimals,cellStyle: this.cellStyleRight, headerClass: "ag-right-aligned-header",
     },
   ];
 
@@ -171,6 +170,13 @@ export class PyramidTeamComponent implements OnInit,AfterViewInit {
     params.columnApi.setColumnsVisible(columnsToShow, true);
     params.columnApi.setColumnsVisible(columnsToHide, false);
     params.api.sizeColumnsToFit();
+  }
+
+  cellStyleRight(params: CellClassParams){
+    return {
+      backgroundColor: '#F8F8F8',
+      textAlign: 'right'
+    };
   }
 
   getCustomerData(){

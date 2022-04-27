@@ -2,19 +2,19 @@
   <nav>
     <mat-nav-list>
       <a mat-list-item routerLinkActive="item-active" routerLink="/main">
-        <span>Gestión personal</span>
+        <span>Gestión Personal</span>
       </a>
       <a mat-list-item routerLinkActive="item-active" routerLink="/scholar">
         <span>Gestión Becarios</span>
-      </a>
-      <a *ngIf="!isAdmin"  mat-list-item routerLinkActive="item-active" routerLink="/users">
-        <span>Gestión Usuarios</span>
       </a>
       <a mat-list-item routerLinkActive="item-active" routerLink="/pyramid">
         <span>Pyramid Index</span>
       </a>
       <a mat-list-item routerLinkActive="item-active" routerLink="/pyramid-team">
         <span>Pyramid Team Index</span>
+      </a>
+      <a *ngIf="!isAdmin"  mat-list-item routerLinkActive="item-active" routerLink="/users">
+        <span>Gestión Usuarios</span>
       </a>
     </mat-nav-list>
   </nav>
