@@ -32,8 +32,11 @@
         </div>
     </div>
     <div id="down" >
-        <div id="left" (window:resize)="resizeGridLeft()">
-          <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <div class="loadWrapper" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+    </div>
+        <div id="left" (window:resize)="resizeGridLeft()" >
+
             <ag-grid-angular id="gridChartLeft"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSchChartLeft"
@@ -57,7 +60,7 @@
         </div>
 
         <div id="right" (window:resize)="resizeGridRight()">
-          <mat-spinner *ngIf="isLoading"></mat-spinner>
+
             <ag-grid-angular id="gridChartRight"
             class="ag-theme-alpine"
             [columnDefs]="columnDefSchChartRight"
