@@ -21,7 +21,7 @@
 
         <div *ngIf="!editar" style="display: flex;">
             <div class="edit">
-                <button secondary (click)="changeMode()"><mat-icon>edit</mat-icon></button>
+                <button secondary (click)="changeMode()" matTooltip="Editar datos de la tabla"><mat-icon>edit</mat-icon></button>
             </div>
         </div>
         <div *ngIf="editar" style="display: flex;">

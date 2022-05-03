@@ -4,11 +4,9 @@
     </div>
 
     <div *ngIf="!editar" style="display: flex;">
-        <div class="timeline">
-            <button secondary (click)="openTimeLine()">TimeLine</button>
-        </div>
         <div class="edit">
-          <button secondary (click)="changeMode()"><mat-icon>edit</mat-icon></button>
+          <button secondary (click)="openTimeLine()" matTooltip="Gráfica de Timeline"><mat-icon>waterfall_chart</mat-icon></button>
+          <button secondary (click)="changeMode()" matTooltip="Editar datos de la tabla"><mat-icon>edit</mat-icon></button>
         </div>
     </div>
     <div *ngIf="editar" style="display: flex;">
