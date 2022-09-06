@@ -17,7 +17,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { HttpInterceptorService } from './services/http-interceptor.service';
-import { UserResolverService } from './services/user-resolver.service';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -59,7 +58,6 @@ import { DialogComponent } from './dialog/dialog.component';
     { provide: MatDialogRef, useValue: {}},
     { provide: MAT_DIALOG_DATA, useValue: {}},
     JwtHelperService,
-    UserResolverService,
   ],
   exports: [
     MatSnackBarModule,

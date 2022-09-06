@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  server: 'http://ccsw.capgemini.com/ccswmanager-data',
+  appCode: 'ccswManager',
+  server: '../ccswmanager-data',
+  sso: '../sso' 
 };

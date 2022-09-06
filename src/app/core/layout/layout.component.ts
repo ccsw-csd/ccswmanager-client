@@ -24,19 +24,24 @@ export class LayoutComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.authService.registerAccess().subscribe();
+    
     this.activatedRoute.data.subscribe(response => { 
-      this.authService.putUserInfo(response.user); 
-      this.checkUserDetails();
+      this.loadDetailedUserInfo(response);
     }); 
   }
 
-  private checkUserDetails() : void {
-    let user = this.authService.getUserInfo();
+  private loadDetailedUserInfo(response: any) : void {
 
-    if (user == null || user.username == null || user.role == null) {
-      this.authService.clearCredentials();
-      this.router.navigate(['login']);
+    //No está activado el userResolver
+    if (response == null || Object.keys(response).length == 0) return;
+
+    if (response.user == null) {
+      this.authService.logout();
+      return;
     }
+
+    this.authService.putUserInfoDetailed(response.user); 
   }
 
   public toggleMenu() : void {

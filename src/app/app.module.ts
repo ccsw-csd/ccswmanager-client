@@ -25,13 +25,10 @@ import { MainComponent } from './main/main.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
-import {UsersComponent} from './users/users.component';
 import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
 import { NgApexchartsModule } from "ng-apexcharts";
-import { UserDialogComponent } from './users/user-dialog/user-dialog.component'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { CustomCellButtonComponent } from './users/custom-cell-button/custom-cell-button.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 
@@ -41,11 +38,8 @@ import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
     MainComponent,
     ScholarComponent,
     LdapDialogComponent,
-    UsersComponent,
     PyramidComponent,
     TimelineDialogComponent,
-    UserDialogComponent,
-    CustomCellButtonComponent,
     PyramidTeamComponent,
   ],
   imports: 
@@ -67,7 +61,7 @@ import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
     MatTabsModule,
     CoreModule,
     LoginModule,
-    AgGridModule.withComponents([CustomCellButtonComponent]),
+    AgGridModule.withComponents([]),
     MatAutocompleteModule,
     ClipboardModule,
     MatSnackBarModule,

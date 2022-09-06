@@ -1,6 +1,5 @@
 export class ResponseCredentials {
-    accessToken: string = ""; 
-    refreshToken: string = ""; 
-    expireTime: number = 0;
-  }
+  token: string = ""; 
+  expireTime: number = 0;
+}
   

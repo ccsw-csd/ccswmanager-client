@@ -13,7 +13,7 @@
     <mat-toolbar-row class="header-submenu">
 
       <button mat-flat-button class="feedback-button" [matTooltip]="'Enviar feedback'" >
-        <a href="mailto:ccsw.support@capgemini.com?subject=[CCSWManager] Consulta / Feedback">
+        <a [href]="getEmailRef()">
           <mat-icon>feedback</mat-icon>
         </a>
       </button>

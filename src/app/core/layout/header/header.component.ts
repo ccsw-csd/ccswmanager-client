@@ -4,7 +4,8 @@ import { LoginService } from 'src/app/login/services/login.service';
 import { PersonDto } from '../../to/PersonDto';
 import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { User } from '../../to/User';
+import { environment } from 'src/environments/environment';
+import { UserInfoSSO } from '../../to/UserInfoSSO';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ import { User } from '../../to/User';
 })
 export class HeaderComponent implements OnInit {
 
-  user : User | null = null;
+  user : UserInfoSSO | null = null;
   navOpen = true;
   isloading : boolean = false;
   person: PersonDto = new PersonDto();
@@ -47,5 +48,14 @@ export class HeaderComponent implements OnInit {
     this.authService.logout();
   }
 
-  
+  getEmailRef() {
+    let gitWord2 = "ge";
+    let gitWord4 = "i";
+    let gitWord3 = "min";
+    let gitWord1 = "cap";
+
+    let gitWord = gitWord1+gitWord2+gitWord3+gitWord4;
+
+    return "mailto:ccsw.support@"+gitWord+".com?subject=["+environment.appCode+"] Consulta / Feedback";
+  }
 }

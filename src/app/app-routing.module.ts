@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
 import { AuthGuard } from './core/services/auth.guard';
-import { UserResolverService } from './core/services/user-resolver.service';
 import { LoginComponent } from './login/login/login.component';
 import { MainComponent } from './main/main.component';
 import { ScholarComponent } from './scholar/scholar.component';
-import { UsersComponent } from './users/users.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 
@@ -20,11 +18,9 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
-    resolve: {user: UserResolverService},
     children: [
       { path: 'main', component: MainComponent,},
       { path: 'scholar', component: ScholarComponent,},
-      { path: 'users', component: UsersComponent,},
       { path: 'pyramid', component: PyramidComponent,},
       { path: 'pyramid-team', component: PyramidTeamComponent,},
       { path: '**', redirectTo: 'main', pathMatch: 'full' },

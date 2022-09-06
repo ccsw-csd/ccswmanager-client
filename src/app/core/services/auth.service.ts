@@ -1,90 +1,136 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 import { ResponseCredentials } from '../to/ResponseCredentials';
-import { User } from '../to/User';
+import { UserInfoDetailed } from '../to/UserInfoDetailed';
+import { UserInfoSSO } from '../to/UserInfoSSO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  credentials : ResponseCredentials | undefined;
-  token : string | null = null;
-  user: User | null = null;
+  ssoCredentialsKey : string = 'ssoCredentials';
+  ssoToken : string = null;
+
+  userInfoSSO: UserInfoSSO | null = null;
+  userInfoDetailed: UserInfoDetailed | null = null;
 
   constructor(
     private jwtHelper: JwtHelperService,
     private router: Router,
+    private http: HttpClient,
   ) { }
 
 
-  putTokenCredentials(res: ResponseCredentials) : void {
-    localStorage.setItem('credentials', JSON.stringify(res));
+  // *************************** //
+  // **     AUTHENTICATION    ** //
+  // *************************** //
+
+
+  public putSSOCredentials(res: ResponseCredentials) : void {
+    this.ssoToken = res.token;
+    localStorage.setItem(this.ssoCredentialsKey, this.ssoToken);
   }
 
-  putUserInfo(user: User) {
-    this.user = user;
-  }
+  public getSSOToken(): string | null {
 
-  getTokenCredentials() : ResponseCredentials | null {
-    
-    if (this.credentials == undefined) {
-      let json = localStorage.getItem('credentials');
-
-      if (json != null)
-        this.credentials = JSON.parse(json);
+    if (this.ssoToken == null) {
+      this.ssoToken = localStorage.getItem(this.ssoCredentialsKey);
     }
 
-    if (this.credentials == undefined) return null;
-    
-    return this.credentials;
+
+    return this.ssoToken;
   }
 
-  getToken(): string | null {
+  
 
-    if (this.token == null) {
-      let credentials = this.getTokenCredentials();
-      if (credentials != null) {
-        this.token = credentials.accessToken;
-      }
-    }
-
-    return this.token;
-  }
+  // *************************** //
+  // **       LOGOUT          ** //
+  // *************************** //
 
   public logout() {
-    this.clearCredentials()
+    this.clearCredentials();
     this.router.navigateByUrl('login');
   }
 
-  clearCredentials() {
-    localStorage.removeItem('credentials');
 
-    this.credentials = undefined;    
-    this.token = null;
-    this.user = null;
-  }
+  public clearCredentials() {
+    localStorage.removeItem(this.ssoCredentialsKey);
 
-  getUsername() : string | null {
-    if (this.user == null) return null;
-    return this.user.username;
-  }
-
-  isAdmin() : boolean {
-    if (this.user == null || this.user.role == null) return false;
-    return this.user.role == 'ADMIN';
-  }
+    this.ssoToken = null;    
+    this.userInfoDetailed = null;
+    this.userInfoSSO = null;
+  }  
+    
+  // *************************** //
+  // **        UTILS          ** //
+  // *************************** //
 
 
   isTokenValid() : boolean {
-    let accessToken = this.getToken();
-    if (accessToken == null) return false;
+    let token = this.getSSOToken();
+    if (token == null) return false;
+  
+    let expired = this.jwtHelper.isTokenExpired(token);
+    if (expired) return false;
 
-    return !this.jwtHelper.isTokenExpired(accessToken);
+    let roles = this.getRoles();
+    if (roles == null || roles.length == 0) return false;
+
+
+    return true;
+  }
+  
+
+
+  public getUserInfo() : UserInfoSSO {
+
+    if (this.userInfoSSO == null) {
+      let data = this.jwtHelper.decodeToken(this.getSSOToken());
+      if (data == null) return null;
+
+      this.userInfoSSO = {
+        displayName: data.displayName,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        officeName: data.officeName,
+        username: data.sub,
+        saga: data.saga,
+        grade: data.grade,
+        roles: data.roles
+      };
+
+    }
+
+    return this.userInfoSSO;
+
   }
 
-  getUserInfo() : User | null {
-    return this.user;
+  public getRoles(): String[] {
+    let userInfo = this.getUserInfo();
+    return userInfo.roles[environment.appCode];
   }
+
+  public putUserInfoDetailed(userDetailed: UserInfoDetailed) {
+    this.userInfoDetailed = userDetailed;
+  }
+
+  public getUserInfoDetailed() : UserInfoDetailed | null {
+    return this.userInfoDetailed;
+  }  
+
+  public registerAccess(): Observable<void> {
+
+    if (environment.production)
+      return this.http.get<void>(environment.sso + '/register-access/'+environment.appCode);
+    else
+      return of();
+  }  
+  
 }

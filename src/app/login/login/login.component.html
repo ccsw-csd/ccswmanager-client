@@ -1,6 +1,6 @@
 <div id="container">
     <div id="login-left">
-        <div><img src="assets/images/Capgemini_Logo_White.png" alt="" /></div>
+        <div><img src="assets/images/logo_white.png" alt="" /></div>
     </div>
 
     <div id="login-right">        
@@ -23,7 +23,7 @@
                 </mat-form-field>                
                 <button mat-button primary [disabled]="user == '' || password == ''" (click)="login()">Login</button>
             </div>
-            <div class="support">Si necesita ayuda para resolver dudas o problemas técnicos, por favor envía un correo a <a href="mailto:ccsw.support@capgemini.com?subject=[CCSWManager] Soporte / Consulta">ccsw.support@capgemini.com</a>.</div>
+            <div class="support">Si necesita ayuda para resolver dudas o problemas técnicos, por favor envía un correo a <a class = "text-gray-700" [href]="getEmailRef()">{{getEmail()}}</a>.</div>
             <div style="flex:1"></div>
         </div>
     </div>
