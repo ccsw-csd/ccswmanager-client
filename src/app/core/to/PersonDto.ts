@@ -18,6 +18,7 @@ export class PersonDto {
     details: string|undefined;
     department: string|undefined;
     businesscode: string|undefined;
+    manager: string|undefined;
     delete: boolean = false;
     constructor() {}
 }

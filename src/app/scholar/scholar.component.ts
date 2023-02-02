@@ -9,6 +9,7 @@ import { ScholarService } from './services/scholar.service';
 import { TimelineDialogComponent } from './timeline-dialog/timeline-dialog.component';
 
 import ResizeObserver from 'resize-observer-polyfill';
+import { MainService } from '../main/services/main.service';
 
 @Component({
   selector: 'app-scholar',
@@ -21,6 +22,8 @@ export class ScholarComponent implements OnInit {
   saveRows: number [] = [];
 
   rowDataScholar : VScholarDto[] = [];
+
+  provinces: string[] = [];
 
   defaultColDef : ColDef;
 
@@ -36,6 +39,30 @@ export class ScholarComponent implements OnInit {
     { field: 'lastname', headerName: 'Apellidos', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150},
     { field: 'customer', headerName: 'Cliente', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 150, maxWidth: 200},
     { field: 'hours', headerName: 'Horas', cellStyle: {'background-color': '#F8F8F8'}, minWidth: 80, maxWidth: 80},
+    { field: 'manager', headerName: 'Responsable', editable: this.isEditing.bind(this),
+      singleClickEdit: true, minWidth: 150, maxWidth: 200},
+    { field: 'province', headerName: 'Localización', editable: this.isEditing.bind(this),
+    singleClickEdit: true, cellEditor: 'agSelectCellEditor', minWidth: 150, maxWidth: 150,
+      valueGetter: function (params) {
+        if (params.data.province == null || params.data.province == "" || params.data.province == undefined) {
+            return '';
+        }
+        else {
+          return params.data.province.province;
+        }
+      },
+      valueSetter: params => {
+        var newValue = params.newValue;
+        var id = this.provinces.indexOf(newValue);
+        if (newValue == null || newValue == "" || newValue == undefined) {
+          params.data.province = null;
+        }
+        else{
+          params.data.province = {id: id, province: newValue};
+        }
+        return true;
+      }
+    },
     { field: 'startDate', headerName: 'Inicio', editable: this.isEditing.bind(this),
       singleClickEdit: true, cellEditorPopup: false, minWidth: 130, maxWidth: 150, comparator : this.dateComparator,
       valueGetter : function(params) {
@@ -129,7 +156,7 @@ export class ScholarComponent implements OnInit {
   ];
 
 
-  constructor( private scholarService: ScholarService, public dialog: MatDialog)
+  constructor( private scholarService: ScholarService, private mainService: MainService, public dialog: MatDialog)
   {
     this.defaultColDef = {
       sortable: true,
@@ -150,6 +177,19 @@ export class ScholarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getScholars();
+
+    this.mainService.findProvince().subscribe((res) => {
+      res.forEach(provinceKey => {
+        if(provinceKey.id != undefined && provinceKey.province) {
+          this.provinces[provinceKey.id] = provinceKey.province;
+        }
+        this.provinces[0] = '';
+      });
+      var column = this.api.getColumnDef('province');
+      if (column != null) {
+        column.cellEditorParams = { values: this.provinces}
+      }
+    });
   }
 
   getScholars(){

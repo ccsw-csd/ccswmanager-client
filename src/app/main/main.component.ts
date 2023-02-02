@@ -123,7 +123,7 @@ export class MainComponent implements OnInit {
         }
       },
 
-      { field: 'grade', headerName: 'Grado', maxWidth: 95, minWidth: 95,
+      { field: 'grade', headerName: 'Grado', maxWidth: 75, minWidth: 75,
         cellStyle: params => {
           if(params.value?.length > 5 || !this.grades.includes(params.value)) {
             return {borderColor: 'lightcoral'};
@@ -161,7 +161,7 @@ export class MainComponent implements OnInit {
           return true;
         }
       },
-      { field: 'hours', headerName: 'Horas', maxWidth: 95, minWidth: 95,
+      { field: 'hours', headerName: 'Horas', maxWidth: 75, minWidth: 75,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
@@ -191,6 +191,15 @@ export class MainComponent implements OnInit {
         }
       },
 
+      { field: 'manager', headerName: 'Responsable', maxWidth: 200, minWidth: 150,
+        cellStyle: params => {
+          if(params.value?.length > 200) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'};
+        }
+      },
+
       { field: 'center', headerName: 'Oficina', maxWidth: 114, minWidth: 114,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
@@ -205,7 +214,7 @@ export class MainComponent implements OnInit {
           return true;
         }
       },
-      { field: 'province', headerName: 'Localización', maxWidth: 170, minWidth: 170,
+      { field: 'province', headerName: 'Localización', maxWidth: 150, minWidth: 150,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           if (params.data.province == null || params.data.province == "" || params.data.province == undefined) {
