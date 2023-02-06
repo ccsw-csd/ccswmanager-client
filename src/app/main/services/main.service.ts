@@ -34,6 +34,10 @@ export class MainService {
     return this.http.get<PersonDto[]>(environment.server + '/person/' + filter);
   }
 
+  findScholarsByFilter(filter: String): Observable<PersonDto[]> {
+    return this.http.get<PersonDto[]>(environment.server + '/person/scholar/' + filter);
+  }
+
   checkLDAP(): Observable<boolean>  {
     return this.http.get<boolean>(environment.server + '/ldap/');
   }

@@ -3,13 +3,24 @@
         <h1>Gestión becarios</h1>
     </div>
 
-    <div *ngIf="!editar" style="display: flex;">
+    <div *ngIf="!edit" style="display: flex;">
         <div class="edit">
           <button secondary (click)="openTimeLine()" matTooltip="Gráfica de Timeline"><mat-icon>waterfall_chart</mat-icon></button>
           <button secondary (click)="changeMode()" matTooltip="Editar datos de la tabla"><mat-icon>edit</mat-icon></button>
         </div>
     </div>
-    <div *ngIf="editar" style="display: flex;">
+    <div *ngIf="edit" style="display: flex;">
+        <mat-form-field class="input-form">
+            <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">
+            <mat-autocomplete #autocompletePersons="matAutocomplete">
+            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+            <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let person of persons" [value]="person.username" (click)="addPersonToData(person)">
+                <span>{{person.name}} {{person.lastname}} <i *ngIf="person.username != null"><b>( {{person.username}} )</b></i></span>
+                </mat-option>
+            </ng-container>
+            </mat-autocomplete>
+        </mat-form-field>
         <div class="closeEdit">
             <button  secondary (click)="undoChanges()" style="margin-right: 10px;">Deshacer cambios</button>
             <button  primary (click)="changeMode()">Guardar y Finalizar</button>
@@ -20,9 +31,10 @@
         <ag-grid-angular id="agGridSholar"
             style="height: calc(100vh - 250px); width: 100%;"
             class="ag-theme-alpine"
-            [columnDefs]="columnDefSch"
-            [rowData]="rowDataScholar"
+            [columnDefs]="columnDefs"
+            [rowData]="rowData"
             [defaultColDef]="defaultColDef"
+            [stopEditingWhenCellsLoseFocus] = true
             [gridOptions] = "gridOptions"
             (gridReady)="onGridReady($event)"
             [stopEditingWhenCellsLoseFocus] = true

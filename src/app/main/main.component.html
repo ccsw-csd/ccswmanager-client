@@ -3,7 +3,7 @@
         <h1>Gestión personal</h1>
     </div>
 
-    <div *ngIf="!editar" style="display: flex;">
+    <div *ngIf="!edit" style="display: flex;">
         <div class="chip">
             <mat-chip-list>              
                 <mat-chip><mat-icon>people</mat-icon>{{personas}} Personas</mat-chip>
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div *ngIf="editar" style="display: flex;">
+    <div *ngIf="edit" style="display: flex;">
         <mat-form-field class="input-form">
             <input matInput placeholder="Añadir persona" aria-label="State" [matAutocomplete]="autocompletePersons" [formControl]="searchPersonsCtrl">
             <mat-autocomplete #autocompletePersons="matAutocomplete">
