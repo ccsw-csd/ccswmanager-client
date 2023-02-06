@@ -25,6 +25,7 @@ export class VScholarDto {
     startDate: Date|undefined;
     endDate: Date|undefined;
     title: String|undefined;  
+    pon: String|undefined;  
     action: String|undefined;
 
     delete: boolean = false;

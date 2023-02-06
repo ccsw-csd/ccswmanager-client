@@ -223,6 +223,15 @@ export class ScholarComponent implements OnInit {
         }
       },
 
+      { field: 'pon', headerName: 'PON', maxWidth: 100, minWidth: 100,
+      cellStyle: params => {
+        if(params.value?.length > 50) {
+          return {borderColor: 'lightcoral'};
+        }
+        return {borderColor: 'transparent'};
+      }
+    },
+
       { field: 'action', headerName: 'Acción', maxWidth: 100, minWidth: 100,
         valueGetter: function (params) {
           if (params.data.action == 1) {
@@ -425,7 +434,7 @@ export class ScholarComponent implements OnInit {
           correct = false;
         } else if(node.data.name?.length > 50 || node.data.saga?.length > 25 || node.data.username?.length > 25 || node.data.department?.length > 10
           || node.data.lastname?.length > 100 || node.data.customer?.length > 100 || node.data.grade?.length > 5 || node.data.role?.length > 50
-          || node.data.businesscode?.length > 50 || node.data.details?.length > 200 || node.data.manager?.length > 200) {
+          || node.data.businesscode?.length > 50 || node.data.details?.length > 200 || node.data.manager?.length > 200 || node.data.pon?.length > 50) {
           correct = false;
         }
       }

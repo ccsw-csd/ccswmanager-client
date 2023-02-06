@@ -12,6 +12,7 @@ export class ScholarDto {
     startDate: Date|undefined;
     endDate: Date|undefined;
     title: String|undefined;  
+    pon: String|undefined;  
     action: String|undefined; 
     active: number|undefined;
     constructor() {}
