@@ -12,6 +12,8 @@ import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.componen
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
 import { CsvExportModule } from 'ag-grid-community';
+import { AuthService } from '../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -53,8 +55,15 @@ export class MainComponent implements OnInit {
   constructor(
     private mainService: MainService,
     public dialog: MatDialog,
+    private router: Router,
+    private authService: AuthService,
     @Inject (MatAutocompleteModule) public auto: string
   ) {
+
+    if (this.authService.hasRole("USER") == false) {
+      this.router.navigate(['scholar']);
+    }
+
 
     this.columnDefs = [
       { field: 'delete', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,

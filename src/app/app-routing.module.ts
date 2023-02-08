@@ -7,6 +7,7 @@ import { MainComponent } from './main/main.component';
 import { ScholarComponent } from './scholar/scholar.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
+import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
+    resolve: {credentials: RefreshTokenResolverService},
     children: [
       { path: 'main', component: MainComponent,},
       { path: 'scholar', component: ScholarComponent,},

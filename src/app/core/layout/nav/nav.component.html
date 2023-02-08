@@ -1,16 +1,16 @@
 <div class="container">
   <nav>
     <mat-nav-list>
-      <a mat-list-item routerLinkActive="item-active" routerLink="/main">
+      <a *ngIf="authService.hasRole('USER')" mat-list-item routerLinkActive="item-active" routerLink="/main">
         <span>Gestión Personal</span>
       </a>
       <a mat-list-item routerLinkActive="item-active" routerLink="/scholar">
         <span>Gestión Becarios</span>
       </a>
-      <a mat-list-item routerLinkActive="item-active" routerLink="/pyramid">
+      <a *ngIf="authService.hasRole('USER')" mat-list-item routerLinkActive="item-active" routerLink="/pyramid">
         <span>Pyramid Index</span>
       </a>
-      <a mat-list-item routerLinkActive="item-active" routerLink="/pyramid-team">
+      <a *ngIf="authService.hasRole('USER')" mat-list-item routerLinkActive="item-active" routerLink="/pyramid-team">
         <span>Pyramid Team Index</span>
       </a>
     </mat-nav-list>

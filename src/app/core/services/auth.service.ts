@@ -34,6 +34,7 @@ export class AuthService {
 
   public putSSOCredentials(res: ResponseCredentials) : void {
     this.ssoToken = res.token;
+    this.userInfoSSO = null;
     localStorage.setItem(this.ssoCredentialsKey, this.ssoToken);
   }
 
@@ -133,4 +134,15 @@ export class AuthService {
       return of();
   }  
   
+  public refreshToken(credentials : ResponseCredentials): void {
+    this.putSSOCredentials(credentials);
+  }   
+
+  hasRole(role : string) : boolean  {
+    let roles = this.getRoles();
+
+    if (roles == null || roles.length == 0) return false;
+    return roles.indexOf(role) >= 0;
+  }
+
 }
