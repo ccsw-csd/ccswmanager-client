@@ -31,6 +31,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
+import { MaintenanceModule } from './maintenance/maintenance.module';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
     MatTabsModule,
     CoreModule,
     LoginModule,
+    MaintenanceModule,
     AgGridModule.withComponents([]),
     MatAutocompleteModule,
     ClipboardModule,
@@ -73,7 +75,7 @@ import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-
+  
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('es-ES');
   }

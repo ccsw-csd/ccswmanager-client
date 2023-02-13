@@ -8,6 +8,7 @@ import { ScholarComponent } from './scholar/scholar.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
+import { DegreeComponent } from './maintenance/degree/degree.component';
 
 
 
@@ -29,10 +30,11 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     resolve: {credentials: RefreshTokenResolverService},
     children: [
-      { path: 'personal', component: PersonalComponent,data:{role:['PERSONAL']}},
-      { path: 'scholar', component: ScholarComponent,data:{role:['INTERN']}},
-      { path: 'pyramid', component: PyramidComponent,data:{role:['PERSONAL']}},
-      { path: 'pyramid-team', component: PyramidTeamComponent,data:{role:['PERSONAL']}},
+      { path: 'personal', component: PersonalComponent, data:{role:['PERSONAL']}},
+      { path: 'scholar', component: ScholarComponent, data:{role:['INTERN']}},
+      { path: 'pyramid', component: PyramidComponent, data:{role:['PERSONAL']}},
+      { path: 'pyramid-team', component: PyramidTeamComponent, data:{role:['PERSONAL']}},
+      { path: 'degree', component: DegreeComponent, data:{role:['MAINTENANCE']}},
       { path: '**', redirectTo: 'personal', pathMatch: 'full' },
     ]
   },
