@@ -29,6 +29,7 @@ nav {
   }
 }
 
+
 .space {
   flex: 1;
 }
@@ -63,4 +64,39 @@ nav {
   .mat-list-item {
     height: 40px !important;
   }
+
+  .mat-expansion-indicator::after {
+    color: $background;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px 0px 0px 0px;
+  }
+
+  .subitem {
+    padding: 0 20px 0 28px !important;
+  }
+
+}
+
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 48px;
+}
+
+.mat-expansion-panel {
+  background: none;
+  color: $background;
+
+
+  * {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+
+  .subtitle {
+    padding-left: 29px;
+  }
+
+  
 }

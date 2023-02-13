@@ -3,12 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './core/layout/layout.component';
 import { AuthGuard } from './core/services/auth.guard';
 import { LoginComponent } from './login/login/login.component';
-import { MainComponent } from './main/main.component';
+import { PersonalComponent } from './personal/personal.component';
 import { ScholarComponent } from './scholar/scholar.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 
+
+
+export const DefaultRoutes = [
+  {role:'PERSONAL', path: '/personal'},
+  {role:'INTERN', path: '/scholar'},
+  {role:'MAINTENANCE', path: '/pyramid'},
+];
 
 const routes: Routes = [
   {
@@ -19,13 +26,14 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     resolve: {credentials: RefreshTokenResolverService},
     children: [
-      { path: 'main', component: MainComponent,},
-      { path: 'scholar', component: ScholarComponent,},
-      { path: 'pyramid', component: PyramidComponent,},
-      { path: 'pyramid-team', component: PyramidTeamComponent,},
-      { path: '**', redirectTo: 'main', pathMatch: 'full' },
+      { path: 'personal', component: PersonalComponent,data:{role:['PERSONAL']}},
+      { path: 'scholar', component: ScholarComponent,data:{role:['INTERN']}},
+      { path: 'pyramid', component: PyramidComponent,data:{role:['PERSONAL']}},
+      { path: 'pyramid-team', component: PyramidTeamComponent,data:{role:['PERSONAL']}},
+      { path: '**', redirectTo: 'personal', pathMatch: 'full' },
     ]
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },

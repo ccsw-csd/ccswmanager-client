@@ -21,10 +21,10 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
-import { MainComponent } from './main/main.component';
+import { PersonalComponent } from './personal/personal.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ScholarComponent } from './scholar/scholar.component';
-import { LdapDialogComponent } from './main/ldap-dialog/ldap-dialog.component';
+import { LdapDialogComponent } from './personal/ldap-dialog/ldap-dialog.component';
 import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
 import { NgApexchartsModule } from "ng-apexcharts";
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -35,7 +35,7 @@ import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
+    PersonalComponent,
     ScholarComponent,
     LdapDialogComponent,
     PyramidComponent,

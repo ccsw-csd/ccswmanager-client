@@ -11,7 +11,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 import { TimelineDialogComponent } from './timeline-dialog/timeline-dialog.component';
 
-import { MainService } from '../main/services/main.service';
+import { PersonalService } from '../personal/services/personal.service';
 import { ScholarService } from './services/scholar.service';
 
 import { PersonDto } from '../core/to/PersonDto';
@@ -49,7 +49,7 @@ export class ScholarComponent implements OnInit {
 
   constructor( 
     private scholarService: ScholarService, 
-    private mainService: MainService, 
+    private personalService: PersonalService, 
     public dialog: MatDialog
   ) {
 
@@ -329,7 +329,7 @@ export class ScholarComponent implements OnInit {
       }),
       switchMap(value =>
         iif(() => value.length > 2,
-        this.mainService.findScholarsByFilter(value))
+        this.personalService.findScholarsByFilter(value))
         .pipe(
           finalize(() => { this.isLoading = false; })
         )
@@ -346,7 +346,7 @@ export class ScholarComponent implements OnInit {
   }
 
   getCenters() : void {
-    this.mainService.findCenters().subscribe((res) => {
+    this.personalService.findCenters().subscribe((res) => {
       res.forEach(center => {
         if(center.id != undefined && center.name) {
         this.centers[center.id] = center.name;
@@ -360,7 +360,7 @@ export class ScholarComponent implements OnInit {
   }
 
   getProvinces() : void {
-    this.mainService.findProvince().subscribe((res) => {
+    this.personalService.findProvince().subscribe((res) => {
       res.forEach(provinceKey => {
         if(provinceKey.id != undefined && provinceKey.province) {
           this.provinces[provinceKey.id] = provinceKey.province;

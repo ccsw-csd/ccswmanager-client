@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit} from '@angular/core';
 import { CellClickedEvent, ColDef, ColumnApi, GridApi, GridOptions} from 'ag-grid-community';
 import { PersonDto } from '../core/to/PersonDto';
-import { MainService } from './services/main.service';
+import { PersonalService } from './services/personal.service';
 import { DialogComponent } from '../core/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
@@ -11,16 +11,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
 import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
-import { CsvExportModule } from 'ag-grid-community';
 import { AuthService } from '../core/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  templateUrl: './personal.component.html',
+  styleUrls: ['./personal.component.scss']
 })
-export class MainComponent implements OnInit {
+export class PersonalComponent implements OnInit {
 
   edit: boolean = false;
 
@@ -53,18 +52,12 @@ export class MainComponent implements OnInit {
   filterModel : any;
 
   constructor(
-    private mainService: MainService,
+    private mainService: PersonalService,
     public dialog: MatDialog,
     private router: Router,
     private authService: AuthService,
     @Inject (MatAutocompleteModule) public auto: string
   ) {
-
-    if (this.authService.hasRole("USER") == false) {
-      this.router.navigate(['scholar']);
-    }
-
-
     this.columnDefs = [
       { field: 'delete', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,
         cellRenderer: function(params) {

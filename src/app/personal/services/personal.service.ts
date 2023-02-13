@@ -11,7 +11,7 @@ import { LdapPerson } from '../ldap-dialog/to/LdapPerson';
 @Injectable({
   providedIn: 'root'
 })
-export class MainService {
+export class PersonalService {
 
   constructor(
     private http: HttpClient,

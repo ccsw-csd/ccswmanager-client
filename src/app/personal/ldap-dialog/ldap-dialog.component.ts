@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MainService } from '../services/main.service';
+import { PersonalService } from '../services/personal.service';
 import { LdapPerson } from './to/LdapPerson';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -23,7 +23,7 @@ export class LdapDialogComponent implements OnInit {
   showSpinner4 = true;
 
   constructor(
-    private mainService: MainService,
+    private mainService: PersonalService,
     private clipboard: Clipboard,
     private snackbar: MatSnackBar,
     public dialogRef: MatDialogRef<LdapDialogComponent>,

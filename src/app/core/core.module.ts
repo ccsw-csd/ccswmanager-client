@@ -25,7 +25,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { DialogComponent } from './dialog/dialog.component';
 import { RefreshTokenResolverService } from './services/refresh-token-resolver.service';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -51,6 +51,7 @@ import { RefreshTokenResolverService } from './services/refresh-token-resolver.s
     MatCardModule,
     MatChipsModule,
     MatTooltipModule,
+    MatExpansionModule,
   ],
   providers: [
     HttpClientModule,
