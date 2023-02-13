@@ -1,0 +1,8 @@
+<div class="column-container" style="height: 100%">
+    <h1>{{data.title}}</h1>
+    <textarea [(ngModel)]="text"></textarea>
+    <div class="button-container">
+        <button secondary mat-button (click)="cancel()">Cancelar</button>&nbsp;&nbsp;
+        <button [disabled]="!edit" primary mat-button (click)="save()">Guardar</button>
+    </div>
+</div>

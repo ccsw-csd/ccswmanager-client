@@ -23,25 +23,27 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { PersonalComponent } from './personal/personal.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { ScholarComponent } from './scholar/scholar.component';
 import { LdapDialogComponent } from './personal/ldap-dialog/ldap-dialog.component';
-import { TimelineDialogComponent } from './scholar/timeline-dialog/timeline-dialog.component'
 import { NgApexchartsModule } from "ng-apexcharts";
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 import { MaintenanceModule } from './maintenance/maintenance.module';
+import { InternComponent } from './intern/intern.component';
+import { TextDialogComponent } from './intern/text-dialog/text-dialog.component';
+import { TimelineComponent } from './intern/timeline/timeline.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonalComponent,
-    ScholarComponent,
     LdapDialogComponent,
     PyramidComponent,
-    TimelineDialogComponent,
     PyramidTeamComponent,
+    InternComponent,
+    TextDialogComponent,
+    TimelineComponent
   ],
   imports: 
   [

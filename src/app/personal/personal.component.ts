@@ -426,7 +426,7 @@ export class PersonalComponent implements OnInit {
     var correct = true;
 
     this.api.forEachNode(node => {
-      if(this.saveRows.includes(node.data.id)) {
+      if(this.saveRows.includes(node.data)) {
         if(this.isEmpty(node.data.name) || this.isEmpty(node.data.lastname) || this.isEmpty(node.data.active) || this.isEmpty(node.data.hours) || this.isEmpty(node.data.center)) {
           correct = false;
         } else if(node.data.name?.length > 50 || node.data.saga?.length > 25 || node.data.username?.length > 25 || node.data.department?.length > 10

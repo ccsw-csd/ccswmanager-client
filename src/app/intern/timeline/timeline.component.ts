@@ -1,25 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ScholarService } from '../services/scholar.service';
-import { VScholarTimeLine } from 'src/app/core/to/VScholarTimeLine';
+import { InternService } from '../services/intern.service';
+import { TimeLine } from 'src/app/core/to/TimeLine';
 import { ChartComponent } from "ng-apexcharts";
 
-
 @Component({
-  selector: 'app-timeline-dialog',
-  templateUrl: './timeline-dialog.component.html',
-  styleUrls: ['./timeline-dialog.component.scss']
+  selector: 'app-timeline',
+  templateUrl: './timeline.component.html',
+  styleUrls: ['./timeline.component.scss']
 })
-export class TimelineDialogComponent implements OnInit {
+export class TimelineComponent implements OnInit {
 
   @ViewChild("chart") chart: ChartComponent | undefined;
   public chartOptions: Partial<any>;
   startDate : Date | undefined;
   endDate : Date | undefined;
-  scholarData : VScholarTimeLine[] = [];
+  data : TimeLine[] = [];
   errorText : String | undefined;
 
-
-  constructor(private scholarService: ScholarService) {
+  constructor(
+    private internService: InternService
+  ) {
     this.dateRange();
 
     this.chartOptions = {
@@ -85,8 +85,8 @@ export class TimelineDialogComponent implements OnInit {
   }
 
   getScholarsByDate(){
-    this.scholarService.findScholarsTimelineByDate(this.startDate, this.endDate).subscribe( (res) => {
-      this.scholarData = res;
+    this.internService.findInternsTimelineByDate(this.startDate, this.endDate).subscribe( (res) => {
+      this.data = res;
 
       this.chartOptions.series = [{
         data: res

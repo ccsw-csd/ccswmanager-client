@@ -4,7 +4,7 @@
       <a *ngIf="authService.hasRole('PERSONAL')" mat-list-item routerLinkActive="item-active" routerLink="/personal">
         <span>Gestión Personal</span>
       </a>
-      <a *ngIf="authService.hasRole('INTERN')" mat-list-item routerLinkActive="item-active" routerLink="/scholar">
+      <a *ngIf="authService.hasRole('INTERN')" mat-list-item routerLinkActive="item-active" routerLink="/intern">
         <span>Gestión Becarios</span>
       </a>
       <a *ngIf="authService.hasRole('PERSONAL')" mat-list-item routerLinkActive="item-active" routerLink="/pyramid">

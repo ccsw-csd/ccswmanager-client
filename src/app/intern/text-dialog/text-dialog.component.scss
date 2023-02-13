@@ -1,0 +1,19 @@
+@import './src/assets/scss/master';
+h1 {
+    height: 30px;
+}
+.button-container {
+    height: 50px;
+    margin-left: auto;
+    width: 210px;
+}
+
+::ng-deep {
+    textarea {
+        border: 2px solid $lightgray;
+        height: 100px;
+        width: 300px;
+        font-size: 16px;
+        padding: 10px;
+    }
+}

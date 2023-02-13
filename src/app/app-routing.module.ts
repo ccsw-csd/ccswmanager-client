@@ -4,7 +4,6 @@ import { LayoutComponent } from './core/layout/layout.component';
 import { AuthGuard } from './core/services/auth.guard';
 import { LoginComponent } from './login/login/login.component';
 import { PersonalComponent } from './personal/personal.component';
-import { ScholarComponent } from './scholar/scholar.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
@@ -13,12 +12,13 @@ import { EnglishLevelComponent } from './maintenance/english-level/english-level
 import { ActionComponent } from './maintenance/action/action.component';
 import { TechnologyComponent } from './maintenance/technology/technology.component';
 import { EducationCenterComponent } from './maintenance/education-center/education-center.component';
+import { InternComponent } from './intern/intern.component';
 
 
 
 export const DefaultRoutes = [
   {role:'PERSONAL', path: '/personal'},
-  {role:'INTERN', path: '/scholar'},
+  {role:'INTERN', path: '/intern'},
   {role:'MAINTENANCE', path: '/pyramid'},
 ];
 
@@ -35,7 +35,7 @@ const routes: Routes = [
     resolve: {credentials: RefreshTokenResolverService},
     children: [
       { path: 'personal', component: PersonalComponent, data:{role:['PERSONAL']}},
-      { path: 'scholar', component: ScholarComponent, data:{role:['INTERN']}},
+      { path: 'intern', component: InternComponent, data:{role:['INTERN']}},
       { path: 'pyramid', component: PyramidComponent, data:{role:['PERSONAL']}},
       { path: 'pyramid-team', component: PyramidTeamComponent, data:{role:['PERSONAL']}},
       { path: 'education', component: EducationComponent, data:{role:['MAINTENANCE']}},
