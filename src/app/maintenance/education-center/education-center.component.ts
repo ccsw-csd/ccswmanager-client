@@ -5,15 +5,16 @@ import { CellClickedEvent, ColDef, ColumnApi, GridApi, GridOptions} from 'ag-gri
 import { DialogComponent } from 'src/app/core/dialog/dialog.component';
 import { AlertDialogComponent } from 'src/app/core/alert-dialog/alert-dialog.component';
 import { ActionDto } from 'src/app/core/to/ActionDto';
-import { ActionService } from 'src/app/core/services/action.service';
-import { ActionEditComponent } from './action-edit/action-edit.component';
+import { EducationCenterService } from 'src/app/core/services/education-center.service';
+import { EducationCenterEditComponent } from './education-center-edit/education-center-edit.component';
 
 @Component({
-  selector: 'app-action',
-  templateUrl: './action.component.html',
-  styleUrls: ['./action.component.scss']
+  selector: 'app-education-center',
+  templateUrl: './education-center.component.html',
+  styleUrls: ['./education-center.component.scss']
 })
-export class ActionComponent implements OnInit {
+export class EducationCenterComponent implements OnInit {
+
 
 
   gridOptions: GridOptions;
@@ -24,7 +25,7 @@ export class ActionComponent implements OnInit {
   rowData : ActionDto[] = [];
 
   constructor(
-    private actionService: ActionService,
+    private educationCenterService: EducationCenterService,
     public dialog: MatDialog,
   ) { 
 
@@ -85,7 +86,7 @@ export class ActionComponent implements OnInit {
 
 
   loadData(): void {
-    this.actionService.findAll().subscribe((data) => {
+    this.educationCenterService.findAll().subscribe((data) => {
       this.rowData = data;
     });
   }
@@ -104,18 +105,18 @@ export class ActionComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
-      data: { title: "Atención", description: "Vas a eliminar la acción '"+rowNode.data.name+"'.<br/>¿Estás seguro que deseas eliminar la acción?"}
+      data: { title: "Atención", description: "Vas a eliminar el centro educativo '"+rowNode.data.name+"'.<br/>¿Estás seguro que deseas eliminar el centro educativo?"}
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionService.delete(rowNode.data.id).subscribe({
+        this.educationCenterService.delete(rowNode.data.id).subscribe({
           next: () => {
             this.loadData();
           },
           error: (err: any) => {
             this.dialog.open(AlertDialogComponent, {
-              data: { titulo: "Error", informacion: "La acción está siendo usada por otro registro y no puede borrarse.<br/>Por favor actualice los registros que la utilizan para poder borrar la acción."}
+              data: { titulo: "Error", informacion: "El centro educativo está siendo usado por otro registro y no puede borrarse.<br/>Por favor actualice los registros que lo utilizan para poder borrar el centro educativo."}
             });
 
           }
@@ -133,7 +134,7 @@ export class ActionComponent implements OnInit {
       if (rowNode && rowNode.data) data = rowNode.data;
     }
 
-    const dialogRef = this.dialog.open(ActionEditComponent, {
+    const dialogRef = this.dialog.open(EducationCenterEditComponent, {
       width: '700px',
       height: '250px',
       data: data

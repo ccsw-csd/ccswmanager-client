@@ -2,31 +2,30 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CellClickedEvent, ColDef, ColumnApi, GridApi, GridOptions} from 'ag-grid-community';
+import { EducationService } from 'src/app/core/services/education.service';
+import { EducationDto } from 'src/app/core/to/EducationDto';
 import { DialogComponent } from 'src/app/core/dialog/dialog.component';
+import { EducationEditComponent } from './education-edit/education-edit.component';
 import { AlertDialogComponent } from 'src/app/core/alert-dialog/alert-dialog.component';
-import { ActionDto } from 'src/app/core/to/ActionDto';
-import { ActionService } from 'src/app/core/services/action.service';
-import { ActionEditComponent } from './action-edit/action-edit.component';
 
 @Component({
-  selector: 'app-action',
-  templateUrl: './action.component.html',
-  styleUrls: ['./action.component.scss']
+  selector: 'app-education',
+  templateUrl: './education.component.html',
+  styleUrls: ['./education.component.scss'] 
 })
-export class ActionComponent implements OnInit {
-
+export class EducationComponent implements OnInit {
 
   gridOptions: GridOptions;
   api: GridApi = new GridApi;
 
   columnDefs: ColDef[];
   defaultColDef: ColDef;
-  rowData : ActionDto[] = [];
+  rowData : EducationDto[] = [];
 
   constructor(
-    private actionService: ActionService,
+    private educationService: EducationService,
     public dialog: MatDialog,
-  ) { 
+    ) { 
 
     let actionCellStyle = { 'padding-left': 0, 'padding-right': 0, 'text-align': 'center', 'cursor':'pointer'};
 
@@ -85,7 +84,7 @@ export class ActionComponent implements OnInit {
 
 
   loadData(): void {
-    this.actionService.findAll().subscribe((data) => {
+    this.educationService.findAll().subscribe((data) => {
       this.rowData = data;
     });
   }
@@ -104,18 +103,18 @@ export class ActionComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
-      data: { title: "Atención", description: "Vas a eliminar la acción '"+rowNode.data.name+"'.<br/>¿Estás seguro que deseas eliminar la acción?"}
+      data: { title: "Atención", description: "Vas a eliminar la titulación '"+rowNode.data.name+"'.<br/>¿Estás seguro que deseas eliminar la titulación?"}
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionService.delete(rowNode.data.id).subscribe({
+        this.educationService.delete(rowNode.data.id).subscribe({
           next: () => {
             this.loadData();
           },
           error: (err: any) => {
             this.dialog.open(AlertDialogComponent, {
-              data: { titulo: "Error", informacion: "La acción está siendo usada por otro registro y no puede borrarse.<br/>Por favor actualice los registros que la utilizan para poder borrar la acción."}
+              data: { titulo: "Error", informacion: "La titulación está siendo usada por otro registro y no puede borrarse.<br/>Por favor actualice los registros que la utilizan para poder borrar la titulación."}
             });
 
           }
@@ -133,7 +132,7 @@ export class ActionComponent implements OnInit {
       if (rowNode && rowNode.data) data = rowNode.data;
     }
 
-    const dialogRef = this.dialog.open(ActionEditComponent, {
+    const dialogRef = this.dialog.open(EducationEditComponent, {
       width: '700px',
       height: '250px',
       data: data
@@ -143,6 +142,6 @@ export class ActionComponent implements OnInit {
       if (result) this.loadData();
     })
   }
-  
+
 
 }

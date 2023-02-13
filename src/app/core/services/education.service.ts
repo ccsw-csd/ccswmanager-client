@@ -8,15 +8,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EducationService {
-
+  
   constructor(
     private http: HttpClient,
-  ) { }
-
-  findAll() : Observable<EducationDto[]> {
-    return this.http.get<EducationDto[]>(environment.server+ '/education/');
-  }
-
-
-  
+    ) { }
+    
+    findAll() : Observable<EducationDto[]> {
+      return this.http.get<EducationDto[]>(environment.server+ '/education/');
+    }
+    
+    
+    save(data: EducationDto) : Observable<EducationDto> {
+      return this.http.post<EducationDto>(environment.server+ '/education/', {id: data.id, name: data.name});
+    }
+    
+    delete(id: number) : Observable<void> {
+      return this.http.delete<void>(environment.server+ '/education/'+id);
+      
+    }
 }

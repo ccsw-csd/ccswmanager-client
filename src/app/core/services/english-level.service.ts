@@ -16,4 +16,14 @@ export class LevelService {
   findAll() : Observable<LevelDto[]> {
     return this.http.get<LevelDto[]>(environment.server+ '/level/');
   }
+
+  
+  save(data: LevelDto) : Observable<LevelDto> {
+    return this.http.post<LevelDto>(environment.server+ '/level/', {id: data.id, name: data.name});
+  }
+  
+  delete(id: number) : Observable<void> {
+    return this.http.delete<void>(environment.server+ '/level/'+id);
+    
+  }  
 }

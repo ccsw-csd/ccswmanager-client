@@ -15,4 +15,13 @@ export class EducationCenterService {
   findAll() : Observable<EducationCenterDto[]> {
     return this.http.get<EducationCenterDto[]>(environment.server+ '/educationCenter/');
   }
+
+  save(data: EducationCenterDto) : Observable<EducationCenterDto> {
+    return this.http.post<EducationCenterDto>(environment.server+ '/educationCenter/', {id: data.id, name: data.name});
+  }
+  
+  delete(id: number) : Observable<void> {
+    return this.http.delete<void>(environment.server+ '/educationCenter/'+id);
+    
+  }  
 }

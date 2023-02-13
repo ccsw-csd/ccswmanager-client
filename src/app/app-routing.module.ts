@@ -8,7 +8,11 @@ import { ScholarComponent } from './scholar/scholar.component';
 import { PyramidComponent } from './pyramid/pyramid.component';
 import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
-import { DegreeComponent } from './maintenance/degree/degree.component';
+import { EducationComponent } from './maintenance/education/education.component';
+import { EnglishLevelComponent } from './maintenance/english-level/english-level.component';
+import { ActionComponent } from './maintenance/action/action.component';
+import { TechnologyComponent } from './maintenance/technology/technology.component';
+import { EducationCenterComponent } from './maintenance/education-center/education-center.component';
 
 
 
@@ -34,7 +38,11 @@ const routes: Routes = [
       { path: 'scholar', component: ScholarComponent, data:{role:['INTERN']}},
       { path: 'pyramid', component: PyramidComponent, data:{role:['PERSONAL']}},
       { path: 'pyramid-team', component: PyramidTeamComponent, data:{role:['PERSONAL']}},
-      { path: 'degree', component: DegreeComponent, data:{role:['MAINTENANCE']}},
+      { path: 'education', component: EducationComponent, data:{role:['MAINTENANCE']}},
+      { path: 'education-center', component: EducationCenterComponent, data:{role:['MAINTENANCE']}},
+      { path: 'level', component: EnglishLevelComponent, data:{role:['MAINTENANCE']}},
+      { path: 'action', component: ActionComponent, data:{role:['MAINTENANCE']}},
+      { path: 'technology', component: TechnologyComponent, data:{role:['MAINTENANCE']}},
       { path: '**', redirectTo: 'personal', pathMatch: 'full' },
     ]
   },

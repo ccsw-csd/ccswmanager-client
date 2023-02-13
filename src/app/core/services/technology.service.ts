@@ -16,4 +16,13 @@ export class TechnologyService {
   findAll() : Observable<TechnologyDto[]> {
     return this.http.get<TechnologyDto[]>(environment.server+ '/technology/');
   }
+
+  save(data: TechnologyDto) : Observable<TechnologyDto> {
+    return this.http.post<TechnologyDto>(environment.server+ '/technology/', {id: data.id, name: data.name});
+  }
+  
+  delete(id: number) : Observable<void> {
+    return this.http.delete<void>(environment.server+ '/technology/'+id);
+    
+  }    
 }
