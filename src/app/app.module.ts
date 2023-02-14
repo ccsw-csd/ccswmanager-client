@@ -16,7 +16,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list'
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -33,6 +34,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
 import { InternComponent } from './intern/intern.component';
 import { TextDialogComponent } from './intern/text-dialog/text-dialog.component';
 import { TimelineComponent } from './intern/timeline/timeline.component';
+
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { TimelineComponent } from './intern/timeline/timeline.component';
     NgApexchartsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule
   ],
   providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
   bootstrap: [AppComponent],

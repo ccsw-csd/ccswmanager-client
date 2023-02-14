@@ -26,10 +26,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { DialogComponent } from './dialog/dialog.component';
 import { RefreshTokenResolverService } from './services/refresh-token-resolver.service';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { MultiselectEditorComponent } from './multiselect-editor/multiselect-editor.component';
 
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, NavComponent, DialogComponent],
+  declarations: [LayoutComponent, HeaderComponent, NavComponent, DialogComponent, MultiselectEditorComponent],
   imports: [
     CommonModule,
     MatSnackBarModule,

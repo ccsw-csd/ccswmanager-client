@@ -16,6 +16,7 @@ import { PersonDto } from '../core/to/PersonDto';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { TextDialogComponent } from './text-dialog/text-dialog.component';
+import { MultiselectEditorComponent } from '../core/multiselect-editor/multiselect-editor.component';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class InternComponent implements OnInit {
   
   columnDefs: ColDef[];
   defaultColDef : ColDef;
+  frameworkComponents;
 
   searchPersonsCtrl = new FormControl();
   isLoading: boolean = false;
@@ -226,21 +228,20 @@ export class InternComponent implements OnInit {
       },
 
       { field: 'technologies', headerName: 'Tecnologias', maxWidth: 200, minWidth: 200,
-        cellEditor: 'agSelectCellEditor',
+        cellEditor: 'multiselectCellEditor',
         valueGetter: function (params) {
           return (params.data.technologies == null || params.data.technologies.length == 0 || params.data.technologies == undefined) ? '' : params.data.technologies.map(t => t.name);
         },
         valueSetter: params => {
           var newValue = params.newValue;
           
-          if (newValue == 'Borrar todo...') {
+          if (newValue != null && newValue != undefined){
             params.data.technologies = [];
-          } else if (newValue != null && newValue != "" && newValue != undefined) {
-            var id = this.technologies.indexOf(newValue);
 
-            if(!params.data.technologies.some( e => e.id === id)){
-              params.data.technologies.push({id: id, name: newValue});
-            }
+            newValue.forEach(tech => {
+              var id = this.technologies.indexOf(tech);
+              params.data.technologies.push({id: id, name: tech});
+            });
           }
           return true;
         }
@@ -378,6 +379,10 @@ export class InternComponent implements OnInit {
     this.gridOptions = {
       getRowNodeId: (data) => data.id
     };
+
+    this.frameworkComponents = {
+      multiselectCellEditor: MultiselectEditorComponent
+    };
   }
 
   ngOnInit(): void {
@@ -479,7 +484,6 @@ export class InternComponent implements OnInit {
           this.technologies[technology.id] = technology.name;
         }
       });
-      this.technologies[0] = 'Borrar todo...';
       var column = this.api.getColumnDef('technologies');
       if (column != null) {
         column.cellEditorParams = { values: this.technologies}
@@ -532,7 +536,7 @@ export class InternComponent implements OnInit {
     this.api.setFilterModel(filter);
     this.api.setSortModel(sort);
     this.api.sizeColumnsToFit();
-    let agGrid = document.getElementById('agGridSholar');
+    let agGrid = document.getElementById('agGridIntern');
     let obs = new ResizeObserver(entries => {
       for (let entry of entries) {
         this.api.sizeColumnsToFit();
@@ -748,8 +752,7 @@ export class InternComponent implements OnInit {
   openTimeLine(): void {
     this.dialogRef = this.dialog.open(TimelineComponent, {
       data: {},
-      width: '80vw',
-      height: '90vh'
+      width: '80vw'
     });
   }
 

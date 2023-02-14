@@ -1,0 +1,7 @@
+<div #container tabindex="0">
+    <mat-selection-list [(ngModel)]="selectedOptions">
+        <mat-list-option *ngFor="let option of options" [value]="option">
+          {{option}}
+        </mat-list-option>
+    </mat-selection-list>
+</div>
