@@ -14,9 +14,9 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-ng build --configuration=production  --base-href "/ccswmanager/" --deploy-url "/ccswmanager/"
+ng build --configuration=production  --base-href "/ccamanager/" --deploy-url "/ccamanager/"
 
-ng build --configuration=dev  --base-href "/dev/ccswmanager/" --deploy-url "/dev/ccswmanager/"
+ng build --configuration=development  --base-href "/dev/ccamanager/" --deploy-url "/dev/ccamanager/"
 
 
 ## Running unit tests

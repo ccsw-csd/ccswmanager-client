@@ -9,7 +9,6 @@ import { PyramidTeamComponent } from './pyramid-team/pyramid-team.component';
 import { RefreshTokenResolverService } from './core/services/refresh-token-resolver.service';
 import { EducationComponent } from './maintenance/education/education.component';
 import { EnglishLevelComponent } from './maintenance/english-level/english-level.component';
-import { ActionComponent } from './maintenance/action/action.component';
 import { TechnologyComponent } from './maintenance/technology/technology.component';
 import { EducationCenterComponent } from './maintenance/education-center/education-center.component';
 import { InternComponent } from './intern/intern.component';
@@ -41,7 +40,6 @@ const routes: Routes = [
       { path: 'education', component: EducationComponent, data:{role:['MAINTENANCE']}},
       { path: 'education-center', component: EducationCenterComponent, data:{role:['MAINTENANCE']}},
       { path: 'level', component: EnglishLevelComponent, data:{role:['MAINTENANCE']}},
-      { path: 'action', component: ActionComponent, data:{role:['MAINTENANCE']}},
       { path: 'technology', component: TechnologyComponent, data:{role:['MAINTENANCE']}},
       { path: '**', redirectTo: 'personal', pathMatch: 'full' },
     ]
