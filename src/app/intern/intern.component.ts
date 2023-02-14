@@ -90,8 +90,7 @@ export class InternComponent implements OnInit {
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
-          }
-          else if(params.value.length > 50) {
+          } else if (params.value.length > 50) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -102,8 +101,7 @@ export class InternComponent implements OnInit {
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
-          }
-          else if(params.value.length > 100) {
+          } else if (params.value.length > 100) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -165,6 +163,12 @@ export class InternComponent implements OnInit {
 
       { field: 'startDate', headerName: 'Inicio', maxWidth: 130, minWidth: 130,
         cellEditorPopup: false, comparator : this.dateComparator,
+        cellStyle: params => {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'};
+        },
         valueGetter : function(params) {
           return params.data.startDate != null ? moment(params.data.startDate).format('DD/MM/YYYY') : params.data.startDate;
         },
@@ -182,6 +186,12 @@ export class InternComponent implements OnInit {
 
       { field: 'endDate', headerName: 'Fin', maxWidth: 130, minWidth: 130,
         cellEditorPopup: false, comparator : this.dateComparator,
+        cellStyle: params => {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'};
+        },
         valueGetter : function(params) {
           return params.data.endDate != null ? moment(params.data.endDate).format('DD/MM/YYYY') : params.data.endDate;
         },
@@ -201,8 +211,7 @@ export class InternComponent implements OnInit {
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
-          }
-          else if(params.value.length > 2) {
+          } else if (params.value.length > 2) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -211,7 +220,9 @@ export class InternComponent implements OnInit {
 
       { field: 'customer', headerName: 'Cliente', maxWidth: 150, minWidth: 150,
         cellStyle: params => {
-          if(params.value?.length > 100) {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          } else if (params.value.length > 100) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -220,7 +231,9 @@ export class InternComponent implements OnInit {
 
       { field: 'code', headerName: 'Código', maxWidth: 100, minWidth: 100,
         cellStyle: params => {
-          if(params.value?.length > 50) {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          } else if (params.value.length > 50) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -271,7 +284,9 @@ export class InternComponent implements OnInit {
 
       { field: 'coordinator', headerName: 'Coordinador', maxWidth: 150, minWidth: 150,
         cellStyle: params => {
-          if(params.value?.length > 200) {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          } else if (params.value.length > 200) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -280,7 +295,9 @@ export class InternComponent implements OnInit {
 
       { field: 'hrManager', headerName: 'Resp. RRHH', maxWidth: 150, minWidth: 150,
         cellStyle: params => {
-          if(params.value?.length > 200) {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          } else if (params.value.length > 200) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
