@@ -40,9 +40,7 @@ export class PersonalComponent implements OnInit {
   deletePersons: PersonDto[] = [];
   persons: any[] = [];
 
-  personas: number = 0;
-  becarios: number = 0;
-  contratos: number = 0;
+  counter: number = 0;
 
   personRoles : string[] = [];
   centers: string[] = [];
@@ -553,18 +551,9 @@ export class PersonalComponent implements OnInit {
   }
 
   updateChips(): void {
-    this.becarios = 0;
-    this.contratos = 0;
-    this.personas = 0;
+    this.counter = 0;
 
-    this.api.forEachNodeAfterFilter(node => {
-      this.personas++;
-      if(this.isEmpty(node.data.grade)) {
-        this.becarios++;
-      } else {
-        this.contratos++;
-      }
-    });
+    this.api.forEachNodeAfterFilter(node => this.counter++);
   }
 
   openLDAP(): void {
@@ -575,7 +564,7 @@ export class PersonalComponent implements OnInit {
 
   onBtExport(): void {
     var excelParams = {
-      fileName: 'PersonalCCsW',
+      fileName: 'PersonalCCA',
       columnSeparator: ';',
     }
     this.api.exportDataAsCsv(excelParams);

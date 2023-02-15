@@ -4,9 +4,17 @@
     </div>
 
     <div *ngIf="!edit" style="display: flex;">
+        <div class="chip">
+            <mat-chip-list>              
+                <mat-chip><mat-icon>people</mat-icon>{{counter}} Personas</mat-chip>
+            </mat-chip-list>
+        </div>
+
         <div class="edit">
           <button secondary (click)="openTimeLine()" matTooltip="Gráfica de Timeline"><mat-icon>waterfall_chart</mat-icon></button>
           <button secondary (click)="changeMode()" matTooltip="Editar datos de la tabla"><mat-icon>edit</mat-icon></button>
+          <button secondary (click)="onBtExport()" matTooltip="Exportar datos visibles"><mat-icon>file_download</mat-icon></button>
+          <button secondary (click)="resetFilters()" matTooltip="Eliminar filtros de la tabla"><mat-icon>filter_alt_off</mat-icon></button>
         </div>
     </div>
     <div *ngIf="edit" style="display: flex;">
@@ -41,7 +49,8 @@
             (gridReady)="onGridReady($event)"
             [stopEditingWhenCellsLoseFocus]=true
             (cellEditingStopped)="onCellEditingStopped($event)"
-            (firstDataRendered)="resizeGrid()"
+            (firstDataRendered)="firstDataRendered()"
+            (filterChanged)="updateChips()"
         >
         </ag-grid-angular>
     </div>

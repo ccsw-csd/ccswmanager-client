@@ -44,6 +44,8 @@ export class InternComponent implements OnInit {
   deleteRows: InternDto[] = [];
   persons: any[] = [];
 
+  counter: number = 0;
+
   educations: string[] = [];
   educationCenters: string[] = [];
   centers: string[] = [];
@@ -53,6 +55,8 @@ export class InternComponent implements OnInit {
   actions: string[] = [];
 
   public dialogRef : TimelineComponent | any;
+
+  filterModel : any;
 
   constructor( 
     private internService: InternService, 
@@ -108,7 +112,7 @@ export class InternComponent implements OnInit {
         }
       },
 
-      { field: 'education', headerName: 'Titulación', maxWidth: 114, minWidth: 114,
+      { field: 'education', headerName: 'Titulación', maxWidth: 200, minWidth: 200,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           return (params.data.education == null || params.data.education == "" || params.data.education == undefined) ? '' : params.data.education.name;
@@ -121,7 +125,7 @@ export class InternComponent implements OnInit {
         }
       },
 
-      { field: 'educationCenter', headerName: 'Centro', maxWidth: 114, minWidth: 114,
+      { field: 'educationCenter', headerName: 'Centro', maxWidth: 200, minWidth: 200,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           return (params.data.educationCenter == null || params.data.educationCenter == "" || params.data.educationCenter == undefined) ? '' : params.data.educationCenter.name;
@@ -304,7 +308,7 @@ export class InternComponent implements OnInit {
         }
       },
 
-      { field: 'action', headerName: 'Acción', maxWidth: 114, minWidth: 114,
+      { field: 'action', headerName: 'Acción', maxWidth: 150, minWidth: 150,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
           return (params.data.action == null || params.data.action == "" || params.data.action == undefined) ? '' : params.data.action.name;
@@ -551,6 +555,7 @@ export class InternComponent implements OnInit {
     ];
 
     this.api.setFilterModel(filter);
+    this.filterModel = this.api.getFilterModel();
     this.api.setSortModel(sort);
     this.api.sizeColumnsToFit();
     let agGrid = document.getElementById('agGridIntern');
@@ -561,6 +566,10 @@ export class InternComponent implements OnInit {
     });
     if(agGrid != null)
       obs.observe(agGrid);
+  }
+
+  resetFilters(): void {
+    this.api.setFilterModel(this.filterModel);
   }
 
   isEditing(): boolean {
@@ -775,6 +784,25 @@ export class InternComponent implements OnInit {
 
   resizeGrid(): void {
     this.api.sizeColumnsToFit();
+  }
+
+  firstDataRendered(): void {
+    this.resizeGrid();
+    this.updateChips();
+  }
+
+  updateChips(): void {
+    this.counter = 0;
+
+    this.api.forEachNodeAfterFilter(node => this.counter++);
+  }
+
+  onBtExport(): void {
+    var excelParams = {
+      fileName: 'BecariosCCA',
+      columnSeparator: ';',
+    }
+    this.api.exportDataAsCsv(excelParams);
   }
 
   dateComparator(date1 : any, date2 : any) {
