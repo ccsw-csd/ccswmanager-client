@@ -794,7 +794,8 @@ export class InternComponent implements OnInit {
   openTimeLine(): void {
     this.dialogRef = this.dialog.open(TimelineComponent, {
       data: {},
-      width: '80vw'
+      width: '90vw',
+      height: '90vh'
     });
   }
 

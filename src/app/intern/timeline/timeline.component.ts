@@ -29,8 +29,22 @@ export class TimelineComponent implements OnInit {
         }
       ],
       chart: {
-        height: 350,
         type: "rangeBar"
+      },
+      annotations: {
+        xaxis: [{
+          x: new Date().getTime(),
+          strokeDashArray: 0,
+          borderColor: '#775DD0',
+          label: {
+            borderColor: '#775DD0',
+            style: {
+              color: '#fff',
+              background: '#775DD0',
+            },
+            text: 'Hoy',
+          }
+        }]
       },
       plotOptions: {
         bar: {
@@ -57,7 +71,7 @@ export class TimelineComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getScholarsByDate();
+    this.getInternsByDate();
   }
 
   onSave(){
@@ -70,9 +84,15 @@ export class TimelineComponent implements OnInit {
         this.endDate = undefined;
       }
       else{
-        this.getScholarsByDate();
+        this.getInternsByDate();
       }
     }
+  }
+
+  getCurrentDate(): number {
+
+    console.log(new Date().getTime());
+    return new Date().getTime();
   }
 
   dateRange(){
@@ -84,7 +104,7 @@ export class TimelineComponent implements OnInit {
     this.endDate = new Date(currentYear, currentMonth + 6, currentDay);
   }
 
-  getScholarsByDate(){
+  getInternsByDate(){
     this.internService.findInternsTimelineByDate(this.startDate, this.endDate).subscribe( (res) => {
       this.data = res;
 
