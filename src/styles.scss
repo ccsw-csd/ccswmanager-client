@@ -5,3 +5,9 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: "Source Sans Pro", sans-serif; }
 
+
+.ag-theme-alpine.ag-popup div:first-child {
+    width: auto !important;
+    max-width: inherit !important;
+}
+
