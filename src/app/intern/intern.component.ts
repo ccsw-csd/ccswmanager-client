@@ -17,6 +17,7 @@ import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.componen
 import { TimelineComponent } from './timeline/timeline.component';
 import { TextDialogComponent } from './text-dialog/text-dialog.component';
 import { MultiselectEditorComponent } from '../core/multiselect-editor/multiselect-editor.component';
+import { LdapSyncDialogComponent } from './ldap-sync-dialog/ldap-sync-dialog.component';
 
 
 @Component({
@@ -27,6 +28,8 @@ import { MultiselectEditorComponent } from '../core/multiselect-editor/multisele
 export class InternComponent implements OnInit {
 
   edit: boolean = false;
+
+  ldap: boolean = true;
 
   gridOptions: GridOptions;
   api: GridApi = new GridApi;
@@ -440,7 +443,14 @@ export class InternComponent implements OnInit {
   getInterns() : void {
     this.internService.findInterns().subscribe((res) => {
       this.rowData = res;
+      this.checkLdap();
     });
+  }
+
+  checkLdap(): void {
+    this.internService.checkLdap().subscribe((res) => {
+      this.ldap = res;
+    })
   }
 
   getEducations() : void {
@@ -607,6 +617,8 @@ export class InternComponent implements OnInit {
         || this.isEmpty(node.data.startDate) || this.isEmpty(node.data.endDate) || this.isEmpty(node.data.hours) || this.isEmpty(node.data.customer) || this.isEmpty(node.data.code)
         || this.isEmpty(node.data.englishLevel) || this.isEmpty(node.data.coordinator) || this.isEmpty(node.data.hrManager) || this.isEmpty(node.data.active) ) {
           correct = false;
+        } else if(moment(node.data.startDate, "YYYY-MM-DD").valueOf() > moment(node.data.endDate, "YYYY-MM-DD").valueOf()) {
+          correct = false;
         } else if(node.data.period?.length > 2 || node.data.username?.length > 25 || node.data.name?.length > 50 || node.data.lastname?.length > 100 || node.data.email?.length > 100
           || node.data.hours?.length > 2 || node.data.customer?.length > 100 || node.data.code?.length > 50
           || node.data.mentor?.length > 200 || node.data.coordinator?.length > 200 || node.data.hrManager?.length > 50 || node.data.link?.length > 400 || node.data.comment?.length > 400) {
@@ -659,6 +671,7 @@ export class InternComponent implements OnInit {
 
     this.internService.saveOrUpdateInterns(internsChanged).subscribe(data => {
       this.rowData = data;
+      this.checkLdap();
     });
 
     this.api?.onFilterChanged();
@@ -799,6 +812,12 @@ export class InternComponent implements OnInit {
     this.api.forEachNodeAfterFilter(node => this.counter++);
   }
 
+  openLdap(): void {
+    const dialogRef = this.dialog.open(LdapSyncDialogComponent, {
+      data: {}
+    });
+  }
+
   onBtExport(): void {
     var excelParams = {
       fileName: 'BecariosCCA',
@@ -810,7 +829,6 @@ export class InternComponent implements OnInit {
   dateComparator(date1 : any, date2 : any) {
     var date1Number = date1 && moment(date1, "DD/MM/YYYY").valueOf();
     var date2Number = date2 && moment(date2, "DD/MM/YYYY").valueOf();
-
 
     if (date1Number == null && date2Number == null) {
       return 0;

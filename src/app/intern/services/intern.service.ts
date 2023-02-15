@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { InternDto } from 'src/app/core/to/InternDto';
 import { TimeLine } from 'src/app/core/to/TimeLine';
+import { LdapPerson } from 'src/app/core/to/LdapPerson';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,22 @@ export class InternService {
       endDate: endDate != null ? endDate : null
     };
     return this.http.post<TimeLine[]>(environment.server+ '/intern/dateFilter', data);
+  }
+
+  checkLdap(): Observable<boolean>  {
+    return this.http.get<boolean>(environment.server + '/ldap/intern');
+  }
+
+  compareLdapToInterns(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/intern/compare/ldap');
+  }
+
+  compareInternsToLdap(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/intern/compare/intern');
+  }
+
+  findListLdapUsernames(): Observable<String[]> {
+    return this.http.get<String[]>(environment.server + '/ldap/intern/list');
   }
 
 }

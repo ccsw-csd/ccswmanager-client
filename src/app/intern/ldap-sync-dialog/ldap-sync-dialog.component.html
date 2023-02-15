@@ -1,0 +1,47 @@
+<div>
+    <h1>Sincronizar LDAP</h1>
+
+    <div class="list-dis" >
+      <div class="list-text">
+        <p>La lista de distribución <strong>CCABecarios</strong> del LDAP no concuerda con la app:
+          <span ng-if="ldapToInterns">{{ldapToInterns.length}} eliminar | </span>
+          <span ng-if="internsToLdap">{{internsToLdap.length}} insertar</span>
+        </p>
+      </div>
+      <div class="list-bt" >
+        <button secondary *ngIf="ldapToInterns.length || internsToLdap.length" (click)="copyList(true)">Sincronizar Manualmente</button>
+      </div>
+    </div>
+
+    <div class="lists_container">
+        <div class="ldap_container">
+            <h3 class="list-header">Becarios que <b>NO</b> están en la app</h3>
+            <mat-spinner [diameter]="55" *ngIf="showSpinner1"></mat-spinner>
+            <mat-list id="ldap_list">
+                <mat-list-item *ngFor="let person of ldapToInterns">
+                <h3 matLine> {{person.name}} {{person.lastname}} </h3>
+                <p matLine>
+                    <span> {{person.username}} </span>
+                </p>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div style="width: 425px;">
+            <h3 class="list-header">Becarios de la app que <b>NO</b> están en <b>CCABecarios</b></h3>
+            <mat-spinner [diameter]="55" *ngIf="showSpinner2"></mat-spinner>
+            <mat-list id="persons_list">
+                <mat-list-item *ngFor="let person of internsToLdap">
+                <h3 matLine> {{person.name}} {{person.lastname}} </h3>
+                <p matLine>
+                    <span> {{person.username}} </span>
+                </p>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button primary (click)="close()">Cerrar</button>
+    </div>
+</div>
+

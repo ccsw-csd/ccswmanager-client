@@ -6,13 +6,12 @@ mat-list {
   height: 400px;
   margin-top: 0;
 }
-
 .buttons {
   height: 50px;
   float: right;
 
   button {
-      width:170px;
+    width:170px;
   }
 }
 
@@ -21,15 +20,14 @@ mat-list {
   flex-direction: row;
   align-items: baseline;
   justify-content: space-evenly;
+  margin-bottom: 20px;
 }
-
 .list-text{
   display: flex;
   flex-direction: column;
   align-items: baseline;
   row-gap: 20px;
 }
-
 .list-bt{
   display: flex;
   flex-direction: column;

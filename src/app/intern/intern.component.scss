@@ -21,8 +21,10 @@
 
 .warn {
     background-color: $warn;
+    border-color: #cf8734;
+    border-width: 1px;
+    border-style: solid;
     color: white;
-    margin-right: 20px;
 }
 
 .closeEdit {

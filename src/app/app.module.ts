@@ -34,6 +34,7 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
 import { InternComponent } from './intern/intern.component';
 import { TextDialogComponent } from './intern/text-dialog/text-dialog.component';
 import { TimelineComponent } from './intern/timeline/timeline.component';
+import { LdapSyncDialogComponent } from './intern/ldap-sync-dialog/ldap-sync-dialog.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { TimelineComponent } from './intern/timeline/timeline.component';
     PyramidTeamComponent,
     InternComponent,
     TextDialogComponent,
-    TimelineComponent
+    TimelineComponent,
+    LdapSyncDialogComponent
   ],
   imports: 
   [
