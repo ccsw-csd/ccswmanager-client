@@ -74,7 +74,9 @@ export class InternComponent implements OnInit {
 
       { field: 'period', headerName: 'Periodo', maxWidth: 85, minWidth: 85,
         cellStyle: params => {
-          if(params.value?.length > 2) {
+          if (params.value == "" || params.value == null || params.value == undefined) {
+            return {borderColor: 'lightcoral'};
+          } else if (params.value.length > 2) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
