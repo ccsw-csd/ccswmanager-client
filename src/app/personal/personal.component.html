@@ -11,7 +11,7 @@
         </div>
 
         <div class="edit">
-            <button *ngIf="!ldap" class="warn" (click)="openLDAP()" matTooltip="Sincronizar con LDAP"><mat-icon>manage_accounts</mat-icon></button>
+            <button *ngIf="!ldap" class="warn" (click)="openLdap()" matTooltip="Sincronizar con LDAP"><mat-icon>manage_accounts</mat-icon></button>
             <button secondary (click)="changeMode()" matTooltip="Editar datos de la tabla"><mat-icon>edit</mat-icon></button>
             <button secondary (click)="onBtExport()" matTooltip="Exportar datos visibles"><mat-icon>file_download</mat-icon></button>
             <button secondary (click)="resetFilters()" matTooltip="Eliminar filtros de la tabla"><mat-icon>filter_alt_off</mat-icon></button>

@@ -24,7 +24,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CustomDateAdapter } from './core/date-adapter/custom-date-adapter';
 import { PersonalComponent } from './personal/personal.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { LdapDialogComponent } from './personal/ldap-dialog/ldap-dialog.component';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,20 +33,20 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
 import { InternComponent } from './intern/intern.component';
 import { TextDialogComponent } from './intern/text-dialog/text-dialog.component';
 import { TimelineComponent } from './intern/timeline/timeline.component';
-import { LdapSyncDialogComponent } from './intern/ldap-sync-dialog/ldap-sync-dialog.component';
-
+import { LdapPersonalDialogComponent } from './personal/ldap-personal-dialog/ldap-personal-dialog.component';
+import { LdapInternDialogComponent } from './intern/ldap-intern-dialog/ldap-intern-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonalComponent,
-    LdapDialogComponent,
     PyramidComponent,
     PyramidTeamComponent,
     InternComponent,
     TextDialogComponent,
     TimelineComponent,
-    LdapSyncDialogComponent
+    LdapPersonalDialogComponent,
+    LdapInternDialogComponent
   ],
   imports: 
   [

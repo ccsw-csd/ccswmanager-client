@@ -18,10 +18,10 @@
             <h3 class="list-header">Becarios que <b>NO</b> están en la app</h3>
             <mat-spinner [diameter]="55" *ngIf="showSpinner1"></mat-spinner>
             <mat-list id="ldap_list">
-                <mat-list-item *ngFor="let person of ldapToInterns">
-                <h3 matLine> {{person.name}} {{person.lastname}} </h3>
+                <mat-list-item *ngFor="let intern of ldapToInterns">
+                <h3 matLine> {{intern.name}} {{intern.lastname}} </h3>
                 <p matLine>
-                    <span> {{person.username}} </span>
+                    <span> {{intern.username}} </span>
                 </p>
                 </mat-list-item>
             </mat-list>
@@ -29,11 +29,11 @@
         <div style="width: 425px;">
             <h3 class="list-header">Becarios de la app que <b>NO</b> están en <b>CCABecarios</b></h3>
             <mat-spinner [diameter]="55" *ngIf="showSpinner2"></mat-spinner>
-            <mat-list id="persons_list">
-                <mat-list-item *ngFor="let person of internsToLdap">
-                <h3 matLine> {{person.name}} {{person.lastname}} </h3>
+            <mat-list id="interns_list">
+                <mat-list-item *ngFor="let intern of internsToLdap">
+                <h3 matLine> {{intern.name}} {{intern.lastname}} </h3>
                 <p matLine>
-                    <span> {{person.username}} </span>
+                    <span> {{intern.username}} </span>
                 </p>
                 </mat-list-item>
             </mat-list>

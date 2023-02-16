@@ -2,9 +2,24 @@
 
 <div class="bodyAlert">
     <mat-form-field appearance="standard">
-        <mat-label>Nombre</mat-label>
-        <input matInput name="name" [(ngModel)]="itemData.name" required matInput placeholder="Name"/>
-        <mat-error>Este campo no puede estar vacío</mat-error>
+      <mat-label>Nombre</mat-label>
+      <input matInput name="name" [(ngModel)]="itemData.name" required matInput placeholder="Name"/>
+      <mat-error>Este campo no puede estar vacío</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Tipo (UN o FP)</mat-label>
+      <input matInput name="type" [(ngModel)]="itemData.type" required matInput placeholder="Type"/>
+      <mat-error>Este campo no puede estar vacío</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Provincia</mat-label>
+      <mat-select [(ngModel)]="selectedProvince">
+        <mat-option *ngFor="let province of provinces" [value]="province.province">
+          {{province.province}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <div class="zona-botones">

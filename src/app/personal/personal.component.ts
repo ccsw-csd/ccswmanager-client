@@ -10,9 +10,9 @@ import { iif } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.component';
 import ResizeObserver from 'resize-observer-polyfill';
-import { LdapDialogComponent } from './ldap-dialog/ldap-dialog.component';
 import { AuthService } from '../core/services/auth.service';
 import { Router } from '@angular/router';
+import { LdapPersonalDialogComponent } from './ldap-personal-dialog/ldap-personal-dialog.component';
 
 @Component({
   selector: 'app-main',
@@ -306,12 +306,12 @@ export class PersonalComponent implements OnInit {
   getPersons(): void {
     this.mainService.findPersons().subscribe( (res) => {
       this.rowData = res;
-      this.checkLDAP();
+      this.checkLdap();
     });
   }
 
-  checkLDAP(): void {
-    this.mainService.checkLDAP().subscribe((res) => {
+  checkLdap(): void {
+    this.mainService.checkLdap().subscribe((res) => {
       this.ldap = res;
     })
   }
@@ -481,7 +481,7 @@ export class PersonalComponent implements OnInit {
 
     this.mainService.saveOrUpdatePersons(personsChanged).subscribe(data => {
       this.rowData = data;
-      this.checkLDAP();
+      this.checkLdap();
     });
 
     this.api?.onFilterChanged();
@@ -556,8 +556,8 @@ export class PersonalComponent implements OnInit {
     this.api.forEachNodeAfterFilter(node => this.counter++);
   }
 
-  openLDAP(): void {
-    const dialogRef = this.dialog.open(LdapDialogComponent, {
+  openLdap(): void {
+    const dialogRef = this.dialog.open(LdapPersonalDialogComponent, {
       data: {}
     });
   }

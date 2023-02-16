@@ -6,11 +6,11 @@ import { LdapPerson } from 'src/app/core/to/LdapPerson';
 import { InternService } from '../services/intern.service';
 
 @Component({
-  selector: 'app-ldap-sync-dialog',
-  templateUrl: './ldap-sync-dialog.component.html',
-  styleUrls: ['./ldap-sync-dialog.component.scss']
+  selector: 'app-ldap-intern-dialog',
+  templateUrl: './ldap-intern-dialog.component.html',
+  styleUrls: ['./ldap-intern-dialog.component.scss']
 })
-export class LdapSyncDialogComponent implements OnInit {
+export class LdapInternDialogComponent implements OnInit {
 
   ldapToInterns: LdapPerson[] = [];
   internsToLdap: LdapPerson[] = [];
@@ -22,7 +22,7 @@ export class LdapSyncDialogComponent implements OnInit {
     private internService: InternService,
     private clipboard: Clipboard,
     private snackbar: MatSnackBar,
-    public dialogRef: MatDialogRef<LdapSyncDialogComponent>,
+    public dialogRef: MatDialogRef<LdapInternDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {}
     ) { }
 

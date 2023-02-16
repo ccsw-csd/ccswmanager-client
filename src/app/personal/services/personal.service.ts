@@ -5,13 +5,13 @@ import { ActionDto } from 'src/app/core/to/ActionDto';
 import { CenterDto } from 'src/app/core/to/CenterDto';
 import { EducationCenterDto } from 'src/app/core/to/EducationCenterDto';
 import { EducationDto } from 'src/app/core/to/EducationDto';
+import { LdapPerson } from 'src/app/core/to/LdapPerson';
 import { LevelDto } from 'src/app/core/to/LevelDto';
 import { PersonDto } from 'src/app/core/to/PersonDto';
 import { PersonRoleDto } from 'src/app/core/to/PersonRoleDto';
 import { ProvinceDto } from 'src/app/core/to/ProvinceDto';
 import { TechnologyDto } from 'src/app/core/to/TechnologyDto';
 import { environment } from 'src/environments/environment';
-import { LdapPerson } from '../ldap-dialog/to/LdapPerson';
 
 @Injectable({
   providedIn: 'root'
@@ -67,20 +67,20 @@ export class PersonalService {
     return this.http.get<PersonDto[]>(environment.server + '/person/scholar/' + filter);
   }
 
-  checkLDAP(): Observable<boolean>  {
-    return this.http.get<boolean>(environment.server + '/ldap/');
+  checkLdap(): Observable<boolean>  {
+    return this.http.get<boolean>(environment.server + '/ldap/person');
   }
 
-  compareLdapToPersons(contract : boolean): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/ldap/' + contract);
+  compareLdapToPersons(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/person/compare/ldap');
   }
 
-  comparePersonsToLdap(contract : boolean): Observable<LdapPerson[]> {
-    return this.http.get<LdapPerson[]>(environment.server + '/ldap/persons/' + contract);
+  comparePersonsToLdap(): Observable<LdapPerson[]> {
+    return this.http.get<LdapPerson[]>(environment.server + '/ldap/person/compare/person');
   }
 
-  findListLdapUsernames(contract : boolean): Observable<String[]> {
-    return this.http.get<String[]>(environment.server + '/ldap/list/' + contract);
+  findListLdapUsernames(): Observable<String[]> {
+    return this.http.get<String[]>(environment.server + '/ldap/person/list');
   }
 
   findPersonRoles(): Observable<PersonRoleDto[]> {

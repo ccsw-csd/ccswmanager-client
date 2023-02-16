@@ -17,7 +17,7 @@ export class EducationCenterService {
   }
 
   save(data: EducationCenterDto) : Observable<EducationCenterDto> {
-    return this.http.post<EducationCenterDto>(environment.server+ '/educationCenter/', {id: data.id, name: data.name});
+    return this.http.post<EducationCenterDto>(environment.server+ '/educationCenter/', {id: data.id, name: data.name, type: data.type, province: data.province});
   }
   
   delete(id: number) : Observable<void> {

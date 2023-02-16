@@ -1,5 +1,7 @@
 export class ProvinceDto {
-  id: number|undefined;
-  province: string|undefined;
+
+  id: number | undefined;
+  province: string | undefined;
+
   constructor() {}
 }

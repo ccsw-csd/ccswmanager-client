@@ -17,7 +17,7 @@ import { AlertDialogComponent } from '../core/alert-dialog/alert-dialog.componen
 import { TimelineComponent } from './timeline/timeline.component';
 import { TextDialogComponent } from './text-dialog/text-dialog.component';
 import { MultiselectEditorComponent } from '../core/multiselect-editor/multiselect-editor.component';
-import { LdapSyncDialogComponent } from './ldap-sync-dialog/ldap-sync-dialog.component';
+import { LdapInternDialogComponent } from './ldap-intern-dialog/ldap-intern-dialog.component';
 
 
 @Component({
@@ -371,14 +371,14 @@ export class InternComponent implements OnInit {
         }
       },
 
-      { field: 'link', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,
+      { field: 'link', headerName:'', maxWidth: 62, minWidth: 62, floatingFilter: false, editable: false,
         cellRenderer: function(params) {
           return '<span><i class="material-icons" style="margin-top:10px;">link</i></span>'
         },
         onCellClicked: (event: CellClickedEvent) => this.link(event), sortable:false
       },
 
-      { field: 'comment', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,
+      { field: 'comment', headerName:'', maxWidth: 62, minWidth: 62, floatingFilter: false, editable: false,
         cellRenderer: function(params) {
           return '<span><i class="material-icons" style="margin-top:10px;">comment</i></span>'
         },
@@ -815,7 +815,7 @@ export class InternComponent implements OnInit {
   }
 
   openLdap(): void {
-    const dialogRef = this.dialog.open(LdapSyncDialogComponent, {
+    const dialogRef = this.dialog.open(LdapInternDialogComponent, {
       data: {}
     });
   }

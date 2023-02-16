@@ -33,6 +33,12 @@ export class EducationCenterComponent implements OnInit {
 
     this.columnDefs = [
       { field: 'name', headerName: 'Nombre'},
+      { field: 'type', headerName: 'Tipo', maxWidth: 100, minWidth: 100},
+      { field: 'province', headerName: 'Localización', maxWidth: 150, minWidth: 150,
+        valueGetter: function (params) {
+          return (params.data.province == null || params.data.province == "" || params.data.province == undefined) ? '' : params.data.province.province;
+        }
+      },
       { field: 'edit', headerName:'', minWidth: 40, maxWidth: 40, cellStyle: actionCellStyle, floatingFilter: false, editable: false,
         cellRenderer: function(params) {
           return '<span><i class="material-icons" style="margin-top:10px; color: #4d4f5c;">edit</i></span>'
@@ -44,10 +50,8 @@ export class EducationCenterComponent implements OnInit {
           return '<span><i class="material-icons" style="margin-top:10px; color: #4d4f5c;">delete</i></span>'
         },
         onCellClicked: (event: CellClickedEvent) => this.deleteItem(event), sortable:false
-      },
-
+      }
     ];
-
   }
 
   ngOnInit(): void {
@@ -64,7 +68,6 @@ export class EducationCenterComponent implements OnInit {
 
   onGridReady = (params: { api: GridApi; columnApi: ColumnApi}) => {
     this.api = params.api;
-
 
     const sort = [
       {colId: 'name', sort: 'asc'}
@@ -83,8 +86,6 @@ export class EducationCenterComponent implements OnInit {
       obs.observe(agGrid);
   }  
 
-
-
   loadData(): void {
     this.educationCenterService.findAll().subscribe((data) => {
       this.rowData = data;
@@ -99,7 +100,6 @@ export class EducationCenterComponent implements OnInit {
     var rowNode;
     if(event.node.id != undefined)
       rowNode = this.api.getRowNode(event.node.id);
-
 
     if (!rowNode || !rowNode.data || !rowNode.data.id) return;
 
@@ -118,9 +118,8 @@ export class EducationCenterComponent implements OnInit {
             this.dialog.open(AlertDialogComponent, {
               data: { titulo: "Error", informacion: "El centro educativo está siendo usado por otro registro y no puede borrarse.<br/>Por favor actualice los registros que lo utilizan para poder borrar el centro educativo."}
             });
-
           }
-        })
+        });
       }
     });
   }
@@ -136,13 +135,13 @@ export class EducationCenterComponent implements OnInit {
 
     const dialogRef = this.dialog.open(EducationCenterEditComponent, {
       width: '700px',
-      height: '250px',
+      height: '350px',
       data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.loadData();
-    })
+    });
   }
   
 

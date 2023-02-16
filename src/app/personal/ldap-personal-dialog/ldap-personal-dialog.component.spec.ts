@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LdapDialogComponent } from './ldap-dialog.component';
+import { LdapPersonalDialogComponent } from './ldap-personal-dialog.component';
 
-describe('LdapDialogComponent', () => {
-  let component: LdapDialogComponent;
-  let fixture: ComponentFixture<LdapDialogComponent>;
+describe('LdapPersonalDialogComponent', () => {
+  let component: LdapPersonalDialogComponent;
+  let fixture: ComponentFixture<LdapPersonalDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LdapDialogComponent ]
+      declarations: [ LdapPersonalDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LdapDialogComponent);
+    fixture = TestBed.createComponent(LdapPersonalDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
