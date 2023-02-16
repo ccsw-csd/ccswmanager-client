@@ -133,12 +133,12 @@ export class InternComponent implements OnInit {
       { field: 'educationCenter', headerName: 'Centro', maxWidth: 200, minWidth: 200,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
-          return (params.data.educationCenter == null || params.data.educationCenter == "" || params.data.educationCenter == undefined) ? '' : '[' + params.data.educationCenter.type + ']' + params.data.educationCenter.name;
+          return (params.data.educationCenter == null || params.data.educationCenter == "" || params.data.educationCenter == undefined) ? '' : '[' + params.data.educationCenter.type + '] ' + params.data.educationCenter.name;
         },
         valueSetter: params => {
           var newValue = params.newValue;
           var id = this.educationCenters.indexOf(newValue);
-          var educationCenterParts = newValue.split(']');
+          var educationCenterParts = newValue.split('] ');
           params.data.educationCenter = (newValue == null || newValue == "" || newValue == undefined) ? null : {id: id, name: educationCenterParts[1], type: educationCenterParts[0].replace('[', '')};
           return true;
         }
@@ -472,7 +472,7 @@ export class InternComponent implements OnInit {
     this.personalService.findEducationCenter().subscribe((res) => {
       res.forEach(educationCenter => {
         if(educationCenter.id != undefined && educationCenter.name) {
-          this.educationCenters[educationCenter.id] = '[' + educationCenter.type + ']' + educationCenter.name;
+          this.educationCenters[educationCenter.id] = '[' + educationCenter.type + '] ' + educationCenter.name;
         }
       });
       var column = this.api.getColumnDef('educationCenter');
