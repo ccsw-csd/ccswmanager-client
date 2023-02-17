@@ -68,18 +68,18 @@ export class InternComponent implements OnInit {
   ) {
 
     this.columnDefs = [
-      { field: 'delete', headerName:'', minWidth: 60, maxWidth: 60, floatingFilter: false, editable: false,
+      { field: 'delete', headerName:'', minWidth: 62, maxWidth: 62, floatingFilter: false, editable: false, sortable: false, hide: true,
         cellRenderer: function(params) {
           return '<span><i class="material-icons" style="margin-top:10px; color: lightcoral;">clear</i></span>'
         },
-        onCellClicked: (event: CellClickedEvent) => this.delete(event), sortable:false, hide: true
+        onCellClicked: (event: CellClickedEvent) => this.delete(event)
       },
 
       { field: 'period', headerName: 'Periodo', maxWidth: 85, minWidth: 85,
         cellStyle: params => {
           if (params.value == "" || params.value == null || params.value == undefined) {
             return {borderColor: 'lightcoral'};
-          } else if (params.value.length > 2) {
+          } else if (params.value.length > 5) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -371,19 +371,27 @@ export class InternComponent implements OnInit {
         }
       },
 
-      { field: 'link', headerName:'', maxWidth: 62, minWidth: 62, floatingFilter: false, editable: false,
+      { field: 'link', headerName:'', maxWidth: 62, minWidth: 62, floatingFilter: false, editable: false, sortable: false,
         cellRenderer: function(params) {
-          return '<span><i class="material-icons" style="margin-top:10px;">link</i></span>'
+          if((params.data.link == null || params.data.link == "" || params.data.link == undefined)){
+            return '<span><i class="material-icons" style="margin-top:10px; color: #12abdb;">link_off</i></span>'
+          } else {
+            return '<span><i class="material-icons" style="margin-top:10px; color: #12abdb;">link</i></span>'
+          }
         },
-        onCellClicked: (event: CellClickedEvent) => this.link(event), sortable:false
+        onCellClicked: (event: CellClickedEvent) => this.link(event)
       },
 
-      { field: 'comment', headerName:'', maxWidth: 62, minWidth: 62, floatingFilter: false, editable: false,
+      { field: 'comment', headerName:'', maxWidth: 62, minWidth: 62, floatingFilter: false, editable: false, sortable: false,
         cellRenderer: function(params) {
-          return '<span><i class="material-icons" style="margin-top:10px;">comment</i></span>'
+          if((params.data.comment == null || params.data.comment == "" || params.data.comment == undefined)){
+            return '<span><i class="material-icons" style="margin-top:10px; color: #12abdb;">chat_bubble</i></span>'
+          } else {
+            return '<span><i class="material-icons" style="margin-top:10px; color: #12abdb;">chat</i></span>'
+          }
         },
-        onCellClicked: (event: CellClickedEvent) => this.comment(event), sortable:false
-      },
+        onCellClicked: (event: CellClickedEvent) => this.comment(event)
+      }
     ];
 
     this.defaultColDef = {
@@ -620,7 +628,7 @@ export class InternComponent implements OnInit {
           correct = false;
         } else if(moment(node.data.startDate, "YYYY-MM-DD").valueOf() > moment(node.data.endDate, "YYYY-MM-DD").valueOf()) {
           correct = false;
-        } else if(node.data.period?.length > 2 || node.data.username?.length > 25 || node.data.name?.length > 50 || node.data.lastname?.length > 100 || node.data.email?.length > 100
+        } else if(node.data.period?.length > 5 || node.data.username?.length > 25 || node.data.name?.length > 50 || node.data.lastname?.length > 100 || node.data.email?.length > 100
           || node.data.hours?.length > 2 || node.data.customer?.length > 100 || node.data.code?.length > 50
           || node.data.mentor?.length > 200 || node.data.coordinator?.length > 200 || node.data.hrManager?.length > 50 || node.data.link?.length > 400 || node.data.comment?.length > 400) {
           correct = false;
@@ -722,7 +730,7 @@ export class InternComponent implements OnInit {
 
   getQuarter(): string {
     var today = new Date();
-    return 'Q' + Math.floor((today.getMonth() + 3) / 3).toString();
+    return 'Q' + Math.floor((today.getMonth() + 3) / 3).toString() + '\'' +  today.getFullYear().toString().slice(2);
   }
 
   delete(event: CellClickedEvent): void {
