@@ -184,7 +184,7 @@ export class PersonalComponent implements OnInit {
         }
       },
 
-      { field: 'manager', headerName: 'Responsable', maxWidth: 200, minWidth: 150,
+      { field: 'manager', headerName: 'Evaluador', maxWidth: 200, minWidth: 150,
         cellStyle: params => {
           if(params.value?.length > 200) {
             return {borderColor: 'lightcoral'};
