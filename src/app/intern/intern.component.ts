@@ -137,9 +137,14 @@ export class InternComponent implements OnInit {
         },
         valueSetter: params => {
           var newValue = params.newValue;
-          var id = this.educationCenters.indexOf(newValue);
-          var educationCenterParts = newValue.split('] ');
-          params.data.educationCenter = (newValue == null || newValue == "" || newValue == undefined) ? null : {id: id, name: educationCenterParts[1], type: educationCenterParts[0].replace('[', '')};
+
+          if(newValue == null || newValue == "" || newValue == undefined){
+            params.data.educationCenter = null;
+          } else {
+            var id = this.educationCenters.indexOf(newValue);
+            var educationCenterParts = newValue.split('] ');
+            params.data.educationCenter = {id: id, name: educationCenterParts[1], type: educationCenterParts[0].replace('[', '')};
+          }
           return true;
         }
       },
@@ -173,12 +178,6 @@ export class InternComponent implements OnInit {
 
       { field: 'startDate', headerName: 'Inicio', maxWidth: 130, minWidth: 130,
         cellEditorPopup: false, comparator : this.dateComparator,
-        cellStyle: params => {
-          if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'lightcoral'};
-          }
-          return {borderColor: 'transparent'};
-        },
         valueGetter : function(params) {
           return params.data.startDate != null ? moment(params.data.startDate).format('DD/MM/YYYY') : params.data.startDate;
         },
@@ -196,12 +195,6 @@ export class InternComponent implements OnInit {
 
       { field: 'endDate', headerName: 'Fin', maxWidth: 130, minWidth: 130,
         cellEditorPopup: false, comparator : this.dateComparator,
-        cellStyle: params => {
-          if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'lightcoral'};
-          }
-          return {borderColor: 'transparent'};
-        },
         valueGetter : function(params) {
           return params.data.endDate != null ? moment(params.data.endDate).format('DD/MM/YYYY') : params.data.endDate;
         },
@@ -230,9 +223,7 @@ export class InternComponent implements OnInit {
 
       { field: 'customer', headerName: 'Cliente', maxWidth: 150, minWidth: 150,
         cellStyle: params => {
-          if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'lightcoral'};
-          } else if (params.value.length > 100) {
+          if (params.value?.length > 100) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -241,9 +232,7 @@ export class InternComponent implements OnInit {
 
       { field: 'code', headerName: 'Código', maxWidth: 100, minWidth: 100,
         cellStyle: params => {
-          if (params.value == "" || params.value == null || params.value == undefined) {
-            return {borderColor: 'lightcoral'};
-          } else if (params.value.length > 50) {
+          if (params.value?.length > 50) {
             return {borderColor: 'lightcoral'};
           }
           return {borderColor: 'transparent'};
@@ -622,11 +611,10 @@ export class InternComponent implements OnInit {
 
     this.api.forEachNode(node => {
       if(this.saveRows.includes(node.data)) {
-        if(this.isEmpty(node.data.period) || this.isEmpty(node.data.name) || this.isEmpty(node.data.lastname) || this.isEmpty(node.data.center)
-        || this.isEmpty(node.data.startDate) || this.isEmpty(node.data.endDate) || this.isEmpty(node.data.hours) || this.isEmpty(node.data.customer) || this.isEmpty(node.data.code)
+        if(this.isEmpty(node.data.period) || this.isEmpty(node.data.name) || this.isEmpty(node.data.lastname) || this.isEmpty(node.data.center) || this.isEmpty(node.data.hours)
         || this.isEmpty(node.data.englishLevel) || this.isEmpty(node.data.coordinator) || this.isEmpty(node.data.hrManager) || this.isEmpty(node.data.active) ) {
           correct = false;
-        } else if(moment(node.data.startDate, "YYYY-MM-DD").valueOf() > moment(node.data.endDate, "YYYY-MM-DD").valueOf()) {
+        } else if(!this.isEmpty(node.data.startDate) && !this.isEmpty(node.data.endDate) && (moment(node.data.startDate, "YYYY-MM-DD").valueOf() > moment(node.data.endDate, "YYYY-MM-DD").valueOf())) {
           correct = false;
         } else if(node.data.period?.length > 5 || node.data.username?.length > 25 || node.data.name?.length > 50 || node.data.lastname?.length > 100 || node.data.email?.length > 100
           || node.data.hours?.length > 2 || node.data.customer?.length > 100 || node.data.code?.length > 50
