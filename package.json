@@ -1,6 +1,6 @@
 {
   "name": "ccswmanager",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "scripts": {
     "ng": "ng",
     "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
