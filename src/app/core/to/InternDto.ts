@@ -13,6 +13,7 @@ export class InternDto {
     username: String | undefined;
     name: String | undefined;
     lastname: String | undefined;
+    gender: number | undefined;
     email: String | undefined;
     education: EducationDto | undefined;
     educationCenter: EducationCenterDto | undefined;
