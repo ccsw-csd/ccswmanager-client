@@ -117,6 +117,37 @@ export class InternComponent implements OnInit {
         }
       },
 
+      { field: 'gender', headerName: 'Genero', maxWidth: 98, minWidth: 98,
+        valueGetter: function (params) {
+          if (params.data.gender == 1) {
+            return 'Mujer';
+          } else if (params.data.gender == 2) {
+            return 'Hombre';
+          } else if (params.data.gender == 0) {
+            return 'Otros';
+          } else {
+            return null;
+          }
+        },
+        valueSetter: params => {
+          var newValue = params.newValue;
+          if(newValue == "Mujer") {
+            params.data.gender = 1;
+          } else if (newValue == "Hombre") {
+            params.data.gender = 2;
+          } else if (newValue == "Otros") {
+            params.data.gender = 0;
+          } else {
+            params.data.gender = null;
+          }
+          return true;
+        },
+        cellEditor: 'agSelectCellEditor',
+        cellEditorParams: {
+            values: ['','Mujer', 'Hombre', 'Otros']
+        }
+      },
+
       { field: 'education', headerName: 'Titulación', maxWidth: 200, minWidth: 200,
         cellEditor: 'agSelectCellEditor',
         valueGetter: function (params) {
