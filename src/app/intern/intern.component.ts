@@ -864,9 +864,9 @@ export class InternComponent implements OnInit {
     }
 
     if (date1Number == null) {
-      return -1;
-    } else if (date2Number == null) {
       return 1;
+    } else if (date2Number == null) {
+      return -1;
     }
 
     return date1Number - date2Number;
