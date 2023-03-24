@@ -364,6 +364,15 @@ export class InternComponent implements OnInit {
         }
       },
 
+      { field: 'saga', headerName: 'Saga', maxWidth: 96, minWidth: 96,
+        cellStyle: params => {
+          if(params.value?.length > 25) {
+            return {borderColor: 'lightcoral'};
+          }
+          return {borderColor: 'transparent'};
+        }
+      },
+
       { field: 'active', headerName: 'Estado', maxWidth: 98, minWidth: 98,
         valueGetter: function (params) {
           if (params.data.active == 1) {
@@ -649,7 +658,7 @@ export class InternComponent implements OnInit {
           correct = false;
         } else if(node.data.period?.length > 5 || node.data.username?.length > 25 || node.data.name?.length > 50 || node.data.lastname?.length > 100 || node.data.email?.length > 100
           || node.data.hours?.length > 2 || node.data.customer?.length > 100 || node.data.code?.length > 50
-          || node.data.mentor?.length > 200 || node.data.coordinator?.length > 200 || node.data.hrManager?.length > 50 || node.data.link?.length > 400 || node.data.comment?.length > 4000) {
+          || node.data.mentor?.length > 200 || node.data.coordinator?.length > 200 || node.data.hrManager?.length > 50 || node.data.saga?.length > 25 || node.data.link?.length > 400 || node.data.comment?.length > 4000) {
           correct = false;
         }
       }
@@ -716,6 +725,7 @@ export class InternComponent implements OnInit {
     intern.name = person.name;
     intern.lastname = person.lastname;
     intern.email = person.email;
+    intern.saga = person.saga;
 
     if(person.hours == null) {
       intern.hours = 5;

@@ -31,6 +31,7 @@ export class InternDto {
     hrManager: string | undefined;
     action: ActionDto | undefined;
     contractDate: Date | undefined;
+    saga: String | undefined;
     active: number | undefined;
     link: string | undefined;
     comment: string | undefined;
